@@ -6,6 +6,8 @@ import javax.swing.JOptionPane;
 
 /**
  * @author Daniels Kanepe
+ * 
+ * Pop-up windows used throughout the project
  *
  */
 public class Messages {

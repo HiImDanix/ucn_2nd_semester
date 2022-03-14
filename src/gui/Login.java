@@ -88,7 +88,7 @@ public class Login extends JFrame {
 		
 		lblTitle = new JLabel("Log In");
 		lblTitle.setFont(new Font("Dialog", Font.PLAIN, 30));
-		lblTitle.setForeground(Palette.GREY_DARK);
+		lblTitle.setForeground(Palette.SECONDARY_GREY_DARK);
 		GridBagConstraints gbc_lblTitle = new GridBagConstraints();
 		gbc_lblTitle.anchor = GridBagConstraints.SOUTH;
 		gbc_lblTitle.insets = new Insets(0, 0, 5, 0);

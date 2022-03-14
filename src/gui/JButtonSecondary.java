@@ -4,9 +4,11 @@ import javax.swing.*;
 
 import java.awt.*;
 
+/**
+ * @author Daniels Kanepe
+ *
+ */
 public class JButtonSecondary extends JButton {
-	
-
     private static final long serialVersionUID = 90062794964789095L;
 
     public JButtonSecondary(String text) {
