@@ -14,8 +14,8 @@ public class JButtonSecondary extends JButton {
     public JButtonSecondary(String text) {
         super(text);
         super.setBackground(Color.WHITE);
-        super.setBorder(BorderFactory.createLineBorder(Palette.PRIMARY));
-        super.setForeground(Palette.PRIMARY);
+        super.setBorder(BorderFactory.createLineBorder(Palette.PRIMARY.getColor()));
+        super.setForeground(Palette.PRIMARY.getColor());
         super.setMargin(new Insets(5, 15, 5, 15));
     }
     
