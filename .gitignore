@@ -87,3 +87,4 @@ local.properties
 .idea/
 *.iml
 config.properties
+config-example.properties
