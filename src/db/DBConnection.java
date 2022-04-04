@@ -13,6 +13,8 @@ public class DBConnection {
             "USERNAME", "PASSWORD", "HOST", "PORT", "DBNAME"));
     private static final String DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     private static final String URL_PREFIX = "jdbc:sqlserver://";
+    private static final String CONFIG_FILE = "config.properties";
+
 
     private static DBConnection instance = null;
     private static Connection con = null;
@@ -20,18 +22,20 @@ public class DBConnection {
 
     private DBConnection() throws DataAccessException {
 
-        // Read config file
-        if (!new File("config.properties").exists()) {
-            // If config file does not exist, create it with needed properties but no values
-            createProperties();
-            Messages.error("A new database config file has been created." +
-                    " Please fill in the needed properties.", "Database config file");
-            // Exit the app
-            System.exit(0);
+        // If properties already have been read, don't read them again
+        if (!properties.isEmpty()) {
+            if (!new File(CONFIG_FILE).exists()) {
+                // If config file does not exist, create it with needed properties but no values
+                createProperties();
+                Messages.error("A new database config file has been created." +
+                        " Please fill in the needed properties.", "Database config file");
+                // Exit the app
+                System.exit(0);
 
-        } else {
-            // Read properties from config file
-            readProperties();
+            } else {
+                // Read properties from config file
+                readProperties();
+            }
         }
 
 
@@ -64,7 +68,7 @@ public class DBConnection {
     private static void readProperties() throws DataAccessException {
         // Read properties from config file
         try {
-            properties.load(new FileInputStream("config.properties"));
+            properties.load(new FileInputStream(CONFIG_FILE));
         } catch (IOException e) {
             e.printStackTrace();
             throw new DataAccessException("Error reading config.properties", e);
@@ -80,7 +84,7 @@ public class DBConnection {
     // Create config file with default properties but no values
     private static void createProperties() throws DataAccessException {
         try {
-            properties.store(new FileOutputStream("config.properties"), null);
+            properties.store(new FileOutputStream(CONFIG_FILE), null);
         } catch (IOException e) {
             e.printStackTrace();
             throw new DataAccessException("Error creating config.properties", e);
@@ -91,7 +95,7 @@ public class DBConnection {
         }
         // Save the properties to the file
         try {
-            properties.store(new FileOutputStream("config.properties"), null);
+            properties.store(new FileOutputStream(CONFIG_FILE), null);
         } catch (IOException e) {
             e.printStackTrace();
             throw new DataAccessException("Error saving config.properties", e);
@@ -164,7 +168,7 @@ public class DBConnection {
             e.printStackTrace();
             throw new DataAccessException("Error executing statement", e);
         }
-
     }
+
 
 }

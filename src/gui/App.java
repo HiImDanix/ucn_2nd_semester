@@ -21,11 +21,11 @@ public class App {
 	 */
 	public static void main(String[] args) {
 
-		try {
-			Connection con = DBConnection.getInstance().getDBCon();
-		} catch (DataAccessException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			Connection con = DBConnection.getInstance().getDBCon();
+//		} catch (DataAccessException e) {
+//			e.printStackTrace();
+//		}
 
 		// Set FlatLaf 'Look And Feel' 
 		try {
