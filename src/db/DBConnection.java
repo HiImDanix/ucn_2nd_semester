@@ -1,26 +1,40 @@
 package db;
 
+import gui.Messages;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.*;
+import java.io.*;
 
 public class DBConnection {
-    // Database credentials
-    private static final String USER = "sa";
-    private static final String PASS = "secret2022*";
-    private static final String HOST = "localhost";
-    private static final String PORT = "1433";
-    private static final String DBNAME = "Dormily";
-    private static final String SERVERNAME = "SQLEXPRESS";
+    private static final Set<String> POSSIBLE_PROPERTIES = new HashSet<>(Arrays.asList(
+            "USERNAME", "PASSWORD", "HOST", "PORT", "DBNAME"));
     private static final String DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-    private static final String URL =
-            String.format("jdbc:sqlserver://%s:%s\\%s;databaseName=%s;user=%s;password=%s;encrypt=true;trustServerCertificate=true",
-                    HOST, PORT, SERVERNAME, DBNAME, USER, PASS);
+    private static final String URL_PREFIX = "jdbc:sqlserver://";
 
     private static DBConnection instance = null;
     private static Connection con = null;
+    private static final Properties properties = new Properties();
 
     private DBConnection() throws DataAccessException {
+
+        // Read config file
+        if (!new File("config.properties").exists()) {
+            // If config file does not exist, create it with needed properties but no values
+            createProperties();
+            Messages.error("A new database config file has been created." +
+                    " Please fill in the needed properties.", "Database config file");
+            // Exit the app
+            System.exit(0);
+
+        } else {
+            // Read properties from config file
+            readProperties();
+        }
+
+
         // Try loading the driver
         try {
             Class.forName(DRIVER);
@@ -28,15 +42,59 @@ public class DBConnection {
             e.printStackTrace();
             throw new DataAccessException("Driver not found", e);
         }
-        // Connection to the database
+
+        // set up url
+        String url = String.format("%s%s:%s;databaseName=%s;encrypt=true;trustServerCertificate=true", URL_PREFIX,
+                        properties.getProperty("HOST"), properties.getProperty("PORT"),
+                        properties.getProperty("DBNAME"));
+
+        // Try connecting to the database
         try {
-            con = java.sql.DriverManager.getConnection(URL, USER, PASS);
+            con = java.sql.DriverManager.getConnection(url,
+                    properties.getProperty("USERNAME"), properties.getProperty("PASSWORD"));
             // Turn on autocommit
             con.setAutoCommit(true);
-        }
-        catch (SQLException e) {
+        }  catch (SQLException e) {
             e.printStackTrace();
             throw new DataAccessException("Error connecting to the database", e);
+        }
+    }
+
+    // Read config properties from config file
+    private static void readProperties() throws DataAccessException {
+        // Read properties from config file
+        try {
+            properties.load(new FileInputStream("config.properties"));
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new DataAccessException("Error reading config.properties", e);
+        }
+        // Check that all needed properties are set
+        for (String property : POSSIBLE_PROPERTIES) {
+            if (!properties.containsKey(property)) {
+                throw new DataAccessException("Property " + property + " not set in config.properties");
+            }
+        }
+    }
+
+    // Create config file with default properties but no values
+    private static void createProperties() throws DataAccessException {
+        try {
+            properties.store(new FileOutputStream("config.properties"), null);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new DataAccessException("Error creating config.properties", e);
+        }
+        // Fill in the properties without values
+        for (String property : POSSIBLE_PROPERTIES) {
+            properties.setProperty(property, "");
+        }
+        // Save the properties to the file
+        try {
+            properties.store(new FileOutputStream("config.properties"), null);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new DataAccessException("Error saving config.properties", e);
         }
     }
 
@@ -45,8 +103,7 @@ public class DBConnection {
         try {
             con.close();
             instance = null;
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             throw new DataAccessException("Error closing the connection", e);
         }
@@ -68,8 +125,7 @@ public class DBConnection {
     public void startTransaction() throws DataAccessException {
         try {
             con.setAutoCommit(false);
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             throw new DataAccessException("Error starting transaction", e);
         }
@@ -80,8 +136,7 @@ public class DBConnection {
         try {
             con.commit();
             con.setAutoCommit(true);
-        }
-        catch (SQLException e) {
+        }  catch (SQLException e) {
             e.printStackTrace();
             throw new DataAccessException("Error committing transaction", e);
         }
@@ -111,19 +166,5 @@ public class DBConnection {
         }
 
     }
-    public static String getDriver() {
-        return DRIVER;
-    }
 
-    public static String getURL() {
-        return URL;
-    }
-
-    public static String getUSER() {
-        return USER;
-    }
-
-    public static String getPASS() {
-        return PASS;
-    }
 }

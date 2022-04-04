@@ -29,6 +29,10 @@ public class Messages {
 	public static void error(Component component, String message) {
 		Messages.error(component, message, "Error");
 	}
+
+	public static void error(String message, String title) {
+		Messages.error(null, message, title);
+	}
 	
 	/**
 	 * Shows a confirmation window
@@ -60,7 +64,11 @@ public class Messages {
 	public static void info(Component component, String message) {
 		Messages.info(component, message, "Information");
 	}
-	
-	
+
+	public static void info(String message, String title) {
+		Messages.info(null, message, title);
+	}
+
+
 
 }
