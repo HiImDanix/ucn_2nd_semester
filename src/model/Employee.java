@@ -7,16 +7,17 @@ public class Employee {
     private String email;
     private String passwordHash;
 
-    public Employee(int id, String firstName, String lastname, String email, String passwordHash) {
+    public Employee(int id, String firstName, String lastName, String email, String passwordHash) {
         this.id = id;
         this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.passwordHash = passwordHash;
     }
 
-    public Employee(String firstName, String lastname, String email, String passwordHash) {
+    public Employee(String firstName, String lastName, String email, String passwordHash) {
         this.firstName = firstName;
-        this.lastName = lastname;
+        this.lastName = lastName;
         this.email = email;
         this.passwordHash = passwordHash;
     }
@@ -63,6 +64,6 @@ public class Employee {
 
     @Override
     public String toString() {
-        return String.format("Employee[id=%d, name='%s', email='%s', passwordHash='%s']", id, name, email, passwordHash);
+        return String.format("Employee[id=%d, firstName='%s', lastName='%s', email='%s', passwordHash='%s']", id, firstName, lastName, email, passwordHash);
     }
 }
