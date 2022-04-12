@@ -27,6 +27,11 @@ import java.awt.Component;
 import javax.swing.Box;
 import java.awt.Dimension;
 
+import db.DataAccessException;
+import model.Employee;
+import controller.EmployeeController;
+import controller.SessionController;
+
 /**
  * @author Daniels Kanepe
  *
@@ -199,25 +204,33 @@ public class Login extends JFrame {
 		    {
 				// parse fields
 			    String email = txtEmail.getText().toLowerCase().trim();
-			    String password = txtPassword.getText();
+			    String password = txtPassword.getPassword().toString();
 			    
 			    // if empty, show error
 			    if (email.isEmpty() || password.isEmpty()) {
 		            Messages.error(Login.this, "Email or password cannot be empty!");
 		            return;
 			    }
-			    
-			    // Log in
-			    //AuthenticationController auth = new AuthenticationController();
-//			    if (auth.login(email, password)) {
-//					Dashboard frame = new Dashboard(auth);
-//					frame.setVisible(true);
-//			    	// free up memory by destroying the current login form
-//			    	Login.this.dispose();
-//			    } else {
-//			    	Messages.error(Login.this, "The e-mail and/or password is incorrect.");
-//			    }
-			    System.out.println("Logged in!");
+
+				SessionController session = SessionController.getInstance();
+
+				// Log in
+				try {
+					if (session.authenticate(email, password)) {
+						// if login successful, close login window
+						Login.this.dispose();
+
+						// show main window
+						//Dashboard mainWindow = new Dashboard();
+						//mainWindow.setVisible(true);
+					} else {
+						// if login failed, show error
+						Messages.error(Login.this, "The e-mail and/or password is incorrect.");
+					}
+				} catch (DataAccessException ex) {
+					// if login failed, show error
+					Messages.error(Login.this, "An error occurred while trying to log in.");
+				}
 		    }
 		};
 		// Attach login action to button
