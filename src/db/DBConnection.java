@@ -114,7 +114,7 @@ public class DBConnection {
     }
 
     // Get DB connection
-    public Connection getDBCon() {
+    public Connection getConnection() {
         return con;
     }
 
@@ -159,7 +159,7 @@ public class DBConnection {
     }
 
     // Execute prepared statement and return the generated primary key
-    public int executeStatement(PreparedStatement ps) throws DataAccessException {
+    public int executeStatementReturnID(PreparedStatement ps) throws DataAccessException {
         try {
             ps.executeUpdate();
             return ps.getGeneratedKeys().getInt(1);
