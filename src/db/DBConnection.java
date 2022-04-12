@@ -23,7 +23,7 @@ public class DBConnection {
     private DBConnection() throws DataAccessException {
 
         // If properties already have been read, don't read them again
-        if (!properties.isEmpty()) {
+        if (properties.isEmpty()) {
             if (!new File(CONFIG_FILE).exists()) {
                 // If config file does not exist, create it with needed properties but no values
                 createProperties();
