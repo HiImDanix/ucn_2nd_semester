@@ -38,12 +38,10 @@ public class DBConnection {
             }
         }
 
-
         // Try loading the driver
         try {
             Class.forName(DRIVER);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
             throw new DataAccessException("Driver not found", e);
         }
 
@@ -52,6 +50,7 @@ public class DBConnection {
                         properties.getProperty("HOST"), properties.getProperty("PORT"),
                         properties.getProperty("DBNAME"));
 
+
         // Try connecting to the database
         try {
             con = java.sql.DriverManager.getConnection(url,
@@ -59,7 +58,7 @@ public class DBConnection {
             // Turn on autocommit
             con.setAutoCommit(true);
         }  catch (SQLException e) {
-            e.printStackTrace();
+            // print
             throw new DataAccessException("Error connecting to the database", e);
         }
     }
@@ -70,7 +69,6 @@ public class DBConnection {
         try {
             properties.load(new FileInputStream(CONFIG_FILE));
         } catch (IOException e) {
-            e.printStackTrace();
             throw new DataAccessException("Error reading config.properties", e);
         }
         // Check that all needed properties are set
@@ -86,7 +84,6 @@ public class DBConnection {
         try {
             properties.store(new FileOutputStream(CONFIG_FILE), null);
         } catch (IOException e) {
-            e.printStackTrace();
             throw new DataAccessException("Error creating config.properties", e);
         }
         // Fill in the properties without values
@@ -97,7 +94,6 @@ public class DBConnection {
         try {
             properties.store(new FileOutputStream(CONFIG_FILE), null);
         } catch (IOException e) {
-            e.printStackTrace();
             throw new DataAccessException("Error saving config.properties", e);
         }
     }
@@ -108,7 +104,6 @@ public class DBConnection {
             con.close();
             instance = null;
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new DataAccessException("Error closing the connection", e);
         }
     }
@@ -130,7 +125,6 @@ public class DBConnection {
         try {
             con.setAutoCommit(false);
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new DataAccessException("Error starting transaction", e);
         }
     }
@@ -141,7 +135,6 @@ public class DBConnection {
             con.commit();
             con.setAutoCommit(true);
         }  catch (SQLException e) {
-            e.printStackTrace();
             throw new DataAccessException("Error committing transaction", e);
         }
     }
@@ -153,7 +146,6 @@ public class DBConnection {
             con.setAutoCommit(true);
         }
         catch (SQLException e) {
-            e.printStackTrace();
             throw new DataAccessException("Error rolling back transaction", e);
         }
     }
@@ -165,10 +157,8 @@ public class DBConnection {
             return ps.getGeneratedKeys().getInt(1);
         }
         catch (SQLException e) {
-            e.printStackTrace();
             throw new DataAccessException("Error executing statement", e);
         }
     }
-
 
 }
