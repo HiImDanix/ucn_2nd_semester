@@ -205,8 +205,6 @@ public class Login extends JFrame {
 				// parse fields
 			    String email = txtEmail.getText().toLowerCase().trim();
 			    String password = txtPassword.getText();
-
-				System.out.println("password test: " + password);
 			    
 			    
 			    // if empty, show error
