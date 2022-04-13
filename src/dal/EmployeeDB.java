@@ -87,7 +87,7 @@ public class EmployeeDB implements EmployeeDBIF {
             ResultSet rs = selectById.executeQuery();
             employee = buildObject(rs);
         } catch (SQLException e) {
-            throw new DataAccessException("Could not get employee by email", e);
+            // empty on purpose
         }
         return employee;
     }
