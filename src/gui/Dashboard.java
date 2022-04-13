@@ -1,10 +1,6 @@
 package gui;
 
-import java.awt.BorderLayout;
-import java.awt.Cursor;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.*;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -17,6 +13,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.MatteBorder;
 
 import controller.SessionController;
 import org.knowm.xchart.XChartPanel;
@@ -162,6 +159,10 @@ public class Dashboard extends JFrame {
 			JPanel emptyPanel6 = new JPanel();
 			emptyPanel6.setBorder(new EmptyBorder(15, 0, 0, 0));
 			tabsPane.addTab("Leaving notices", null, emptyPanel6, "Manage leave notices");
+			
+			JPanel emptyPanel7 = new JPanel();
+			emptyPanel7.setBorder(new EmptyBorder(15, 0, 0, 0));
+			tabsPane.addTab("Reports", null, emptyPanel7, "View statistics");
 			
 		// Attach event handler
 		addEventHandlers();
