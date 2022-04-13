@@ -15,7 +15,7 @@ import javax.swing.JButton;
 public class JLink extends JButton {
 	private static final long serialVersionUID = -6117412042952963334L;
 	
-	String text;
+	private String text;
 
 	public JLink(String text, Color color) {
 		super(text);
@@ -49,7 +49,10 @@ public class JLink extends JButton {
 		    }
 		});
 	}
-	
+
+	/*
+	 * Create a JLink with default primary color
+	 */
 	public JLink(String text) {
 		this(text, Palette.PRIMARY.getColor());
 	}
@@ -59,7 +62,20 @@ public class JLink extends JButton {
 		super.setText(text);
 		this.text = text;
 	}
-	
 
+	@Override
+	public String getText() {
+		return text;
+	}
 
+	@Override
+	public void setEnabled(boolean enabled) {
+		super.setEnabled(enabled);
+
+		if (enabled) {
+			this.setForeground(Palette.PRIMARY.getColor());
+		} else {
+			this.setForeground(Palette.SECONDARY_GREY_LIGHT.getColor());
+		}
+	}
 }
