@@ -576,8 +576,7 @@ public class Dashboard extends JFrame {
 		btnLogout.addActionListener(e -> {
 	    	if (Messages.confirm(Dashboard.this, "Are you sure you want to log out?", "Log Out?")) {
 		    	SessionController.getInstance().logout();
-				Login frame = new Login();
-				frame.setVisible(true);
+				App.showLoginDefaultCredentials();
 		    	// free up memory by destroying the current dashboard
 		    	Dashboard.this.dispose();
 	    	}

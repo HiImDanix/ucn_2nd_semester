@@ -37,10 +37,12 @@ public class App {
 
 		// TODO: Generate some default data
 		//new GenerateDataController().generateData();
+
+		showLoginDefaultCredentials();
 		
-		// TODO: Add default employee
-		
-		// Show login window
+	}
+
+	public static void showLoginDefaultCredentials() {
 		EventQueue.invokeLater(() -> {
 			try {
 				Login frame = new Login("email@example.com", "password");
@@ -49,6 +51,5 @@ public class App {
 				e.printStackTrace();
 			}
 		});
-		
 	}
 }
