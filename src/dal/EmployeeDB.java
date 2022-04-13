@@ -73,6 +73,7 @@ public class EmployeeDB implements EmployeeDBIF {
         try {
             selectById.setInt(1, id);
             ResultSet rs = selectById.executeQuery();
+            rs.next();
             employee = buildObject(rs);
         } catch (SQLException e) {
             throw new DataAccessException("Could not get employee by id", e);
