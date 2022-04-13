@@ -1,12 +1,11 @@
 package model;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class Contract {
     private int ID;
     private boolean includeInternet;
-    private LocalDateTime startDate;
+    private LocalDateTime startDatetime;
     private Room room;
     private Tenant tenant;
     private List<RoomCondition> roomConditions;
@@ -16,7 +15,7 @@ public class Contract {
                     Room room, Tenant tenant, List<RoomCondition> roomConditions, Notification notifications) {
         this.ID = ID;
         this.includeInternet = includeInternet;
-        this.startDate = startDate;
+        this.startDatetime = startDate;
         this.room = room;
         this.tenant = tenant;
         this.roomConditions = roomConditions;
@@ -39,12 +38,12 @@ public class Contract {
         this.includeInternet = includeInternet;
     }
 
-    public LocalDateTime getStartDate() {
-        return startDate;
+    public LocalDateTime getStartDatetime() {
+        return startDatetime;
     }
 
-    public void setStartDate(LocalDateTime startDate) {
-        this.startDate = startDate;
+    public void setStartDatetime(LocalDateTime startDatetime) {
+        this.startDatetime = startDatetime;
     }
 
     public Room getRoom() {
@@ -80,7 +79,7 @@ public class Contract {
     }
 
     public String toString() {
-        return String.format("Contract (ID: %d, includeInternet: %b, startDate: %s", ID, includeInternet, startDate);
+        return String.format("Contract (ID: %d, includeInternet: %b, startDate: %s", ID, includeInternet, startDatetime);
     }
 
 }
