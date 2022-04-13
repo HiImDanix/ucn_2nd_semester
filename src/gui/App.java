@@ -21,13 +21,14 @@ public class App {
 	 */
 	public static void main(String[] args) {
 
-//		try {
-//			Connection con = DBConnection.getInstance().getDBCon();
-//		} catch (DataAccessException e) {
-//			e.printStackTrace();
-//		}
+		// Try to get database connection
+		try {
+			Connection con = DBConnection.getInstance().getConnection();
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}
 
-		// Set FlatLaf 'Look And Feel' 
+		// Set FlatLaf 'Look And Feel'  to a light theme
 		try {
 		    UIManager.setLookAndFeel( new FlatLightLaf() );
 		} catch( Exception ex ) {
@@ -38,11 +39,11 @@ public class App {
 		// TODO: Generate some default data
 		//new GenerateDataController().generateData();
 
-		showLoginDefaultCredentials();
+		showLoginDefaultWithCredentials();
 		
 	}
 
-	public static void showLoginDefaultCredentials() {
+	public static void showLoginDefaultWithCredentials() {
 		EventQueue.invokeLater(() -> {
 			try {
 				Login frame = new Login("email@example.com", "password");
