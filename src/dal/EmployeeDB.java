@@ -14,12 +14,14 @@ public class EmployeeDB implements EmployeeDBIF {
     // SQL statements
     public static final String SQL_SELECT_ALL = "SELECT * FROM employee";
     public static final String SQL_SELECT_BY_ID = "SELECT * FROM employee WHERE id = ?";
+    public static final String SQL_SELECT_BY_EMAIL = "SELECT * FROKM employee WHERE email = ?";
     public static final String SQL_INSERT = "INSERT INTO employee (first_name, last_name, email, password_hash) VALUES (?, ?, ?, ?)";
     public static final String SQL_UPDATE = "UPDATE employee SET first_name = ?, last_name = ?, email= ?, password_hash= ? WHERE id = ?";
     public static final String SQL_DELETE = "DELETE FROM employee WHERE id = ?";
     // Prepared statements
     private static PreparedStatement selectAll;
     private static PreparedStatement selectById;
+    private static PreparedStatement selectByEmail;
     private static PreparedStatement insert;
     private static PreparedStatement update;
     private static PreparedStatement delete;
@@ -36,6 +38,7 @@ public class EmployeeDB implements EmployeeDBIF {
         try {
             selectAll = db.getConnection().prepareStatement(SQL_SELECT_ALL);
             selectById = db.getConnection().prepareStatement(SQL_SELECT_BY_ID);
+            selectByEmail = db.getConnection().prepareStatement(SQL_SELECT_BY_EMAIL);
             insert = db.getConnection().prepareStatement(SQL_INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
             update = db.getConnection().prepareStatement(SQL_UPDATE);
             delete = db.getConnection().prepareStatement(SQL_DELETE);
@@ -83,8 +86,8 @@ public class EmployeeDB implements EmployeeDBIF {
     public Employee getEmployeeByEmail(String email) throws DataAccessException {
         Employee employee = null;
         try {
-            selectById.setString(1, email);
-            ResultSet rs = selectById.executeQuery();
+            selectByEmail.setString(1, email); //here
+            ResultSet rs = selectByEmail.executeQuery();
             employee = buildObject(rs);
         } catch (SQLException e) {
             // empty on purpose
