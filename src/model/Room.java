@@ -4,6 +4,7 @@ public class Room {
     private int roomID;
     private boolean isOutOfService;
     private RoomCategory roomCategory;
+    private List<RoomCondition> roomConditions;
 
     public Room(int roomID, RoomCategory roomCategory) {
         this.roomID = roomID;
