@@ -220,6 +220,9 @@ public class Login extends JFrame {
 						// if login successful, close login window
 						Login.this.dispose();
 
+						// Show success message
+						Messages.success(Login.this, "Login successful!");
+
 						// show main window
 						//Dashboard mainWindow = new Dashboard();
 						//mainWindow.setVisible(true);

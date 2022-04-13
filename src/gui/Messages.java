@@ -69,6 +69,20 @@ public class Messages {
 		Messages.info(null, message, title);
 	}
 
+	public static void success(Component component, String message, String title) {
+		JOptionPane.showMessageDialog(component, message, title, JOptionPane.INFORMATION_MESSAGE);
+	}
+
+	public static void success(Component component, String message) {
+		Messages.success(component, message, "Success");
+	}
+
+	public static void success(String message, String title) {
+		Messages.success(null, message, title);
+	}
+
+
+
 
 
 }
