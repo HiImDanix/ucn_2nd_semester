@@ -204,7 +204,10 @@ public class Login extends JFrame {
 		    {
 				// parse fields
 			    String email = txtEmail.getText().toLowerCase().trim();
-			    String password = txtPassword.getPassword().toString();
+			    String password = txtPassword.getText();
+
+				System.out.println("password test: " + password);
+			    
 			    
 			    // if empty, show error
 			    if (email.isEmpty() || password.isEmpty()) {
@@ -213,7 +216,7 @@ public class Login extends JFrame {
 			    }
 
 				SessionController session = SessionController.getInstance();
-
+				
 				// Log in
 				try {
 					if (session.authenticate(email, password)) {
