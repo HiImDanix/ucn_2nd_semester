@@ -58,12 +58,13 @@ public class DBConnection {
             // Turn on autocommit
             con.setAutoCommit(true);
         }  catch (SQLException e) {
-            // print
             throw new DataAccessException("Error connecting to the database", e);
         }
     }
 
-    // Read config properties from config file
+    /*
+     * Read properties from config file
+     */
     private static void readProperties() throws DataAccessException {
         // Read properties from config file
         try {
@@ -79,7 +80,9 @@ public class DBConnection {
         }
     }
 
-    // Create config file with default properties but no values
+    /*
+     * Create a new config file with default properties but no values
+     */
     private static void createProperties() throws DataAccessException {
         try {
             properties.store(new FileOutputStream(CONFIG_FILE), null);
@@ -98,7 +101,9 @@ public class DBConnection {
         }
     }
 
-    // Close the connection
+    /*
+     * Close the connection to the database
+     */
     public void closeConnection() throws DataAccessException {
         try {
             con.close();
@@ -108,11 +113,16 @@ public class DBConnection {
         }
     }
 
-    // Get DB connection
+    /*
+     * Get the database's Connection object
+     */
     public Connection getConnection() {
         return con;
     }
 
+    /*
+     * Singleton pattern
+     */
     public static synchronized DBConnection getInstance() throws DataAccessException {
         if (instance == null) {
             instance = new DBConnection();
@@ -120,7 +130,9 @@ public class DBConnection {
         return instance;
     }
 
-    // start transaction
+    /*
+     * Start transaction
+     */
     public void startTransaction() throws DataAccessException {
         try {
             con.setAutoCommit(false);
@@ -129,7 +141,9 @@ public class DBConnection {
         }
     }
 
-    // commit transaction
+    /*
+     * commit transaction
+     */
     public void commitTransaction() throws DataAccessException {
         try {
             con.commit();
@@ -139,7 +153,9 @@ public class DBConnection {
         }
     }
 
-    // rollback transaction
+    /*
+     * Rollback transaction
+     */
     public void rollbackTransaction() throws DataAccessException {
         try {
             con.rollback();
@@ -151,6 +167,15 @@ public class DBConnection {
     }
 
     // Execute prepared statement and return the generated primary key
+
+    /**
+     * Execute a prepared statement and return the generated primary key
+     * @param ps Prepared statement that has been prepared with RETURN_GENERATED_KEYS enabled.
+     *
+     * @return The generated primary key
+     *
+     * @throws DataAccessException If an error occurs during the execution of the statement
+     */
     public int executeStatementReturnID(PreparedStatement ps) throws DataAccessException {
         try {
             ps.executeUpdate();

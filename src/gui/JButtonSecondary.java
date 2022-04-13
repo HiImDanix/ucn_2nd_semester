@@ -19,5 +19,4 @@ public class JButtonSecondary extends JButton {
         super.setMargin(new Insets(5, 15, 5, 15));
     }
     
-    
 }

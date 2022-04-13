@@ -3,6 +3,7 @@ package gui;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 
 /**
@@ -30,13 +31,21 @@ public class Common {
         return LocalDate.parse(dateString, formatter);
     }
 
+    /**
+     * Convert string to date time.
+     *
+     * @param dateTimeString the date time string
+     * @return localDateTime the parsed data
+     *
+     * @throws DateTimeParseException when there is an error parsing the date
+     */
     public static LocalDateTime stringToDateTime(String dateTimeString) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATETIME_FORMAT);
         return LocalDateTime.parse(dateTimeString, formatter);
     }
 
     /**
-     * Converts a LocalDate object to String
+     * Convert a LocalDate object to String
      *
      * @param date the date
      * @return the string
@@ -46,7 +55,7 @@ public class Common {
     }
 
     /**
-     * Converts a LocalDateTime object to String
+     * Convert a LocalDateTime object to String
      *
      * @param dateTime the date time
      * @return the string
@@ -56,7 +65,7 @@ public class Common {
     }
 
     /**
-     * Gets the date format.
+     * Get the date format.
      *
      * @return the date format
      */
@@ -65,12 +74,11 @@ public class Common {
     }
     
     /**
-     * Gets the date time format.
+     * Get the date time format.
      *
      * @return the date time format
      */
     public static String getDateTimeFormat() {
         return DATETIME_FORMAT.toLowerCase();
     }
-
 }
