@@ -12,11 +12,11 @@ import model.Employee;
 
 public class EmployeeDB implements EmployeeDBIF {
     // SQL statements
-    public static final String SQL_SELECT_ALL = "SELECT * FROM Employee";
-    public static final String SQL_SELECT_BY_ID = "SELECT * FROM Employee WHERE id = ?";
-    public static final String SQL_INSERT = "INSERT INTO Employee (first_name, last_name, email, passwordHash) VALUES (?, ?, ?, ?)";
-    public static final String SQL_UPDATE = "UPDATE Employee SET first_name = ?, last_name = ?, email= ?, passwordHash= ? WHERE id = ?";
-    public static final String SQL_DELETE = "DELETE FROM Employee WHERE id = ?";
+    public static final String SQL_SELECT_ALL = "SELECT * FROM employee";
+    public static final String SQL_SELECT_BY_ID = "SELECT * FROM employee WHERE id = ?";
+    public static final String SQL_INSERT = "INSERT INTO employee (first_name, last_name, email, passwordHash) VALUES (?, ?, ?, ?)";
+    public static final String SQL_UPDATE = "UPDATE employee SET first_name = ?, last_name = ?, email= ?, passwordHash= ? WHERE id = ?";
+    public static final String SQL_DELETE = "DELETE FROM employee WHERE id = ?";
     // Prepared statements
     private static PreparedStatement selectAll;
     private static PreparedStatement selectById;
