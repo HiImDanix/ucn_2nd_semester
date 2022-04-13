@@ -9,10 +9,10 @@ public class RoomCondition {
     private String imagePath;
     private Contract contract;
 
-    private boolean objectsRetrieved = false;
+    private boolean fullObjectRetrieved = false;
 
     public RoomCondition(int ID, String description, LocalDateTime datetimeTaken, String imagePath, Contract contract) {
-        objectsRetrieved = true;
+        fullObjectRetrieved = true;
 
         this.ID = ID;
         this.description = description;
@@ -25,8 +25,8 @@ public class RoomCondition {
         this(ID, description, datetimeTaken, imagePath, null);
     }
 
-    public boolean isObjectsRetrieved() {
-        return objectsRetrieved;
+    public boolean isfullObjectRetrieved() {
+        return fullObjectRetrieved;
     }
 
     public int getId() {

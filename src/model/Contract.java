@@ -12,7 +12,7 @@ public class Contract {
     private List<RoomCondition> roomConditions;
     private Notification notifications;
 
-    private boolean objectsRetrieved = false;
+    private boolean fullObjectRetrieved = false;
 
     public Contract(int ID, boolean includeInternet, LocalDateTime startDate,
                     Room room, Tenant tenant, List<RoomCondition> roomConditions, Notification notifications) {
@@ -24,7 +24,7 @@ public class Contract {
         this.roomConditions = roomConditions;
         this.notifications = notifications;
 
-        objectsRetrieved = true;
+        fullObjectRetrieved = true;
     }
 
     public Contract(int ID, boolean includeInternet, LocalDateTime startDate) {
@@ -87,8 +87,8 @@ public class Contract {
         this.notifications = notifications;
     }
 
-    public boolean isObjectsRetrieved() {
-        return objectsRetrieved;
+    public boolean isfullObjectRetrieved() {
+        return fullObjectRetrieved;
     }
 
     @Override

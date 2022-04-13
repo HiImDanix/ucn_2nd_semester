@@ -9,10 +9,10 @@ public abstract class Notification {
     private LocalDateTime createdAt;
     private Contract contract;
 
-    private boolean objectsRetrieved = false;
+    private boolean fullObjectRetrieved = false;
 
     public Notification(int id, String title, String content, LocalDateTime createdAt, Contract contract) {
-        objectsRetrieved = true;
+        fullObjectRetrieved = true;
 
         this.id = id;
         this.title = title;
@@ -28,8 +28,8 @@ public abstract class Notification {
     // Send notification to the user
     public abstract void send();
 
-    public boolean isObjectsRetrieved() {
-        return objectsRetrieved;
+    public boolean isfullObjectRetrieved() {
+        return fullObjectRetrieved;
     }
 
     public int getId() {

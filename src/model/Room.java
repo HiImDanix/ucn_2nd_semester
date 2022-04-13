@@ -8,10 +8,10 @@ public class Room {
     private RoomCategory roomCategory;
     private List<RoomCondition> roomConditions;
 
-    private boolean objectsRetrieved = false;
+    private boolean fullObjectRetrieved = false;
 
     public Room(int roomID, RoomCategory roomCategory, boolean isOutOfService, List<RoomCondition> roomConditions) {
-        objectsRetrieved = true;
+        fullObjectRetrieved = true;
 
         this.roomID = roomID;
         this.roomCategory = roomCategory;
@@ -23,8 +23,8 @@ public class Room {
         this(roomID, roomCategory, isOutOfService, null);
     }
 
-    public boolean isObjectsRetrieved() {
-        return objectsRetrieved;
+    public boolean isfullObjectRetrieved() {
+        return fullObjectRetrieved;
     }
 
     public int getRoomID() {

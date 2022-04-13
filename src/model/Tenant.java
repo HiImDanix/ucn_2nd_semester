@@ -6,6 +6,20 @@ public class Tenant {
     private String lastName;
     private String email;
     private String phone;
+    private StudyProof studyProof;
+
+    private boolean fullObjectRetrieved = false;
+
+    public Tenant(int id, String firstName, String lastName, String email, String phone, StudyProof studyProof) {
+        this.fullObjectRetrieved = true;
+
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phone = phone;
+        this.studyProof = studyProof;
+    }
 
     public Tenant(int id, String firstName, String lastName, String email, String phone) {
         this.id = id;
@@ -13,6 +27,10 @@ public class Tenant {
         this.lastName = lastName;
         this.email = email;
         this.phone = phone;
+    }
+
+    public boolean isFullObjectRetrieved() {
+        return this.fullObjectRetrieved;
     }
 
     public int getId() {
