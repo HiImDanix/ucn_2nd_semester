@@ -14,11 +14,6 @@ public class Contract {
 
     public Contract(int ID, boolean includeInternet, LocalDateTime startDate,
                     Room room, Tenant tenant, List<RoomCondition> roomConditions, Notification notifications) {
-
-        if (startDate == null || room == null || tenant == null || roomConditions == null || notifications == null) {
-            throw new IllegalArgumentException("Contract cannot be created with null parameters");
-        }
-
         this.ID = ID;
         this.includeInternet = includeInternet;
         this.startDate = startDate;

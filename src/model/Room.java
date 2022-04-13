@@ -6,10 +6,6 @@ public class Room {
     private RoomCategory roomCategory;
 
     public Room(int roomID, RoomCategory roomCategory) {
-        if (roomCategory == null) {
-            throw new IllegalArgumentException("Room category cannot be null");
-        }
-
         this.roomID = roomID;
         this.roomCategory = roomCategory;
         this.isOutOfService = false;
