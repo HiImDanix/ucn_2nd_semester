@@ -1,6 +1,7 @@
 package model;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class RoomCategory {
     private int id;
@@ -13,6 +14,13 @@ public class RoomCategory {
     private List<Furniture> furniture;
 
     public RoomCategory(int id, String name, String description, BigDecimal pricePerMonth, BigDecimal PricePerMonthForInternet, BigDecimal pricePerMonthForExtraTenant, int maxTenants, List<Furniture> furniture) {
+        if (pricePerMonth.compareTo(BigDecimal.ZERO) < 0 || PricePerMonthForInternet.compareTo(BigDecimal.ZERO) < 0 || pricePerMonthForExtraTenant.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("Price cannot be negative");
+        }
+        if (maxTenants < 0) {
+            throw new IllegalArgumentException("Max tenants cannot be negative");
+        }
+
         this.id = id;
         this.name = name;
         this.description = description;
