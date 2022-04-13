@@ -221,12 +221,9 @@ public class Login extends JFrame {
 						// if login successful, close login window
 						Login.this.dispose();
 
-						// Show success message
-						Messages.success(Login.this, "Login successful!");
-
 						// show main window
-						//Dashboard mainWindow = new Dashboard();
-						//mainWindow.setVisible(true);
+						Dashboard mainWindow = new Dashboard();
+						mainWindow.setVisible(true);
 					} else {
 						// if login failed, show error
 						Messages.error(Login.this, "The e-mail and/or password is incorrect.");
