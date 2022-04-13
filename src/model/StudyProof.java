@@ -60,7 +60,8 @@ public class StudyProof {
     }
 
     public String toString() {
-        return "StudyProof{" + "id=" + id + ", documentPath=" + documentPath + ", studentUntilDate=" + studentUntilDate + ", institution=" + institution + '}';
+        return "StudyProof{" + "id=" + id + ", documentPath=" + documentPath
+                + ", studentUntilDate=" + studentUntilDate + ", institution=" + institution + '}';
     }
 
 }

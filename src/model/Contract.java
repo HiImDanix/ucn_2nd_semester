@@ -11,11 +11,13 @@ public class Contract {
     private Tenant tenant;
     private List<RoomCondition> roomConditions;
     private Notification notifications;
+    private LeaveNotice leaveNotice;
 
     private boolean fullObjectRetrieved = false;
 
     public Contract(int ID, boolean includeInternet, LocalDateTime startDate,
-                    Room room, Tenant tenant, List<RoomCondition> roomConditions, Notification notifications) {
+                    Room room, Tenant tenant, List<RoomCondition> roomConditions,
+                    Notification notifications, LeaveNotice leaveNotice) {
         this.ID = ID;
         this.includeInternet = includeInternet;
         this.startDatetime = startDate;
@@ -23,12 +25,21 @@ public class Contract {
         this.tenant = tenant;
         this.roomConditions = roomConditions;
         this.notifications = notifications;
+        this.leaveNotice = leaveNotice;
 
         fullObjectRetrieved = true;
     }
 
     public Contract(int ID, boolean includeInternet, LocalDateTime startDate) {
-        this(ID, includeInternet, startDate, null, null, null, null);
+        this(ID, includeInternet, startDate, null, null, null, null, null);
+    }
+
+    public LeaveNotice getLeaveNotice() {
+        return leaveNotice;
+    }
+
+    public void setLeaveNotice(LeaveNotice leaveNotice) {
+        this.leaveNotice = leaveNotice;
     }
 
     public int getID() {
@@ -101,6 +112,7 @@ public class Contract {
                 ", tenant=" + tenant +
                 ", roomConditions=" + roomConditions +
                 ", notifications=" + notifications +
+                ", leaveNotice=" + leaveNotice +
                 '}';
     }
 

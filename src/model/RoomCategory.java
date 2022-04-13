@@ -1,6 +1,7 @@
 package model;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 public class RoomCategory {
@@ -12,12 +13,16 @@ public class RoomCategory {
     private BigDecimal pricePerMonthForExtraTenant;
     private int maxTenants;
     private List<Furniture> furniture;
+    private int leaveNoticeDays;
 
     private boolean fullObjectRetrieved = false;
 
-    public RoomCategory(int id, String name, String description, BigDecimal pricePerMonth, BigDecimal PricePerMonthForInternet, BigDecimal pricePerMonthForExtraTenant, int maxTenants, List<Furniture> furniture) {
+    public RoomCategory(int id, String name, String description, BigDecimal pricePerMonth, BigDecimal PricePerMonthForInternet, BigDecimal pricePerMonthForExtraTenant, int maxTenants, int leaveNoticeDays, List<Furniture> furniture) {
         if (pricePerMonth.compareTo(BigDecimal.ZERO) < 0 || PricePerMonthForInternet.compareTo(BigDecimal.ZERO) < 0 || pricePerMonthForExtraTenant.compareTo(BigDecimal.ZERO) < 0) {
             throw new IllegalArgumentException("Price cannot be negative");
+        }
+        if (leaveNoticeDays < 0) {
+            throw new IllegalArgumentException("Leave notice days cannot be negative");
         }
         if (maxTenants < 0) {
             throw new IllegalArgumentException("Max tenants cannot be negative");
@@ -31,12 +36,13 @@ public class RoomCategory {
         this.pricePerMonthForExtraTenant = pricePerMonthForExtraTenant;
         this.maxTenants = maxTenants;
         this.furniture = furniture;
+        this.leaveNoticeDays = leaveNoticeDays;
 
         this.fullObjectRetrieved = true;
     }
 
-    public RoomCategory(int id, String name, String description, BigDecimal pricePerMonth, BigDecimal PricePerMonthForInternet, BigDecimal pricePerMonthForExtraTenant, int maxTenants) {
-        this(id, name, description, pricePerMonth, PricePerMonthForInternet, pricePerMonthForExtraTenant, maxTenants, null);
+    public RoomCategory(int id, String name, String description, BigDecimal pricePerMonth, BigDecimal PricePerMonthForInternet, BigDecimal pricePerMonthForExtraTenant, int maxTenants, int leaveNoticeDays) {
+        this(id, name, description, pricePerMonth, PricePerMonthForInternet, pricePerMonthForExtraTenant, maxTenants, leaveNoticeDays, null);
     }
 
     public boolean isfullObjectRetrieved() {
@@ -107,6 +113,14 @@ public class RoomCategory {
         this.furniture = furniture;
     }
 
+    public int getLeaveNoticeDays() {
+        return leaveNoticeDays;
+    }
+
+    public void setLeaveNoticeDays(int leaveNoticeDays) {
+        this.leaveNoticeDays = leaveNoticeDays;
+    }
+
     @Override
     public String toString() {
         return "RoomCategory{" +
@@ -118,6 +132,7 @@ public class RoomCategory {
                 ", pricePerMonthForExtraTenant=" + pricePerMonthForExtraTenant +
                 ", maxTenants=" + maxTenants +
                 ", furniture=" + furniture +
+                ", leaveNoticeDays=" + leaveNoticeDays +
                 '}';
     }
 }
