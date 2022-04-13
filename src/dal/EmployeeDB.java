@@ -2,6 +2,7 @@ package dal;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +15,7 @@ public class EmployeeDB implements EmployeeDBIF {
     // SQL statements
     public static final String SQL_SELECT_ALL = "SELECT * FROM employee";
     public static final String SQL_SELECT_BY_ID = "SELECT * FROM employee WHERE id = ?";
-    public static final String SQL_SELECT_BY_EMAIL = "SELECT * FROM employee WHERE email = ?";
+    public static final String SQL_SELECT_BY_EMAIL = "SELECT * FROM employee WHERE email = ? ";
     public static final String SQL_INSERT = "INSERT INTO employee (first_name, last_name, email, password_hash) VALUES (?, ?, ?, ?)";
     public static final String SQL_UPDATE = "UPDATE employee SET first_name = ?, last_name = ?, email= ?, password_hash= ? WHERE id = ?";
     public static final String SQL_DELETE = "DELETE FROM employee WHERE id = ?";
@@ -86,8 +87,9 @@ public class EmployeeDB implements EmployeeDBIF {
     public Employee getEmployeeByEmail(String email) throws DataAccessException {
         Employee employee = null;
         try {
-            selectByEmail.setString(1, email); //here
+            selectByEmail.setString(1, email);
             ResultSet rs = selectByEmail.executeQuery();
+            rs.next();
             employee = buildObject(rs);
         } catch (SQLException e) {
             // empty on purpose
@@ -163,7 +165,7 @@ public class EmployeeDB implements EmployeeDBIF {
                 rs.getString("first_name"),
                 rs.getString("last_name"),
                 rs.getString("email"),
-                rs.getString("passwordHash")
+                rs.getString("password_hash")
         );
         return employee;
     }
