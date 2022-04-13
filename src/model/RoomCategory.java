@@ -13,6 +13,8 @@ public class RoomCategory {
     private int maxTenants;
     private List<Furniture> furniture;
 
+    private boolean objectsRetrieved = false;
+
     public RoomCategory(int id, String name, String description, BigDecimal pricePerMonth, BigDecimal PricePerMonthForInternet, BigDecimal pricePerMonthForExtraTenant, int maxTenants, List<Furniture> furniture) {
         if (pricePerMonth.compareTo(BigDecimal.ZERO) < 0 || PricePerMonthForInternet.compareTo(BigDecimal.ZERO) < 0 || pricePerMonthForExtraTenant.compareTo(BigDecimal.ZERO) < 0) {
             throw new IllegalArgumentException("Price cannot be negative");
@@ -29,6 +31,16 @@ public class RoomCategory {
         this.pricePerMonthForExtraTenant = pricePerMonthForExtraTenant;
         this.maxTenants = maxTenants;
         this.furniture = furniture;
+
+        this.objectsRetrieved = true;
+    }
+
+    public RoomCategory(int id, String name, String description, BigDecimal pricePerMonth, BigDecimal PricePerMonthForInternet, BigDecimal pricePerMonthForExtraTenant, int maxTenants) {
+        this(id, name, description, pricePerMonth, PricePerMonthForInternet, pricePerMonthForExtraTenant, maxTenants, null);
+    }
+
+    public boolean isObjectsRetrieved() {
+        return objectsRetrieved;
     }
 
     public int getId() {
@@ -93,5 +105,19 @@ public class RoomCategory {
 
     public void setFurniture(List<Furniture> furniture) {
         this.furniture = furniture;
+    }
+
+    @Override
+    public String toString() {
+        return "RoomCategory{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", pricePerMonth=" + pricePerMonth +
+                ", PricePerMonthForInternet=" + PricePerMonthForInternet +
+                ", pricePerMonthForExtraTenant=" + pricePerMonthForExtraTenant +
+                ", maxTenants=" + maxTenants +
+                ", furniture=" + furniture +
+                '}';
     }
 }

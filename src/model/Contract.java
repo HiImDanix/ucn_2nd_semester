@@ -12,6 +12,8 @@ public class Contract {
     private List<RoomCondition> roomConditions;
     private Notification notifications;
 
+    private boolean objectsRetrieved = false;
+
     public Contract(int ID, boolean includeInternet, LocalDateTime startDate,
                     Room room, Tenant tenant, List<RoomCondition> roomConditions, Notification notifications) {
         this.ID = ID;
@@ -21,6 +23,12 @@ public class Contract {
         this.tenant = tenant;
         this.roomConditions = roomConditions;
         this.notifications = notifications;
+
+        objectsRetrieved = true;
+    }
+
+    public Contract(int ID, boolean includeInternet, LocalDateTime startDate) {
+        this(ID, includeInternet, startDate, null, null, null, null);
     }
 
     public int getID() {
@@ -79,8 +87,21 @@ public class Contract {
         this.notifications = notifications;
     }
 
+    public boolean isObjectsRetrieved() {
+        return objectsRetrieved;
+    }
+
+    @Override
     public String toString() {
-        return String.format("Contract (ID: %d, includeInternet: %b, startDate: %s", ID, includeInternet, startDatetime);
+        return "Contract{" +
+                "ID=" + ID +
+                ", includeInternet=" + includeInternet +
+                ", startDatetime=" + startDatetime +
+                ", room=" + room +
+                ", tenant=" + tenant +
+                ", roomConditions=" + roomConditions +
+                ", notifications=" + notifications +
+                '}';
     }
 
 }

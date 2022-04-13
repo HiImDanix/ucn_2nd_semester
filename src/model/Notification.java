@@ -9,7 +9,11 @@ public abstract class Notification {
     private LocalDateTime createdAt;
     private Contract contract;
 
+    private boolean objectsRetrieved = false;
+
     public Notification(int id, String title, String content, LocalDateTime createdAt, Contract contract) {
+        objectsRetrieved = true;
+
         this.id = id;
         this.title = title;
         this.content = content;
@@ -17,8 +21,16 @@ public abstract class Notification {
         this.contract = contract;
     }
 
+    public Notification(int id, String title, String content, LocalDateTime createdAt) {
+        this(id, title, content, createdAt, null);
+    }
+
     // Send notification to the user
     public abstract void send();
+
+    public boolean isObjectsRetrieved() {
+        return objectsRetrieved;
+    }
 
     public int getId() {
         return id;
@@ -58,5 +70,10 @@ public abstract class Notification {
 
     public void setContract(Contract contract) {
         this.contract = contract;
+    }
+
+    @Override
+    public String toString() {
+        return "Notification{" + "id=" + id + ", title=" + title + ", content=" + content + ", createdAt=" + createdAt + ", contract=" + contract + '}';
     }
 }

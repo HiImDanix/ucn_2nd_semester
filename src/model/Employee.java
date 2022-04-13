@@ -64,6 +64,12 @@ public class Employee {
 
     @Override
     public String toString() {
-        return String.format("Employee[id=%d, firstName='%s', lastName='%s', email='%s', passwordHash='%s']", id, firstName, lastName, email, passwordHash);
+        return "Employee{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", passwordHash='" + passwordHash + '\'' +
+                '}';
     }
 }

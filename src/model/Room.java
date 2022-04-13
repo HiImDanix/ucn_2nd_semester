@@ -1,15 +1,30 @@
 package model;
 
+import java.util.List;
+
 public class Room {
     private int roomID;
     private boolean isOutOfService;
     private RoomCategory roomCategory;
     private List<RoomCondition> roomConditions;
 
-    public Room(int roomID, RoomCategory roomCategory) {
+    private boolean objectsRetrieved = false;
+
+    public Room(int roomID, RoomCategory roomCategory, boolean isOutOfService, List<RoomCondition> roomConditions) {
+        objectsRetrieved = true;
+
         this.roomID = roomID;
         this.roomCategory = roomCategory;
-        this.isOutOfService = false;
+        this.isOutOfService = isOutOfService;
+        this.roomConditions = roomConditions;
+    }
+
+    public Room(int roomID, RoomCategory roomCategory, boolean isOutOfService) {
+        this(roomID, roomCategory, isOutOfService, null);
+    }
+
+    public boolean isObjectsRetrieved() {
+        return objectsRetrieved;
     }
 
     public int getRoomID() {
@@ -36,8 +51,22 @@ public class Room {
         this.roomCategory = roomCategory;
     }
 
+    public List<RoomCondition> getRoomConditions() {
+        return roomConditions;
+    }
+
+    public void setRoomConditions(List<RoomCondition> roomConditions) {
+        this.roomConditions = roomConditions;
+    }
+
+    @Override
     public String toString() {
-        return "Room ID: " + this.roomID + " - " + this.roomCategory.toString();
+        return "Room{" +
+                "roomID=" + roomID +
+                ", isOutOfService=" + isOutOfService +
+                ", roomCategory=" + roomCategory +
+                ", roomConditions=" + roomConditions +
+                '}';
     }
 }
 
