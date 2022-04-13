@@ -6,11 +6,11 @@ public class StudyProof {
     private int id;
     private String documentPath;
     private LocalDateTime studentUntilDate;
-    private Insstitution institution;
+    private Institution institution;
 
     private boolean fullObjectRetrieved = false;
 
-    public StudyProof(int id, String documentPath, LocalDateTime studentUntilDate, Insstitution institution) {
+    public StudyProof(int id, String documentPath, LocalDateTime studentUntilDate, Institution institution) {
         this.id = id;
         this.documentPath = documentPath;
         this.studentUntilDate = studentUntilDate;
@@ -47,16 +47,20 @@ public class StudyProof {
         this.studentUntilDate = studentUntilDate;
     }
 
-    public Insstitution getInstitution() {
+    public Institution getInstitution() {
         return institution;
     }
 
-    public void setInstitution(Insstitution institution) {
+    public void setInstitution(Institution institution) {
         this.institution = institution;
     }
 
     public boolean isFullObjectRetrieved() {
         return fullObjectRetrieved;
     }
-    
+
+    public String toString() {
+        return "StudyProof{" + "id=" + id + ", documentPath=" + documentPath + ", studentUntilDate=" + studentUntilDate + ", institution=" + institution + '}';
+    }
+
 }
