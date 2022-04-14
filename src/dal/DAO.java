@@ -157,4 +157,15 @@ public abstract class DAO<T> {
             throw new DataAccessException("Could not get all " + getTableName(), e);
         }
     }
+
+    public List<T> getAllByField(String field, String value) throws DataAccessException {
+        try (Connection conn = DBConnection.getInstance().getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement(getQuerySelectByField(field));
+            stmt.setString(1, value);
+            ResultSet resultSet = stmt.executeQuery();
+            return buildDomainObjects(resultSet);
+        } catch (SQLException e) {
+            throw new DataAccessException("Could not get all " + getTableName(), e);
+        }
+    }
 }
