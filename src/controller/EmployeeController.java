@@ -23,7 +23,7 @@ public class EmployeeController {
     public Employee addEmployee(String firstName, String lastName, String email, String password) throws DataAccessException {
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
         Employee employee = new Employee(firstName, lastName, email, hashedPassword);
-        employeeDB.addEmployee(employee);
+        employeeDB.add(employee);
         return employee;
     }
 
@@ -31,14 +31,14 @@ public class EmployeeController {
      * Get employee by email
      */
     public Employee getEmployeeByEmail(String email) throws DataAccessException {
-        return employeeDB.getEmployeeByEmail(email);
+        return employeeDB.getByEmail(email);
     }
 
     /*
      * Get employee by id
      */
     public Employee getEmployeeById(int id) throws DataAccessException {
-        return employeeDB.getEmployeeById(id);
+        return employeeDB.getById(id);
     }
 
     /*
@@ -48,7 +48,7 @@ public class EmployeeController {
         String oldFirstName = employee.getFirstName();
         try {
             employee.setFirstName(firstName);
-            employeeDB.updateEmployee(employee);
+            employeeDB.update(employee);
         } catch (DataAccessException e) {
             employee.setFirstName(oldFirstName);
             throw new DataAccessException("Error updating employee's first name");
@@ -62,7 +62,7 @@ public class EmployeeController {
         String oldLastName = employee.getLastName();
         try {
             employee.setLastName(lastName);
-            employeeDB.updateEmployee(employee);
+            employeeDB.update(employee);
         } catch (DataAccessException e) {
             employee.setLastName(oldLastName);
             throw new DataAccessException("Error updating employee's last name");
@@ -76,7 +76,7 @@ public class EmployeeController {
         String oldEmail = employee.getEmail();
         try {
             employee.setEmail(email);
-            employeeDB.updateEmployee(employee);
+            employeeDB.update(employee);
         } catch (DataAccessException e) {
             employee.setEmail(oldEmail);
             throw new DataAccessException("Error updating employee's email");
@@ -91,7 +91,7 @@ public class EmployeeController {
         try {
             String newPasswordHash = BCrypt.hashpw(password, BCrypt.gensalt());
             employee.setPasswordHash(newPasswordHash);
-            employeeDB.updateEmployee(employee);
+            employeeDB.update(employee);
         } catch (DataAccessException e) {
             employee.setPasswordHash(oldPasswordHash);
             throw new DataAccessException("Error updating employee's password");
@@ -102,13 +102,13 @@ public class EmployeeController {
      * Delete employee
      */
     public void deleteEmployee(Employee employee) throws DataAccessException {
-        employeeDB.deleteEmployee(employee);
+        employeeDB.delete(employee);
     }
 
     /*
      * Get all employees
      */
     public List<Employee> getAllEmployees() throws DataAccessException {
-        return employeeDB.getAllEmployees();
+        return employeeDB.getAll();
     }
 }

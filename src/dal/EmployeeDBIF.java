@@ -9,31 +9,31 @@ public interface EmployeeDBIF {
     /*
      * Get employee by id
      */
-    Employee getEmployeeById(int id) throws DataAccessException;
+    Employee getById(int id) throws DataAccessException;
 
     /*
      * Get employee by email
      */
-    Employee getEmployeeByEmail(String email) throws DataAccessException;
+    Employee getByEmail(String email) throws DataAccessException;
 
     /*
      * Insert employee
      */
-    void addEmployee(Employee employee) throws DataAccessException;
+    void add(Employee employee) throws DataAccessException;
 
     /*
      * Update employee
      */
-    void updateEmployee(Employee employee) throws DataAccessException;
+    void update(Employee employee) throws DataAccessException;
 
     /*
      * Delete employee
      */
-    void deleteEmployee(Employee employee) throws DataAccessException;
+    void delete(Employee employee) throws DataAccessException;
 
     /*
      * Get all employees
      */
-    List<Employee> getAllEmployees() throws DataAccessException;
+    List<Employee> getAll() throws DataAccessException;
 
 }

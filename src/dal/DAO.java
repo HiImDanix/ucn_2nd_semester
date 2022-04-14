@@ -33,21 +33,21 @@ public abstract class DAO<T> {
     }
 
     // Fields for building SQL statements
-    public String getInsertFields() {
+    protected String getInsertFields() {
         StringBuilder sb = new StringBuilder();
         for (String field : getFields()) {
             sb.append(field).append(", ");
         }
         return sb.toString().substring(0, sb.length() - 2); // Remove last ", "
     }
-    public String getInsertValues() {
+    protected String getInsertValues() {
         StringBuilder sb = new StringBuilder();
         for (String field : getFields()) {
             sb.append("?, ");
         }
         return sb.toString().substring(0, sb.length() - 2); // Remove last ", "
     }
-    public String getUpdateFields() {
+    protected String getUpdateFields() {
         StringBuilder sb = new StringBuilder();
         for (String field : getFields()) {
             sb.append(field).append(" = ?, ");
@@ -76,12 +76,12 @@ public abstract class DAO<T> {
     }
 
     // Methods for setting values in prepared statements
-    public abstract void setValues(PreparedStatement stmt, T obj) throws SQLException;
-    public abstract void setValues(PreparedStatement stmt, int id) throws SQLException;
+    protected abstract void setValues(PreparedStatement stmt, T obj) throws SQLException;
+    protected abstract void setValues(PreparedStatement stmt, int id) throws SQLException;
 
     // Methods for building objects from ResultSet
-    public abstract T buildDomainObject(ResultSet resultSet) throws SQLException;
-    public List<T> buildDomainObjects(ResultSet resultSet) throws SQLException {
+    protected abstract T buildDomainObject(ResultSet resultSet) throws SQLException;
+    protected List<T> buildDomainObjects(ResultSet resultSet) throws SQLException {
         List<T> list = new ArrayList<>();
         while (resultSet.next()) {
             list.add(buildDomainObject(resultSet));
@@ -90,7 +90,7 @@ public abstract class DAO<T> {
     }
 
     // CRUD methods
-    public void create(T obj) throws DataAccessException {
+    public void add(T obj) throws DataAccessException {
         try (Connection conn = DBConnection.getInstance().getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(getQueryCreate());
             setValues(stmt, obj);
@@ -119,6 +119,9 @@ public abstract class DAO<T> {
             throw new DataAccessException("Could not delete " + getTableName(), e);
         }
     }
+
+    // delete by object
+
 
     public T getById(int id) throws DataAccessException {
         try (Connection conn = DBConnection.getInstance().getConnection()) {

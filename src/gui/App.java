@@ -47,6 +47,7 @@ public class App {
 		EventQueue.invokeLater(() -> {
 			try {
 				Login frame = new Login("email@example.com", "password");
+
 				frame.setVisible(true);
 			} catch (Exception e) {
 				e.printStackTrace();

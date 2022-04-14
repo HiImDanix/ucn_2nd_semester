@@ -6,12 +6,11 @@ import model.Employee;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 public class EmployeeDB extends DAO<Employee> implements EmployeeDBIF {
     public static final String tableName = "employee";
     public static final String[] columnNames = new String[]
-            {"id", "first_name", "last_name", "email", "password_hash"}; // order matters!
+            {"id", "first_name", "last_name", "email", "password_hash"}; // order matters (for down the code)
 
     public EmployeeDB() {
         super(tableName, columnNames);
@@ -43,34 +42,14 @@ public class EmployeeDB extends DAO<Employee> implements EmployeeDBIF {
 
     }
 
-    @Override
-    public Employee getEmployeeById(int id) throws DataAccessException {
-        return super.getById(id);
+    public Employee getByEmail(String email) throws DataAccessException {
+        return super.getByField(columnNames[3], email);
     }
 
-    @Override
-    public void addEmployee(Employee employee) throws DataAccessException {
-        super.create(employee);
-    }
-
-    @Override
-    public void updateEmployee(Employee employee) throws DataAccessException {
-        super.update(employee);
-    }
-
-    @Override
-    public void deleteEmployee(Employee employee) throws DataAccessException {
+    public void delete(Employee employee) throws DataAccessException {
         super.delete(employee.getId());
     }
 
-    @Override
-    public List<Employee> getAllEmployees() throws DataAccessException {
-        return super.getAll();
-    }
 
-    @Override
-    public Employee getEmployeeByEmail(String email) throws DataAccessException {
-        return super.getByField(columnNames[3], email);
-    }
 
 }
