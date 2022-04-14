@@ -115,7 +115,7 @@ public class Dashboard extends JFrame {
 				gbc_lblGreeting.gridy = 0;
 				topPanel.add(lblGreeting, gbc_lblGreeting);
 				
-				btnDarkLight = new JButton(new ImageIcon(new ImageIcon("images/lamp.png").getImage().getScaledInstance(16, 16,  java.awt.Image.SCALE_SMOOTH)));
+				btnDarkLight = new JButton(this.darkMode ? Images.SUN.getImageIcon(16, 16) : Images.MOON.getImageIcon(16, 16));
 				btnDarkLight.setBorderPainted(false);
 				btnDarkLight.setFocusPainted(false);
 				btnDarkLight.setContentAreaFilled(false);
@@ -204,6 +204,8 @@ public class Dashboard extends JFrame {
 			}
     		this.darkMode = !this.darkMode;
     		SwingUtilities.updateComponentTreeUI(this);
+			// Change icon
+			btnDarkLight.setIcon(this.darkMode ? Images.SUN.getImageIcon(16, 16) : Images.MOON.getImageIcon(16, 16));
 		});
 		
 		// ***** Log out button *****
