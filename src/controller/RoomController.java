@@ -12,7 +12,7 @@ import java.util.List;
 public class RoomController {
     private RoomDBIF roomDB;
 
-    public RoomController() throws DataAccessException {
+    public RoomController() {
         roomDB = new RoomDB();
     }
 

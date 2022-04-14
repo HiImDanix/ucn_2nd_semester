@@ -68,14 +68,14 @@ public class JLink extends JButton {
 		return text;
 	}
 
-	@Override
-	public void setEnabled(boolean enabled) {
-		super.setEnabled(enabled);
-
-		if (enabled) {
-			this.setForeground(Palette.PRIMARY.getColor());
-		} else {
-			this.setForeground(Palette.SECONDARY_GREY_LIGHT.getColor());
-		}
-	}
+//	@Override
+//	public void setEnabled(boolean enabled) {
+//		super.setEnabled(enabled);
+//
+//		if (enabled) {
+//			this.setForeground(Palette.PRIMARY.getColor());
+//		} else {
+//			this.setForeground(Palette.SECONDARY_GREY_LIGHT.getColor());
+//		}
+//	}
 }

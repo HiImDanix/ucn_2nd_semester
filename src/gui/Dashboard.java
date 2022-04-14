@@ -18,6 +18,7 @@ import javax.swing.border.MatteBorder;
 import controller.RoomController;
 import controller.SessionController;
 import db.DataAccessException;
+import gui.panels.CRUDRooms;
 import model.Room;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
@@ -142,9 +143,14 @@ public class Dashboard extends JFrame {
 			JPanel emptyPanel1 = new JPanel();
 			emptyPanel1.setBorder(new EmptyBorder(15, 0, 0, 0));
 			tabsPane.addTab("Home", null, emptyPanel1, "Dashboard");
-			
-			JPanel emptyPanel2 = new JPanel();
-			emptyPanel2.setBorder(new EmptyBorder(15, 0, 0, 0));
+
+		JPanel emptyPanel2 = null;
+		try {
+			emptyPanel2 = new CRUDRooms();
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}
+		emptyPanel2.setBorder(new EmptyBorder(15, 0, 0, 0));
 			tabsPane.addTab("Rooms", null, emptyPanel2, "Manage rooms");
 			
 			JPanel emptyPanel3 = new JPanel();
