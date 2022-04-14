@@ -117,6 +117,14 @@ public class DBConnection {
      * Get the database's Connection object
      */
     public Connection getConnection() {
+        // print if closed
+        try {
+            if (con.isClosed()) {
+                Messages.error("Connection to the database has been closed.", "Database connection");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return con;
     }
 
@@ -124,8 +132,13 @@ public class DBConnection {
      * Singleton pattern
      */
     public static synchronized DBConnection getInstance() throws DataAccessException {
-        if (instance == null) {
-            instance = new DBConnection();
+        // TODO: a hack to make sure connection is open. Look into a better solution
+        try {
+            if (instance == null || con == null || instance.con.isClosed()) {
+                instance = new DBConnection();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return instance;
     }

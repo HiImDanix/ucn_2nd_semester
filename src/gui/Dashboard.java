@@ -15,7 +15,10 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 
+import controller.RoomController;
 import controller.SessionController;
+import db.DataAccessException;
+import model.Room;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 
@@ -205,6 +208,20 @@ public class Dashboard extends JFrame {
 		    	// free up memory by destroying the current dashboard
 		    	Dashboard.this.dispose();
 	    	}
+		});
+
+		// When switching to room management tab
+		tabsPane.addChangeListener(e -> {
+			if (tabsPane.getSelectedIndex() == 1) {
+				// print all rooms
+				try {
+					for (Room room : new RoomController().getAllRooms()) {
+						System.out.println(room);
+					}
+				} catch (DataAccessException ex) {
+					ex.printStackTrace();
+				}
+			}
 		});
 		
 	} // end of event handlers

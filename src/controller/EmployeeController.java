@@ -23,7 +23,7 @@ public class EmployeeController {
     public Employee addEmployee(String firstName, String lastName, String email, String password) throws DataAccessException {
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
         Employee employee = new Employee(firstName, lastName, email, hashedPassword);
-        employeeDB.add(employee);
+        employee.setId(employeeDB.add(employee));
         return employee;
     }
 

@@ -3,36 +3,25 @@ package model;
 import java.util.List;
 
 public class Room {
-    private int roomID;
+    private int id;
     private boolean isOutOfService;
     private RoomCategory roomCategory;
-    private List<RoomCondition> roomConditions;
-
-    private boolean fullObjectRetrieved = false;
-
-    public Room(int roomID, RoomCategory roomCategory, boolean isOutOfService, List<RoomCondition> roomConditions) {
-        fullObjectRetrieved = true;
-
-        this.roomID = roomID;
-        this.roomCategory = roomCategory;
-        this.isOutOfService = isOutOfService;
-        this.roomConditions = roomConditions;
-    }
 
     public Room(int roomID, RoomCategory roomCategory, boolean isOutOfService) {
-        this(roomID, roomCategory, isOutOfService, null);
+
+        this.id = roomID;
+        this.roomCategory = roomCategory;
+        this.isOutOfService = isOutOfService;
     }
 
-    public boolean isfullObjectRetrieved() {
-        return fullObjectRetrieved;
+
+
+    public int getId() {
+        return id;
     }
 
-    public int getRoomID() {
-        return roomID;
-    }
-
-    public void setRoomID(int roomID) {
-        this.roomID = roomID;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public boolean isOutOfService() {
@@ -51,21 +40,12 @@ public class Room {
         this.roomCategory = roomCategory;
     }
 
-    public List<RoomCondition> getRoomConditions() {
-        return roomConditions;
-    }
-
-    public void setRoomConditions(List<RoomCondition> roomConditions) {
-        this.roomConditions = roomConditions;
-    }
-
     @Override
     public String toString() {
         return "Room{" +
-                "roomID=" + roomID +
+                "roomID=" + id +
                 ", isOutOfService=" + isOutOfService +
                 ", roomCategory=" + roomCategory +
-                ", roomConditions=" + roomConditions +
                 '}';
     }
 }

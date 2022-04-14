@@ -50,6 +50,4 @@ public class EmployeeDB extends DAO<Employee> implements EmployeeDBIF {
         super.delete(employee.getId());
     }
 
-
-
 }

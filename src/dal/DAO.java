@@ -80,8 +80,8 @@ public abstract class DAO<T> {
     protected abstract void setValues(PreparedStatement stmt, int id) throws SQLException;
 
     // Methods for building objects from ResultSet
-    protected abstract T buildDomainObject(ResultSet resultSet) throws SQLException;
-    protected List<T> buildDomainObjects(ResultSet resultSet) throws SQLException {
+    protected abstract T buildDomainObject(ResultSet resultSet) throws SQLException, DataAccessException;
+    protected List<T> buildDomainObjects(ResultSet resultSet) throws SQLException, DataAccessException {
         List<T> list = new ArrayList<>();
         while (resultSet.next()) {
             list.add(buildDomainObject(resultSet));
@@ -89,14 +89,17 @@ public abstract class DAO<T> {
         return list;
     }
 
-    // CRUD methods
-    public void add(T obj) throws DataAccessException {
+    // add & return id
+    public int add(T obj) throws DataAccessException {
         try (Connection conn = DBConnection.getInstance().getConnection()) {
-            PreparedStatement stmt = conn.prepareStatement(getQueryCreate());
+            PreparedStatement stmt = conn.prepareStatement(getQueryCreate(), PreparedStatement.RETURN_GENERATED_KEYS);
             setValues(stmt, obj);
             stmt.executeUpdate();
+            ResultSet rs = stmt.getGeneratedKeys();
+            rs.next();
+            return rs.getInt(1);
         } catch (SQLException e) {
-            throw new DataAccessException("Could not create " + getTableName(), e);
+            throw new DataAccessException("Could not add " + obj.getClass().getSimpleName() + " to database", e);
         }
     }
 
@@ -119,9 +122,6 @@ public abstract class DAO<T> {
             throw new DataAccessException("Could not delete " + getTableName(), e);
         }
     }
-
-    // delete by object
-
 
     public T getById(int id) throws DataAccessException {
         try (Connection conn = DBConnection.getInstance().getConnection()) {
