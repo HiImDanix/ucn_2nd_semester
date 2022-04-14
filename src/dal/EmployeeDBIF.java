@@ -19,7 +19,7 @@ public interface EmployeeDBIF {
     /*
      * Insert employee
      */
-    Employee addEmployee(Employee employee) throws DataAccessException;
+    void addEmployee(Employee employee) throws DataAccessException;
 
     /*
      * Update employee
