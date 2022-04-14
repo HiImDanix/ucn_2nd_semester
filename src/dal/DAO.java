@@ -11,8 +11,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class DAO<T> {
-    public abstract String getTableName();
-    public abstract String[] getFields(); // all fields in the table
+
+    // Store table name and fields
+    private String tableName;
+    private String[] fields;
+
+    // Constructor
+    public DAO(String tableName, String[] fields) {
+        this.tableName = tableName;
+        this.fields = fields;
+    }
+
+    // Get table name
+    public String getTableName() {
+        return tableName;
+    }
+
+    // Get fields
+    public String[] getFields() {
+        return fields;
+    }
 
     // Fields for building SQL statements
     public String getInsertFields() {
@@ -38,20 +56,23 @@ public abstract class DAO<T> {
     }
 
     // SQL statements
-    public String getQueryCreate() {
+    protected String getQueryCreate() {
         return "INSERT INTO " + getTableName() + " (" + getInsertFields() + ") VALUES (" + getInsertValues() + ")";
     }
-    public String getQueryUpdate() {
+    protected String getQueryUpdate() {
         return "UPDATE " + getTableName() + " SET " + getUpdateFields() + " WHERE id = ?";
     }
-    public String getQueryDelete() {
+    protected String getQueryDelete() {
         return "DELETE FROM " + getTableName() + " WHERE id = ?";
     }
-    public String getQuerySelectById() {
+    protected String getQuerySelectById() {
         return "SELECT * FROM " + getTableName() + " WHERE id = ?";
     }
-    public String getQuerySelectAll() {
+    protected String getQuerySelectAll() {
         return "SELECT * FROM " + getTableName();
+    }
+    protected String getQuerySelectByField(String field) {
+        return "SELECT * FROM " + getTableName() + " WHERE " + field + " = ?";
     }
 
     // Methods for setting values in prepared statements
@@ -103,6 +124,20 @@ public abstract class DAO<T> {
         try (Connection conn = DBConnection.getInstance().getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(getQuerySelectById());
             setValues(stmt, id);
+            ResultSet resultSet = stmt.executeQuery();
+            if (resultSet.next()) {
+                return buildDomainObject(resultSet);
+            }
+            return null;
+        } catch (SQLException e) {
+            throw new DataAccessException("Could not get " + getTableName(), e);
+        }
+    }
+
+    public T getByField(String field, String value) throws DataAccessException {
+        try (Connection conn = DBConnection.getInstance().getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement(getQuerySelectByField(field));
+            stmt.setString(1, value);
             ResultSet resultSet = stmt.executeQuery();
             if (resultSet.next()) {
                 return buildDomainObject(resultSet);
