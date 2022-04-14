@@ -18,6 +18,7 @@ import gui.JLink;
 import gui.Messages;
 import gui.Palette;
 import gui.panels.tablemodels.RoomTableModel;
+import gui.windows.WindowRoom;
 import model.Room;
 
 /**
@@ -159,13 +160,13 @@ public class CRUDRooms extends JPanel {
 //		return tableModel;
 //	}
 //
-//	public void setTableModel(CustomerTableModel tableModel) {
-//		this.tableMain.setModel(tableModel);
-//		this.tableModel = tableModel;
-//		// Update table row sorter
-//		rowSorter = new TableRowSorter<>(tableMain.getModel());
-//		tableMain.setRowSorter(rowSorter);
-//	}
+	public void setTableModel(RoomTableModel tableModel) {
+		this.tableMain.setModel(tableModel);
+		this.tableModel = tableModel;
+		// Update table row sorter
+		rowSorter = new TableRowSorter<>(tableMain.getModel());
+		tableMain.setRowSorter(rowSorter);
+	}
 //
 //	/**
 //	 * Select a customer in the CRUD table.
@@ -236,15 +237,15 @@ public class CRUDRooms extends JPanel {
 //			setTableModel(tableModel);
 //		});
 //
-//		// 'ADD customer' button
-//		btnAddCustomer.addActionListener(e -> {
-//			CustomerUI frame = new CustomerUI(auth);
-//			frame.setVisible(true);
-//			if (frame.getCustomer() != null) {
-//				tableModel.add(frame.getCustomer());
-//				setTableModel(tableModel);
-//			}
-//		});
+		// 'ADD customer' button
+		btnAddCustomer.addActionListener(e -> {
+			WindowRoom frame = new WindowRoom();
+			frame.setVisible(true);
+			if (frame.getRoom() != null) {
+				tableModel.add(frame.getRoom());
+				setTableModel(tableModel);
+			}
+		});
 		
 		// Search implementation
 		txtSearch.getDocument().addDocumentListener(new DocumentListener(){

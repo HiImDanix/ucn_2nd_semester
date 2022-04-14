@@ -217,20 +217,6 @@ public class Dashboard extends JFrame {
 		    	Dashboard.this.dispose();
 	    	}
 		});
-
-		// When switching to room management tab
-		tabsPane.addChangeListener(e -> {
-			if (tabsPane.getSelectedIndex() == 1) {
-				// print all rooms
-				try {
-					for (Room room : new RoomController().getAllRooms()) {
-						System.out.println(room);
-					}
-				} catch (DataAccessException ex) {
-					ex.printStackTrace();
-				}
-			}
-		});
 		
 	} // end of event handlers
 }
