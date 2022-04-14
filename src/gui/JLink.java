@@ -16,10 +16,12 @@ public class JLink extends JButton {
 	private static final long serialVersionUID = -6117412042952963334L;
 	
 	private String text;
+	private Color color;
 
 	public JLink(String text, Color color) {
 		super(text);
 		this.text = text;
+		this.color = color;
 
 		this.setForeground(color);
         setFocusPainted(false);
@@ -68,14 +70,14 @@ public class JLink extends JButton {
 		return text;
 	}
 
-//	@Override
-//	public void setEnabled(boolean enabled) {
-//		super.setEnabled(enabled);
-//
-//		if (enabled) {
-//			this.setForeground(Palette.PRIMARY.getColor());
-//		} else {
-//			this.setForeground(Palette.SECONDARY_GREY_LIGHT.getColor());
-//		}
-//	}
+	@Override
+	public void setEnabled(boolean enabled) {
+		super.setEnabled(enabled);
+
+		if (enabled) {
+			this.setForeground(this.color);
+		} else {
+			this.setForeground(Palette.SECONDARY_GREY_LIGHT.getColor());
+		}
+	}
 }
