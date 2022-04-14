@@ -1,11 +1,12 @@
 package model;
 
 public class Furniture {
+    private int id;
     private String name;
     private String description;
     private int quantity;
 
-    public Furniture(String name, String description, int quantity) {
+    public Furniture(int id, String name, String description, int quantity) {
         if (quantity < 0) {
             throw new IllegalArgumentException("Quantity must be positive");
         }
@@ -37,6 +38,14 @@ public class Furniture {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override

@@ -131,8 +131,8 @@ public class RoomCategory {
                 ", PricePerMonthForInternet=" + PricePerMonthForInternet +
                 ", pricePerMonthForExtraTenant=" + pricePerMonthForExtraTenant +
                 ", maxTenants=" + maxTenants +
-                ", furniture=" + furniture +
                 ", leaveNoticeDays=" + leaveNoticeDays +
+                ", furniture=" + furniture +
                 '}';
     }
 }
