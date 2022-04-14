@@ -71,6 +71,16 @@ public class JLink extends JButton {
 	}
 
 	@Override
+	public void setForeground(Color color) {
+		super.setForeground(color);
+		this.color = color;
+	}
+
+	@Override
+	public Color getForeground() {
+		return color;
+	}
+	@Override
 	public void setEnabled(boolean enabled) {
 		super.setEnabled(enabled);
 
