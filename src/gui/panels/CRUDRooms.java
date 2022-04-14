@@ -1,23 +1,11 @@
 package gui.panels;
 
-import java.awt.GridBagLayout;
-import javax.swing.JLabel;
+import java.awt.*;
+import javax.swing.*;
 
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
 import java.util.regex.Pattern;
 
-import javax.swing.JButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
 
-import java.awt.BorderLayout;
-import javax.swing.JPanel;
-
-
-import javax.swing.ListSelectionModel;
-import javax.swing.RowFilter;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.TableModel;
@@ -25,6 +13,7 @@ import javax.swing.table.TableRowSorter;
 
 import controller.RoomController;
 import db.DataAccessException;
+import gui.Images;
 import gui.JLink;
 import gui.Messages;
 import gui.Palette;
@@ -92,6 +81,7 @@ public class CRUDRooms extends JPanel {
 		gbc_btnNewButton.gridx = 2;
 		gbc_btnNewButton.gridy = 1;
 		topPanel.add(btnAddCustomer, gbc_btnNewButton);
+		btnAddCustomer.setIcon(Images.ADD_ITEM.getImageIcon(btnAddCustomer));
 		
 		// ***** Middle panel: Scroll panel *****
 		JScrollPane scrollPanel = new JScrollPane();
