@@ -35,7 +35,7 @@ public class CRUDRooms extends JPanel {
 	private RoomTableModel tableModel;
 	private JLink btnView;
 	private JLink btnEdit;
-	private JLink btnDisable;
+	private JLink btnDelete;
 	private JTextField txtSearch;
 	private TableRowSorter<TableModel> rowSorter;
 
@@ -121,16 +121,16 @@ public class CRUDRooms extends JPanel {
 		bottomPanel.add(btnEdit, gbc_btnEdit);
 				
 		// ***** Disable button *****
-		btnDisable = new JLink("Delete", Palette.DANGER.getColor());
+		btnDelete = new JLink("Delete", Palette.DANGER.getColor());
 		GridBagConstraints gbc_btnDisable = new GridBagConstraints();
 		gbc_btnDisable.gridx = 3;
 		gbc_btnDisable.gridy = 0;
-		bottomPanel.add(btnDisable, gbc_btnDisable);
+		bottomPanel.add(btnDelete, gbc_btnDisable);
 		
 		// By default: all selection buttons disabled
 		btnView.setEnabled(false);
 		btnEdit.setEnabled(false);
-		btnDisable.setEnabled(false);
+		btnDelete.setEnabled(false);
 		
 		// Add filtering
 		rowSorter = new TableRowSorter<>(tableModel);
@@ -199,26 +199,32 @@ public class CRUDRooms extends JPanel {
 				// Not selected
 				btnView.setEnabled(false);
 				btnEdit.setEnabled(false);
-				btnDisable.setEnabled(false);
+				btnDelete.setEnabled(false);
 			} else {
 				// Selected
 				btnView.setEnabled(true);
 				btnEdit.setEnabled(true);
-				btnDisable.setEnabled(true);
+				btnDelete.setEnabled(true);
 			}
 		});
-//
-//		// Delete customer
-//		btnDisable.addActionListener(e -> {
-//			int row = tableMain.convertRowIndexToModel(tableMain.getSelectedRow());
-//			Customer customer = tableModel.getObj(row);
-//			if (Messages.confirm(this, String.format("Are you sure you wish to delete the customer '%s %s'?", customer.getFirstName(), customer.getLastName()))) {
-//				customerCtrl.removeCustomer(customer);
-//				tableModel.remove(row);
-//				setTableModel(tableModel);
-//			}
-//		});
-//
+
+		/*
+		 * 'Delete' button
+		 */
+		btnDelete.addActionListener(e -> {
+			int row = tableMain.convertRowIndexToModel(tableMain.getSelectedRow());
+			Room room = tableModel.getObj(row);
+			if (Messages.confirm(this, String.format("Are you sure you wish to delete the room with id %d'?", room.getId()))) {
+				try {
+					roomCtrl.deleteRoom(room);
+					tableModel.remove(row);
+					setTableModel(tableModel);
+				} catch (DataAccessException ex) {
+					Messages.error(this, "There was an error deleting the room.", "error");
+				}
+			}
+		});
+
 		/*
 		 * 'View' button
 		 */
