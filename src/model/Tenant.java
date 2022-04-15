@@ -4,29 +4,34 @@ public class Tenant {
     private int id;
     private String firstName;
     private String lastName;
+    private String middleName;
     private String email;
     private String phone;
     private StudyProof studyProof;
+    private Room room;
 
     private boolean fullObjectRetrieved = false;
 
-    public Tenant(int id, String firstName, String lastName, String email, String phone, StudyProof studyProof) {
+    public Tenant(int id, String firstName, String lastName, String middleName, String email, String phone, StudyProof studyProof, Room room) {
         this.fullObjectRetrieved = true;
 
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.middleName = middleName;
         this.email = email;
         this.phone = phone;
         this.studyProof = studyProof;
+        this.room = room;
     }
 
-    public Tenant(int id, String firstName, String lastName, String email, String phone) {
+    public Tenant(int id, String firstName, String lastName, String email, String phone, Room room) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phone = phone;
+        this.room = room;
     }
 
     public boolean isFullObjectRetrieved() {
