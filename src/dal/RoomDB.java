@@ -25,22 +25,18 @@ public class RoomDB extends DAO<Room> implements RoomDBIF {
     }
 
     @Override
-    public void setValues(PreparedStatement stmt, int id) throws SQLException {
-        stmt.setInt(1, id);
+    public int getId(Room obj) {
+        return obj.getId();
     }
 
     @Override
     public Room buildDomainObject(ResultSet rs) throws SQLException, DataAccessException {
         Room room = new Room(
                 rs.getInt("id"),
-                new RoomCategoryController().getRoomCategoryById(rs.getInt(settableColumnNames[0])),
-                rs.getBoolean(settableColumnNames[1])
+                new RoomCategoryController().getRoomCategoryById(rs.getInt(settableColumnNames[1])),
+                rs.getBoolean(settableColumnNames[0])
         );
         return room;
 
-    }
-
-    public void delete(Room room) throws DataAccessException {
-        super.delete(room.getId());
     }
 }

@@ -227,17 +227,19 @@ public class CRUDRooms extends JPanel {
 //			frame.setVisible(true);
 //		});
 //
-//		// Edit customer
-//		btnEdit.addActionListener(e -> {
-//			int row = tableMain.convertRowIndexToModel(tableMain.getSelectedRow());
-//			Customer customer = tableModel.getObj(row);
-//			CustomerUI frame = new CustomerUI(auth, customer, CustomerUI.Mode.EDIT);
-//			frame.setVisible(true);
-//			tableModel.fireTableRowsUpdated(row, row);
-//			setTableModel(tableModel);
-//		});
+		// Edit customer
+		btnEdit.addActionListener(e -> {
+			int row = tableMain.convertRowIndexToModel(tableMain.getSelectedRow());
+			Room room = tableModel.getObj(row);
+			WindowRoom frame = new WindowRoom(room, WindowRoom.Mode.EDIT);
+			frame.setVisible(true);
+			tableModel.fireTableRowsUpdated(row, row);
+			setTableModel(tableModel);
+		});
 //
-		// 'ADD customer' button
+		/*
+		 * Add new customer button
+		 */
 		btnAddCustomer.addActionListener(e -> {
 			WindowRoom frame = new WindowRoom();
 			frame.setVisible(true);
@@ -247,7 +249,9 @@ public class CRUDRooms extends JPanel {
 			}
 		});
 		
-		// Search implementation
+		/*
+		 * Search
+		 */
 		txtSearch.getDocument().addDocumentListener(new DocumentListener(){
 			
 			private void search() {
@@ -255,6 +259,7 @@ public class CRUDRooms extends JPanel {
 				if(text.trim().length() == 0) {
 					rowSorter.setRowFilter(null);
 				} else {
+					// (?i) matches case-insensitive & Pattern.quote() escapes special characters
 					rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + Pattern.quote(text)));
 				}
 			}

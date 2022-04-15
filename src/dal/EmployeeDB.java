@@ -25,11 +25,6 @@ public class EmployeeDB extends DAO<Employee> implements EmployeeDBIF {
     }
 
     @Override
-    public void setValues(PreparedStatement stmt, int id) throws SQLException {
-        stmt.setInt(1, id);
-    }
-
-    @Override
     public Employee buildDomainObject(ResultSet rs) throws SQLException {
         Employee employee = new Employee(
                 rs.getInt(columnNames[0]),
@@ -42,12 +37,13 @@ public class EmployeeDB extends DAO<Employee> implements EmployeeDBIF {
 
     }
 
-    public Employee getByEmail(String email) throws DataAccessException {
-        return super.getByField(columnNames[3], email);
+    @Override
+    public int getId(Employee obj) {
+        return obj.getId();
     }
 
-    public void delete(Employee employee) throws DataAccessException {
-        super.delete(employee.getId());
+    public Employee getByEmail(String email) throws DataAccessException {
+        return super.getByField(columnNames[3], email);
     }
 
 }

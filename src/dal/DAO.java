@@ -106,7 +106,6 @@ public abstract class DAO<T> {
 
     public void update(T obj) throws DataAccessException {
         try (Connection conn = DBConnection.getInstance().getConnection()) {
-            System.out.println("Obj: " + obj);
             PreparedStatement stmt = conn.prepareStatement(getQueryUpdate());
             setValues(stmt, obj);
             stmt.setInt(getFields().length + 1, getId(obj));
