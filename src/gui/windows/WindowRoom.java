@@ -1,9 +1,8 @@
 package gui.windows;
 
-import java.awt.Component;
+import java.awt.*;
 
-import javax.swing.JDialog;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import controller.RoomCategoryController;
@@ -13,20 +12,6 @@ import gui.JButtonPrimary;
 import gui.Messages;
 import model.Room;
 import model.RoomCategory;
-
-import java.awt.GridBagLayout;
-import javax.swing.JLabel;
-import java.awt.GridBagConstraints;
-import javax.swing.JTextField;
-import java.awt.Insets;
-
-import javax.swing.JButton;
-import javax.swing.JTextArea;
-import javax.swing.BoxLayout;
-import javax.swing.JCheckBox;
-import javax.swing.JToggleButton;
-import javax.swing.JRadioButton;
-import javax.swing.ButtonGroup;
 
 /**
  * @author Daniels Kanepe
@@ -241,29 +226,38 @@ public class WindowRoom extends JDialog {
 	 * *******************  Methods *******************
 	 * *******************************************************
 	 */
-	
-	
-	// Makes the text fields uneditable
-	private void disableFields() {
-		for (Component c : this.getContentPane().getComponents()) {
-			   if (c instanceof JTextField || c instanceof JTextArea) {
-				      c.setEnabled(false);
-				   }
+
+	// Recursively disable/enable all user editable components
+	private void toggleUserComponents(Container container, boolean enabled) {
+		for (Component c : container.getComponents()) {
+			// if the component is user editable
+			if (c instanceof JTextField || c instanceof JTextArea ||
+					c instanceof JComboBox || c instanceof JSpinner ||
+					c instanceof JRadioButton || c instanceof JCheckBox || c instanceof JPasswordField) {
+				// disable/enable it
+				c.setEnabled(enabled);
 			}
+			// if the component is a container
+			if (c instanceof Container) {
+				// recursively disable/enable all fields in it
+				toggleUserComponents((Container) c, enabled);
+			}
+		}
 	}
 	
+	// Makes all user editable components disabled
+	private void disableFields() {
+		toggleUserComponents(this, false);
+	}
 	
-	// Makes the text fields editable except ID & Type field
 	private void enableFields() {
-		for (Component c : this.getContentPane().getComponents()) {
-			   if (c instanceof JTextField || c instanceof JTextArea) {
-			      c.setEnabled(true);
-			   }
-			}
+		this.toggleUserComponents(this, true);
+
+		// except ID & Category field
 		txtID.setEnabled(false);
 		txtCategory.setEnabled(false);
 	}
-	
+
 	// FIll in the fields
 	private void fillFields(Room room) {
 		txtID.setText(String.valueOf(room.getId()));

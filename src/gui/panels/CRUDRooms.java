@@ -219,15 +219,19 @@ public class CRUDRooms extends JPanel {
 //			}
 //		});
 //
-//		// View Customer
-//		btnView.addActionListener(e -> {
-//			int row = tableMain.convertRowIndexToModel(tableMain.getSelectedRow());
-//			Customer customer = tableModel.getObj(row);
-//			CustomerUI frame = new CustomerUI(auth, customer, CustomerUI.Mode.VIEW);
-//			frame.setVisible(true);
-//		});
-//
-		// Edit customer
+		/*
+		 * 'View' button
+		 */
+		btnView.addActionListener(e -> {
+			int row = tableMain.convertRowIndexToModel(tableMain.getSelectedRow());
+			Room room = tableModel.getObj(row);
+			WindowRoom frame = new WindowRoom(room, WindowRoom.Mode.VIEW);
+			frame.setVisible(true);
+		});
+
+		/*
+		 * 'Edit' button
+		 */
 		btnEdit.addActionListener(e -> {
 			int row = tableMain.convertRowIndexToModel(tableMain.getSelectedRow());
 			Room room = tableModel.getObj(row);
@@ -236,9 +240,9 @@ public class CRUDRooms extends JPanel {
 			tableModel.fireTableRowsUpdated(row, row);
 			setTableModel(tableModel);
 		});
-//
+
 		/*
-		 * Add new customer button
+		 * 'Add new' button
 		 */
 		btnAddCustomer.addActionListener(e -> {
 			WindowRoom frame = new WindowRoom();
