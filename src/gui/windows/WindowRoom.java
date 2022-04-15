@@ -269,6 +269,7 @@ public class WindowRoom extends JDialog {
 		txtID.setText(String.valueOf(room.getId()));
 		txtCategory.setText(room.getRoomCategory().getName());
 		rdbtnOutOfServiceYes.setSelected(room.isOutOfService());
+		rdbtnOutOfServiceNo.setSelected(!room.isOutOfService());
 	}
 	
 	/**
