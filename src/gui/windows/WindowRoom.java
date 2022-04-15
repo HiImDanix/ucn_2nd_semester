@@ -8,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 import controller.RoomCategoryController;
 import controller.RoomController;
 import db.DataAccessException;
+import gui.Common;
 import gui.JButtonPrimary;
 import gui.Messages;
 import model.Room;
@@ -227,31 +228,13 @@ public class WindowRoom extends JDialog {
 	 * *******************************************************
 	 */
 
-	// Recursively disable/enable all user editable components
-	private void toggleUserComponents(Container container, boolean enabled) {
-		for (Component c : container.getComponents()) {
-			// if the component is user editable
-			if (c instanceof JTextField || c instanceof JTextArea ||
-					c instanceof JComboBox || c instanceof JSpinner ||
-					c instanceof JRadioButton || c instanceof JCheckBox || c instanceof JPasswordField) {
-				// disable/enable it
-				c.setEnabled(enabled);
-			}
-			// if the component is a container
-			if (c instanceof Container) {
-				// recursively disable/enable all fields in it
-				toggleUserComponents((Container) c, enabled);
-			}
-		}
-	}
-	
 	// Makes all user editable components disabled
 	private void disableFields() {
-		toggleUserComponents(this, false);
+		Common.toggleUserComponents(this, false);
 	}
 	
 	private void enableFields() {
-		this.toggleUserComponents(this, true);
+		Common.toggleUserComponents(this, true);
 
 		// except ID & Category field
 		txtID.setEnabled(false);

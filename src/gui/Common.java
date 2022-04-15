@@ -1,5 +1,7 @@
 package gui;
 
+import javax.swing.*;
+import java.awt.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -81,4 +83,25 @@ public class Common {
     public static String getDateTimeFormat() {
         return DATETIME_FORMAT.toLowerCase();
     }
+
+    /*
+     * Recursively enable or disable all components in a Swing container.
+     */
+    public static void toggleUserComponents(Container container, boolean enabled) {
+        for (Component c : container.getComponents()) {
+            // if the component is user editable
+            if (c instanceof JTextField || c instanceof JTextArea ||
+                    c instanceof JComboBox || c instanceof JSpinner ||
+                    c instanceof JRadioButton || c instanceof JCheckBox || c instanceof JPasswordField) {
+                // disable/enable it
+                c.setEnabled(enabled);
+            }
+            // if the component is a container
+            if (c instanceof Container) {
+                // recursively disable/enable all fields in it
+                toggleUserComponents((Container) c, enabled);
+            }
+        }
+    }
+
 }
