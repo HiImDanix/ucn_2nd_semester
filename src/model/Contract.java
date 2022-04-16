@@ -8,26 +8,23 @@ public class Contract {
     private boolean includeInternet;
     private LocalDateTime startDatetime;
     private Room room;
-    private Tenant tenant;
+    private List<Tenant> tenants;
     private List<RoomCondition> roomConditions;
-    private Notification notifications;
+    private List<Notification> notifications;
     private LeaveNotice leaveNotice;
 
-    private boolean fullObjectRetrieved = false;
-
     public Contract(int ID, boolean includeInternet, LocalDateTime startDate,
-                    Room room, Tenant tenant, List<RoomCondition> roomConditions,
-                    Notification notifications, LeaveNotice leaveNotice) {
+                    Room room, List<Tenant> tenants, List<RoomCondition> roomConditions,
+                    List<Notification> notifications, LeaveNotice leaveNotice) {
         this.ID = ID;
         this.includeInternet = includeInternet;
         this.startDatetime = startDate;
         this.room = room;
-        this.tenant = tenant;
+        this.tenants = tenants;
         this.roomConditions = roomConditions;
         this.notifications = notifications;
         this.leaveNotice = leaveNotice;
 
-        fullObjectRetrieved = true;
     }
 
     public Contract(int ID, boolean includeInternet, LocalDateTime startDate) {
@@ -74,12 +71,12 @@ public class Contract {
         this.room = room;
     }
 
-    public Tenant getTenant() {
-        return tenant;
+    public List<Tenant> getTenants() {
+        return tenants;
     }
 
-    public void setTenant(Tenant tenant) {
-        this.tenant = tenant;
+    public void setTenants(List<Tenant> tenants) {
+        this.tenants = tenants;
     }
 
     public List<RoomCondition> getRoomConditions() {
@@ -90,17 +87,14 @@ public class Contract {
         this.roomConditions = roomConditions;
     }
 
-    public Notification getNotifications() {
+    public List<Notification> getNotifications() {
         return notifications;
     }
 
-    public void setNotifications(Notification notifications) {
+    public void setNotifications(List<Notification> notifications) {
         this.notifications = notifications;
     }
 
-    public boolean isfullObjectRetrieved() {
-        return fullObjectRetrieved;
-    }
 
     @Override
     public String toString() {
@@ -109,7 +103,7 @@ public class Contract {
                 ", includeInternet=" + includeInternet +
                 ", startDatetime=" + startDatetime +
                 ", room=" + room +
-                ", tenant=" + tenant +
+                ", tenants=" + tenants +
                 ", roomConditions=" + roomConditions +
                 ", notifications=" + notifications +
                 ", leaveNotice=" + leaveNotice +
