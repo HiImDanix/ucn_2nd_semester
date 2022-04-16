@@ -7,6 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import static dal.EmployeeDB.Columns.*;
+
 public class EmployeeDB extends DAO<Employee> implements EmployeeDBIF {
     public static final String tableName = "employee";
     public enum Columns {
@@ -16,8 +18,7 @@ public class EmployeeDB extends DAO<Employee> implements EmployeeDBIF {
         EMAIL,
         PASSWORD_HASH;
 
-        @Override
-        public String toString() {
+        public String fieldName() {
             return this.name().toLowerCase();
         }
     }
@@ -25,11 +26,11 @@ public class EmployeeDB extends DAO<Employee> implements EmployeeDBIF {
     public EmployeeDB() {
         // Passing table name and settable column names
         super(tableName, new String[] {
-                Columns.ID.toString(),
-                Columns.FIRST_NAME.toString(),
-                Columns.LAST_NAME.toString(),
-                Columns.EMAIL.toString(),
-                Columns.PASSWORD_HASH.toString()
+                ID.fieldName(),
+                FIRST_NAME.fieldName(),
+                LAST_NAME.fieldName(),
+                EMAIL.fieldName(),
+                PASSWORD_HASH.fieldName()
         });
     }
 
@@ -44,11 +45,11 @@ public class EmployeeDB extends DAO<Employee> implements EmployeeDBIF {
     @Override
     public Employee buildDomainObject(ResultSet rs) throws SQLException {
         Employee employee = new Employee(
-                rs.getInt(Columns.ID.toString()),
-                rs.getString(Columns.FIRST_NAME.toString()),
-                rs.getString(Columns.LAST_NAME.toString()),
-                rs.getString(Columns.EMAIL.toString()),
-                rs.getString(Columns.PASSWORD_HASH.toString())
+                rs.getInt(ID.fieldName()),
+                rs.getString(FIRST_NAME.fieldName()),
+                rs.getString(LAST_NAME.fieldName()),
+                rs.getString(EMAIL.fieldName()),
+                rs.getString(PASSWORD_HASH.fieldName())
         );
         return employee;
 
@@ -60,7 +61,7 @@ public class EmployeeDB extends DAO<Employee> implements EmployeeDBIF {
     }
 
     public Employee getByEmail(String email) throws DataAccessException {
-        return super.getByField(Columns.EMAIL.toString(), email);
+        return super.getByField(EMAIL.fieldName(), email);
     }
 
 }
