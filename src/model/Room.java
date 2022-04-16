@@ -8,7 +8,6 @@ public class Room {
     private RoomCategory roomCategory;
 
     public Room(int roomID, RoomCategory roomCategory, boolean isOutOfService) {
-
         this.id = roomID;
         this.roomCategory = roomCategory;
         this.isOutOfService = isOutOfService;

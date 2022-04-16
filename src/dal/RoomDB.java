@@ -9,6 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import static dal.RoomDB.Columns.*;
+
 public class RoomDB extends DAO<Room> implements RoomDBIF {
     public static final String tableName = "room";
     public enum Columns {
@@ -16,8 +18,7 @@ public class RoomDB extends DAO<Room> implements RoomDBIF {
         IS_OUT_OF_SERVICE,
         ROOM_CATEGORY_ID;
 
-        @Override
-        public String toString() {
+        public String fieldName() {
             return this.name().toLowerCase();
         }
     }
@@ -25,8 +26,8 @@ public class RoomDB extends DAO<Room> implements RoomDBIF {
     public RoomDB() {
         // Passing table name and settable column names
         super(tableName, new String[] {
-                Columns.IS_OUT_OF_SERVICE.toString(),
-                Columns.ROOM_CATEGORY_ID.toString()});
+                IS_OUT_OF_SERVICE.fieldName(),
+                ROOM_CATEGORY_ID.fieldName()});
     }
 
     @Override
@@ -43,9 +44,9 @@ public class RoomDB extends DAO<Room> implements RoomDBIF {
     @Override
     public Room buildDomainObject(ResultSet rs) throws SQLException, DataAccessException {
         Room room = new Room(
-                rs.getInt(Columns.ID.toString()),
-                new RoomCategoryController().getRoomCategoryById(rs.getInt(Columns.ROOM_CATEGORY_ID.toString())),
-                rs.getBoolean(Columns.IS_OUT_OF_SERVICE.toString())
+                rs.getInt(ID.fieldName()),
+                new RoomCategoryController().getRoomCategoryById(rs.getInt(ROOM_CATEGORY_ID.fieldName())),
+                rs.getBoolean(IS_OUT_OF_SERVICE.fieldName())
         );
         return room;
 

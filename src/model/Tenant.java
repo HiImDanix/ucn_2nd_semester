@@ -1,41 +1,26 @@
 package model;
 
+import java.util.List;
+
 public class Tenant {
     private int id;
     private String firstName;
     private String lastName;
-    private String middleName;
     private String email;
     private String phone;
     private StudyProof studyProof;
     private Room room;
+    private List<Contract> contracts;
 
-    private boolean fullObjectRetrieved = false;
 
-    public Tenant(int id, String firstName, String lastName, String middleName, String email, String phone, StudyProof studyProof, Room room) {
-        this.fullObjectRetrieved = true;
-
+    public Tenant(int id, String firstName, String lastName, String email, String phone, StudyProof studyProof, List<Contract> contracts) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.middleName = middleName;
         this.email = email;
         this.phone = phone;
         this.studyProof = studyProof;
-        this.room = room;
-    }
-
-    public Tenant(int id, String firstName, String lastName, String email, String phone, Room room) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.phone = phone;
-        this.room = room;
-    }
-
-    public boolean isFullObjectRetrieved() {
-        return this.fullObjectRetrieved;
+        this.contracts = contracts;
     }
 
     public int getId() {
@@ -78,8 +63,42 @@ public class Tenant {
         this.phone = phone;
     }
 
+    public StudyProof getStudyProof() {
+        return studyProof;
+    }
+
+    public void setStudyProof(StudyProof studyProof) {
+        this.studyProof = studyProof;
+    }
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
+    }
+
+    public List<Contract> getContracts() {
+        return contracts;
+    }
+
+    public void setContracts(List<Contract> contracts) {
+        this.contracts = contracts;
+    }
+
     @Override
     public String toString() {
-        return "Tenant{" + "id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", phone=" + phone + '}';
+        return "Tenant{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", middleName='" + middleName + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", studyProof=" + studyProof +
+                ", room=" + room +
+                ", contracts=" + contracts +
+                '}';
     }
 }
