@@ -5,6 +5,7 @@ import java.util.List;
 import dal.TenantDB;
 import dal.TenantDBIF;
 import db.DataAccessException;
+import model.Contract;
 import model.Room;
 import model.Tenant;
 
@@ -26,8 +27,12 @@ public class TenantController {
 		return tenant;
 	}
 
+	public Tenant addTenant(Tenant tenant) throws DataAccessException {
+		tenant.setId(tenantDb.add(tenant));
+		return tenant;
+	}
+
 	public List<Tenant> getAllTenants() throws DataAccessException{
 		return tenantDb.getAll();
 	}
-	
 }

@@ -88,6 +88,11 @@ public class Tenant {
         this.contracts = contracts;
     }
 
+    // add contract
+    public void addContract(Contract contract) {
+    	this.contracts.add(contract);
+    }
+
     @Override
     public String toString() {
         return "Tenant{" +
