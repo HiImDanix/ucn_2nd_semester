@@ -1,132 +1,292 @@
 package gui.panels;
 
-import java.awt.BorderLayout;
+import java.awt.*;
+import javax.swing.*;
 
-import javax.swing.JPanel;
-
-import controller.TenantController;
-import db.DataAccessException;
-import gui.panels.tablemodels.RoomTableModel;
-import gui.panels.tablemodels.TenantTableModel;
-import java.awt.GridBagLayout;
-import javax.swing.JLabel;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
 import java.util.regex.Pattern;
 
-import javax.swing.JTextField;
-import javax.swing.RowFilter;
+
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-import javax.swing.JButton;
-import javax.swing.JScrollPane;
-import gui.JLink;
-import java.awt.Color;
-import javax.swing.JTable;
 
+import controller.TenantController;
+import db.DataAccessException;
+import gui.Images;
+import gui.JLink;
+import gui.Messages;
+import gui.Palette;
+import gui.panels.tablemodels.TenantTableModel;
+import model.Tenant;
+
+/**
+ * @author Daniels Kanepe
+ *
+ */
 public class CRUDTenants extends JPanel {
 
+
+	private JButton btnAddCustomer;
 	private TenantController tenantCtrl;
+	private static final long serialVersionUID = -8329527605114016878L;
+	private JTable tableMain;
 	private TenantTableModel tableModel;
-	private JTextField tfSearch;
+	private JLink btnView;
+	private JLink btnEdit;
+	private JLink btnDelete;
+	private JTextField txtSearch;
 	private TableRowSorter<TableModel> rowSorter;
-	private JTable tableTenants;
-	
-	/**
-	 * Create the panel.
-	 */
+
 	public CRUDTenants() throws DataAccessException {
 		tenantCtrl = new TenantController();
-		setLayout(new BorderLayout(0,0));
+		setLayout(new BorderLayout(0, 0));
 		tableModel = new TenantTableModel(tenantCtrl.getAllTenants());
-		
+
+		// ***** TOP PANEL *****
 		JPanel topPanel = new JPanel();
-		add(topPanel, BorderLayout.NORTH);
+		this.add(topPanel, BorderLayout.NORTH);
 		GridBagLayout gbl_topPanel = new GridBagLayout();
 		gbl_topPanel.columnWidths = new int[]{0, 0, 0, 0};
 		gbl_topPanel.rowHeights = new int[]{0, 0, 0, 0};
 		gbl_topPanel.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
 		gbl_topPanel.rowWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
 		topPanel.setLayout(gbl_topPanel);
-		
-		JLabel lblTenants = new JLabel("Tenants");
-		GridBagConstraints gbc_lblTenants = new GridBagConstraints();
-		gbc_lblTenants.gridwidth = 3;
-		gbc_lblTenants.insets = new Insets(0, 0, 5, 0);
-		gbc_lblTenants.gridx = 0;
-		gbc_lblTenants.gridy = 0;
-		topPanel.add(lblTenants, gbc_lblTenants);
-		
-		tfSearch = new JTextField();
-		tfSearch.setColumns(10);
-		GridBagConstraints gbc_tfSearch = new GridBagConstraints();
-		gbc_tfSearch.fill = GridBagConstraints.HORIZONTAL;
-		gbc_tfSearch.insets = new Insets(0, 0, 5, 5);
-		gbc_tfSearch.gridx = 0;
-		gbc_tfSearch.gridy = 1;
-		topPanel.add(tfSearch, gbc_tfSearch);
-		
-		JButton btnAddCustomer = new JButton("Add tenant");
-		GridBagConstraints gbc_btnAddCustomer = new GridBagConstraints();
-		gbc_btnAddCustomer.insets = new Insets(0, 0, 5, 0);
-		gbc_btnAddCustomer.gridx = 2;
-		gbc_btnAddCustomer.gridy = 1;
-		topPanel.add(btnAddCustomer, gbc_btnAddCustomer);
-		
+
+		// ***** Title *****
+		JLabel lblTitle = new JLabel(
+				String.format("Tenants")
+		);
+		GridBagConstraints gbc_lblTitle = new GridBagConstraints();
+		gbc_lblTitle.gridwidth = 3;
+		gbc_lblTitle.insets = new Insets(0, 0, 5, 0);
+		gbc_lblTitle.gridx = 0;
+		gbc_lblTitle.gridy = 0;
+		topPanel.add(lblTitle, gbc_lblTitle);
+
+		// ***** Search bar *****
+		txtSearch = new JTextField();
+		GridBagConstraints gbc_txtSearch = new GridBagConstraints();
+		gbc_txtSearch.insets = new Insets(0, 0, 5, 5);
+		gbc_txtSearch.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtSearch.gridx = 0;
+		gbc_txtSearch.gridy = 1;
+		topPanel.add(txtSearch, gbc_txtSearch);
+		txtSearch.setColumns(10);
+
+		// ***** button: Add tenant  *****
+		btnAddCustomer = new JButton("Add tenant");
+		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
+		gbc_btnNewButton.insets = new Insets(0, 0, 5, 0);
+		gbc_btnNewButton.gridx = 2;
+		gbc_btnNewButton.gridy = 1;
+		topPanel.add(btnAddCustomer, gbc_btnNewButton);
+		btnAddCustomer.setIcon(Images.ADD_ITEM.getImageIcon(btnAddCustomer));
+
+		// ***** Middle panel: Scroll panel *****
 		JScrollPane scrollPanel = new JScrollPane();
 		add(scrollPanel, BorderLayout.CENTER);
-		
-		tableTenants = new JTable();
-		add(tableTenants, BorderLayout.WEST);
-		
+
+		// ***** Table *****
+		tableMain = new JTable();
+		tableMain.setModel(tableModel);
+		tableMain.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		scrollPanel.setViewportView(tableMain);
+
+		// ***** Bottom panel *****
 		JPanel bottomPanel = new JPanel();
-		add(bottomPanel, BorderLayout.SOUTH);
+		this.add(bottomPanel, BorderLayout.SOUTH);
 		GridBagLayout gbl_bottomPanel = new GridBagLayout();
 		gbl_bottomPanel.columnWidths = new int[]{271, 0, 0, 0, 0};
 		gbl_bottomPanel.rowHeights = new int[]{21, 0};
 		gbl_bottomPanel.columnWeights = new double[]{1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gbl_bottomPanel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		bottomPanel.setLayout(gbl_bottomPanel);
-		
-		JLink btnView = new JLink("View", new Color(32, 120, 104));
-		btnView.setEnabled(false);
+
+		// ***** View button *****
+		btnView = new JLink("View", Palette.SUCCESS.getColor());
 		GridBagConstraints gbc_btnView = new GridBagConstraints();
 		gbc_btnView.insets = new Insets(0, 0, 0, 5);
 		gbc_btnView.gridx = 1;
 		gbc_btnView.gridy = 0;
 		bottomPanel.add(btnView, gbc_btnView);
-		
-		JLink btnEdit = new JLink("Edit", new Color(101, 88, 245));
-		btnEdit.setEnabled(false);
+
+		// ***** Edit button *****
+		btnEdit = new JLink("Edit", Palette.PRIMARY.getColor());
 		GridBagConstraints gbc_btnEdit = new GridBagConstraints();
 		gbc_btnEdit.insets = new Insets(0, 0, 0, 5);
 		gbc_btnEdit.gridx = 2;
 		gbc_btnEdit.gridy = 0;
 		bottomPanel.add(btnEdit, gbc_btnEdit);
-		
-		JLink btnDelete = new JLink("Delete", new Color(211, 69, 91));
+
+		// ***** Disable button *****
+		btnDelete = new JLink("Delete", Palette.DANGER.getColor());
+		GridBagConstraints gbc_btnDisable = new GridBagConstraints();
+		gbc_btnDisable.gridx = 3;
+		gbc_btnDisable.gridy = 0;
+		bottomPanel.add(btnDelete, gbc_btnDisable);
+
+		// By default: all selection buttons disabled
+		btnView.setEnabled(false);
+		btnEdit.setEnabled(false);
 		btnDelete.setEnabled(false);
-		GridBagConstraints gbc_btnDelete = new GridBagConstraints();
-		gbc_btnDelete.gridx = 3;
-		gbc_btnDelete.gridy = 0;
-		bottomPanel.add(btnDelete, gbc_btnDelete);
-		
+
 		// Add filtering
-				rowSorter = new TableRowSorter<>(tableModel);
-				tableTenants.setRowSorter(rowSorter);
-				
-		// set table model
-				setTableModel(tableModel);
+		rowSorter = new TableRowSorter<>(tableModel);
+		tableMain.setRowSorter(rowSorter);
+
+		// Attach event handler
+		this.addEventHandlers();
 	}
-	
+
+	/*
+	 * *******************************************************
+	 * *******************  Methods *******************
+	 * *******************************************************
+	 */
+
+	//	/**
+//	 * @return JTable tableMain
+//	 */
+//	public JTable getTable() {
+//		return tableMain;
+//	}
+//
+//	/**
+//	 * @return CustomerTableModel tableModel
+//	 */
+//	public CustomerTableModel getTableModel() {
+//		return tableModel;
+//	}
+//
 	public void setTableModel(TenantTableModel tableModel) {
-		this.tableTenants.setModel(tableModel);
+		this.tableMain.setModel(tableModel);
 		this.tableModel = tableModel;
 		// Update table row sorter
-		rowSorter = new TableRowSorter<>(tableTenants.getModel());
-		tableTenants.setRowSorter(rowSorter);
+		rowSorter = new TableRowSorter<>(tableMain.getModel());
+		tableMain.setRowSorter(rowSorter);
 	}
-	
+//
+//	/**
+//	 * Select a customer in the CRUD table.
+//	 *
+//	 * @param customer the customer
+//	 * @return true, if successful
+//	 */
+//	public boolean selectCustomer(Customer customer) {
+//		int rows = tableModel.getRowCount();
+//		for (int i = 0; i < rows; i++) {
+//			Customer foundCustomer = tableModel.getObj(i);
+//			if (foundCustomer == customer) {
+//				tableMain.getSelectionModel().setSelectionInterval(0, i);
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
+
+
+	/*
+	 * *******************************************************
+	 * *******************  EVENT HANDLERS *******************
+	 * *******************************************************
+	 */
+	private void addEventHandlers() {
+		// Table row selection
+		tableMain.getSelectionModel().addListSelectionListener(e -> {
+			if (tableMain.getSelectionModel().isSelectionEmpty()) {
+				// Not selected
+				btnView.setEnabled(false);
+				btnEdit.setEnabled(false);
+				btnDelete.setEnabled(false);
+			} else {
+				// Selected
+				btnView.setEnabled(true);
+				btnEdit.setEnabled(true);
+				btnDelete.setEnabled(true);
+			}
+		});
+
+		/*
+		 * 'Delete' button
+		 */
+		btnDelete.addActionListener(e -> {
+			int row = tableMain.convertRowIndexToModel(tableMain.getSelectedRow());
+			Tenant tenant = tableModel.getObj(row);
+			if (Messages.confirm(this, String.format("Are you sure you wish to delete the tenant with id %d'?'", tenant.getId()))) {
+				// TODO: STUB - delete tenant]
+				Messages.info(this, "Not implemented yet");
+//				try {
+////					tenantCtrl.deleteTenant(tenant);
+//					tableModel.remove(row);
+//					setTableModel(tableModel);
+//				} catch (DataAccessException ex) {
+//					Messages.error(this, "There was an error deleting the room.", "error");
+//				}
+			}
+		});
+
+		/*
+		 * 'View' button
+		 */
+//		btnView.addActionListener(e -> {
+//			int row = tableMain.convertRowIndexToModel(tableMain.getSelectedRow());
+//			Room room = tableModel.getObj(row);
+//			WindowRoom frame = new WindowRoom(room, WindowRoom.Mode.VIEW);
+//			frame.setVisible(true);
+//		});
+
+		/*
+		 * 'Edit' button
+		 */
+//		btnEdit.addActionListener(e -> {
+//			int row = tableMain.convertRowIndexToModel(tableMain.getSelectedRow());
+//			Room room = tableModel.getObj(row);
+//			WindowRoom frame = new WindowRoom(room, WindowRoom.Mode.EDIT);
+//			frame.setVisible(true);
+//			tableModel.fireTableRowsUpdated(row, row);
+//			setTableModel(tableModel);
+//		});
+
+		/*
+		 * 'Add new' button
+		 */
+//		btnAddCustomer.addActionListener(e -> {
+//			WindowRoom frame = new WindowRoom();
+//			frame.setVisible(true);
+//			if (frame.getRoom() != null) {
+//				tableModel.add(frame.getRoom());
+//				setTableModel(tableModel);
+//			}
+//		});
+
+		/*
+		 * Search
+		 */
+		txtSearch.getDocument().addDocumentListener(new DocumentListener(){
+
+			private void search() {
+				String text = txtSearch.getText();
+				if(text.trim().length() == 0) {
+					rowSorter.setRowFilter(null);
+				} else {
+					// (?i) matches case-insensitive & Pattern.quote() escapes special characters
+					rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + Pattern.quote(text)));
+				}
+			}
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				search();
+			}
+
+			@Override
+			public void  removeUpdate(DocumentEvent e) {
+				search();
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) { /* Empty due to interface */ }
+		});
+	}
 }
