@@ -25,7 +25,15 @@ public class Tenant {
         this.room = room;
     }
 
-    public Tenant(int id, String firstName, String lastName, String email, String phone, Room room) {
+    public Room getRoom() {
+		return room;
+	}
+
+	public void setRoom(Room room) {
+		this.room = room;
+	}
+
+	public Tenant(int id, String firstName, String lastName, String email, String phone, Room room) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;

@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.List;
+
 import dal.TenantDB;
 import dal.TenantDBIF;
 import db.DataAccessException;
@@ -24,4 +26,8 @@ public class TenantController {
 		return tenant;
 	}
 
+	public List<Tenant> getAllTenants() throws DataAccessException{
+		return tenantDb.getAll();
+	}
+	
 }
