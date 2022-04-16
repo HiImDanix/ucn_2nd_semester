@@ -284,6 +284,7 @@ public class WindowRoom extends JDialog {
 				// Validate that out of service is either true or false
 				if (rdbtnOutOfServiceYes.isSelected() == false && rdbtnOutOfServiceNo.isSelected() == false) {
 					Messages.error(this, "You must choose whether the room is out of service!");
+					return;
 				}
 
 				if (mode == Mode.EDIT) {
