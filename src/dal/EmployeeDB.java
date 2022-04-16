@@ -9,11 +9,28 @@ import java.sql.SQLException;
 
 public class EmployeeDB extends DAO<Employee> implements EmployeeDBIF {
     public static final String tableName = "employee";
-    public static final String[] columnNames = new String[]
-            {"id", "first_name", "last_name", "email", "password_hash"}; // order matters (for down the code)
+    public enum Columns {
+        ID,
+        FIRST_NAME,
+        LAST_NAME,
+        EMAIL,
+        PASSWORD_HASH;
+
+        @Override
+        public String toString() {
+            return this.name().toLowerCase();
+        }
+    }
 
     public EmployeeDB() {
-        super(tableName, columnNames);
+        // Passing table name and settable column names
+        super(tableName, new String[] {
+                Columns.ID.toString(),
+                Columns.FIRST_NAME.toString(),
+                Columns.LAST_NAME.toString(),
+                Columns.EMAIL.toString(),
+                Columns.PASSWORD_HASH.toString()
+        });
     }
 
     @Override
@@ -27,11 +44,11 @@ public class EmployeeDB extends DAO<Employee> implements EmployeeDBIF {
     @Override
     public Employee buildDomainObject(ResultSet rs) throws SQLException {
         Employee employee = new Employee(
-                rs.getInt(columnNames[0]),
-                rs.getString(columnNames[1]),
-                rs.getString(columnNames[2]),
-                rs.getString(columnNames[3]),
-                rs.getString(columnNames[4])
+                rs.getInt(Columns.ID.toString()),
+                rs.getString(Columns.FIRST_NAME.toString()),
+                rs.getString(Columns.LAST_NAME.toString()),
+                rs.getString(Columns.EMAIL.toString()),
+                rs.getString(Columns.PASSWORD_HASH.toString())
         );
         return employee;
 
@@ -43,7 +60,7 @@ public class EmployeeDB extends DAO<Employee> implements EmployeeDBIF {
     }
 
     public Employee getByEmail(String email) throws DataAccessException {
-        return super.getByField(columnNames[3], email);
+        return super.getByField(Columns.EMAIL.toString(), email);
     }
 
 }
