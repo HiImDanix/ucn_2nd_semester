@@ -1,23 +1,24 @@
 package model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class StudyProof {
     private int id;
     private String documentPath;
-    private LocalDateTime studentUntilDate;
+    private LocalDate studentUntilDate;
     private Institution institution;
 
     private boolean fullObjectRetrieved = false;
 
-    public StudyProof(int id, String documentPath, LocalDateTime studentUntilDate, Institution institution) {
+    public StudyProof(int id, String documentPath, LocalDate studentUntilDate, Institution institution) {
         this.id = id;
         this.documentPath = documentPath;
         this.studentUntilDate = studentUntilDate;
         this.institution = institution;
     }
 
-    public StudyProof(int id, String documentPath, LocalDateTime studentUntilDate) {
+    public StudyProof(int id, String documentPath, LocalDate studentUntilDate) {
         this.id = id;
         this.documentPath = documentPath;
         this.studentUntilDate = studentUntilDate;
@@ -39,11 +40,11 @@ public class StudyProof {
         this.documentPath = documentPath;
     }
 
-    public LocalDateTime getStudentUntilDate() {
+    public LocalDate getStudentUntilDate() {
         return studentUntilDate;
     }
 
-    public void setStudentUntilDate(LocalDateTime studentUntilDate) {
+    public void setStudentUntilDate(LocalDate studentUntilDate) {
         this.studentUntilDate = studentUntilDate;
     }
 

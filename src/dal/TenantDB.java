@@ -6,6 +6,7 @@ package dal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -63,7 +64,7 @@ public class TenantDB extends DAO<Tenant> implements TenantDBIF {
 				resultSet.getString(Columns.email.fieldName()),
 				resultSet.getString(Columns.phone.fieldName()),
 				// TODO: stubbed for now
-				new StudyProof(1, "", LocalDateTime.now()),
+				new StudyProof(1, "", LocalDate.now()),
 				new ArrayList<Contract>()
 		);
 

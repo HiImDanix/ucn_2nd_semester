@@ -52,7 +52,7 @@ public class TenantTableModel extends AbstractTableModel {
             case 3: return tenant.getEmail();
             case 4: return tenant.getPhone();
             case 5: return tenant.getStudyProof() != null
-                    ? "Until: " + Common.datetimeToString(tenant.getStudyProof().getStudentUntilDate())
+                    ? "Until: " + Common.dateToString(tenant.getStudyProof().getStudentUntilDate())
                     : "Not provided";
             // TODO: Stubbed out for now
             case 6: return "(2) Room A, Room B";
