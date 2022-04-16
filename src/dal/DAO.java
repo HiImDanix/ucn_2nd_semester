@@ -157,7 +157,8 @@ public abstract class DAO<T> {
         try (Connection conn = DBConnection.getInstance().getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(getQuerySelectAll());
             ResultSet resultSet = stmt.executeQuery();
-            return buildDomainObjects(resultSet);
+            List<T> objects = buildDomainObjects(resultSet);
+            return objects;
         } catch (SQLException e) {
             throw new DataAccessException("Could not get all " + getTableName(), e);
         }

@@ -27,10 +27,6 @@ public class Contract {
 
     }
 
-    public Contract(int ID, boolean includeInternet, LocalDateTime startDate) {
-        this(ID, includeInternet, startDate, null, null, null, null, null);
-    }
-
     public LeaveNotice getLeaveNotice() {
         return leaveNotice;
     }

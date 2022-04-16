@@ -15,8 +15,10 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 
+import controller.ContractController;
 import controller.RoomController;
 import controller.SessionController;
+import dal.ContractDB;
 import db.DataAccessException;
 import gui.panels.CRUDRooms;
 import gui.panels.CRUDTenants;
@@ -231,6 +233,18 @@ public class Dashboard extends JFrame {
 		    	// free up memory by destroying the current dashboard
 		    	Dashboard.this.dispose();
 	    	}
+		});
+
+		// Once you click on contract tab
+		tabsPane.addChangeListener(e -> {
+			if (tabsPane.getSelectedIndex() == 3) {
+				// TODO: REMOVE
+				try {
+					System.out.println(new ContractController().getAllContracts());
+				} catch (DataAccessException e2) {
+					e2.printStackTrace();
+				}
+			}
 		});
 		
 	} // end of event handlers
