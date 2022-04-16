@@ -11,11 +11,22 @@ import java.sql.SQLException;
 
 public class RoomDB extends DAO<Room> implements RoomDBIF {
     public static final String tableName = "room";
-    public static final String[] settableColumnNames = new String[]
-            {"is_out_of_service", "room_category_id"}; // except id
+    public enum Columns {
+        ID,
+        IS_OUT_OF_SERVICE,
+        ROOM_CATEGORY_ID;
+
+        @Override
+        public String toString() {
+            return this.name().toLowerCase();
+        }
+    }
 
     public RoomDB() {
-        super(tableName, settableColumnNames);
+        // Passing table name and settable column names
+        super(tableName, new String[] {
+                Columns.IS_OUT_OF_SERVICE.toString(),
+                Columns.ROOM_CATEGORY_ID.toString()});
     }
 
     @Override
@@ -32,9 +43,9 @@ public class RoomDB extends DAO<Room> implements RoomDBIF {
     @Override
     public Room buildDomainObject(ResultSet rs) throws SQLException, DataAccessException {
         Room room = new Room(
-                rs.getInt("id"),
-                new RoomCategoryController().getRoomCategoryById(rs.getInt(settableColumnNames[1])),
-                rs.getBoolean(settableColumnNames[0])
+                rs.getInt(Columns.ID.toString()),
+                new RoomCategoryController().getRoomCategoryById(rs.getInt(Columns.ROOM_CATEGORY_ID.toString())),
+                rs.getBoolean(Columns.IS_OUT_OF_SERVICE.toString())
         );
         return room;
 
