@@ -1,5 +1,7 @@
 package controller;
 
+import dal.ContractDB;
+import dal.ContractDBIF;
 import dal.TenantDB;
 import dal.TenantDBIF;
 import db.DataAccessException;
