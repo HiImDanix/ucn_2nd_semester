@@ -9,7 +9,7 @@ import model.Tenant;
 
 public class TenantTableModel extends AbstractTableModel {
 
-	private static final String[] columnNames = {"ID", "fname", "lname", "email", "phone", "living_in"};
+	private static final String[] columnNames = {"ID", "First name", "Last name", "Email", "Phone", "Contracts"};
 	private List<Tenant> tenants;
 	
 	public TenantTableModel(List<Tenant> tenants) {
@@ -35,7 +35,8 @@ public class TenantTableModel extends AbstractTableModel {
             case 2: return tenant.getLastName();
             case 3: return tenant.getEmail();
             case 4: return tenant.getPhone();
-            case 5: return tenant.getRoom().getId();
+            // TODO: Stubbed out for now
+            case 6: return "(2) Room A, Room B";
             default: return "ERROR";
         }
 	}
@@ -47,10 +48,10 @@ public class TenantTableModel extends AbstractTableModel {
     }
     
     /**
-     * Gets the Room object by row
+     * Gets the Tenant object by row
      *
      * @param row the row
-     * @return the Room object
+     * @return the Tenant object
      */
     public Tenant getObj(int row) {
     	return tenants.get(row);
@@ -58,9 +59,9 @@ public class TenantTableModel extends AbstractTableModel {
     
   
     /**
-     * Adds a room to the table
+     * Adds a tenant to the table
      *
-     * @param room the room
+     * @param tenant the tenant
      */
     public void add(Tenant tenant) {
         this.tenants.add(tenant);
@@ -68,7 +69,7 @@ public class TenantTableModel extends AbstractTableModel {
     }
     
     /**
-     * Removes the room from the table by row
+     * Removes the tenant from the table by row
      *
      * @param row the row
      */
@@ -76,6 +77,4 @@ public class TenantTableModel extends AbstractTableModel {
     	this.tenants.remove(row);
     	this.fireTableRowsDeleted(row, row);
     }
-	
-	//fire cells edited/deleted?
 }

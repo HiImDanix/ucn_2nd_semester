@@ -73,6 +73,7 @@ public class TenantDB extends DAO<Tenant> implements TenantDBIF {
 				resultSet.getString(Columns.last_name.fieldName()),
 				resultSet.getString(Columns.email.fieldName()),
 				resultSet.getString(Columns.phone.fieldName()),
+				// TODO: stubbed for now
 				new StudyProof(1, "", LocalDateTime.now()),
 				new ArrayList<Contract>()
 		);

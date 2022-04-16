@@ -13,24 +13,15 @@ public class Tenant {
     private List<Contract> contracts;
 
 
-    public Tenant(int id, String firstName, String lastName, String email, String phone, Room room, StudyProof studyProof, List<Contract> contracts) {
+    public Tenant(int id, String firstName, String lastName, String email, String phone, StudyProof studyProof, List<Contract> contracts) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phone = phone;
         this.studyProof = studyProof;
-        this.room = room;
 		this.contracts = contracts;
     }
-
-    public Room getRoom() {
-		return room;
-	}
-
-	public void setRoom(Room room) {
-		this.room = room;
-	}
 
 	public Tenant(int id, String firstName, String lastName, String email, String phone, Room room) {
         this.id = id;
@@ -39,11 +30,6 @@ public class Tenant {
         this.email = email;
         this.phone = phone;
         this.room = room;
-    }
-
-    public boolean isFullObjectRetrieved() {
-        return this.fullObjectRetrieved;
-        
     }
 
     public int getId() {
