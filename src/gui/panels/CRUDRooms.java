@@ -21,10 +21,7 @@ import gui.panels.tablemodels.RoomTableModel;
 import gui.windows.WindowRoom;
 import model.Room;
 
-/**
- * @author Daniels Kanepe
- *
- */
+
 public class CRUDRooms extends JPanel {
 	
 	

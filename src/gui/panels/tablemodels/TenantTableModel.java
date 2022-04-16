@@ -1,19 +1,23 @@
 package gui.panels.tablemodels;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
+import gui.Common;
 import model.Room;
 import model.Tenant;
 
 public class TenantTableModel extends AbstractTableModel {
 
-	private static final String[] columnNames = {"ID", "First name", "Last name", "Email", "Phone", "Contracts"};
+	private static final String[] COLUMN_NAMES = {"ID", "First name", "Last name", "Email", "Phone", "Study proof?", "Contracts"};
+
 	private List<Tenant> tenants;
 	
 	public TenantTableModel(List<Tenant> tenants) {
-		this.tenants = tenants;
+        // Copying array to prevent mutation
+		this.tenants = new ArrayList<>(tenants);
 	}
 	
 	@Override
@@ -23,8 +27,20 @@ public class TenantTableModel extends AbstractTableModel {
 
 	@Override
 	public int getColumnCount() {
-		return columnNames.length;
+		return COLUMN_NAMES.length;
 	}
+
+    @Override
+    public String getColumnName(int column) {
+        return COLUMN_NAMES[column];
+    }
+
+    @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        switch (columnIndex) {
+            default: return String.class;
+        }
+    }
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
@@ -35,6 +51,9 @@ public class TenantTableModel extends AbstractTableModel {
             case 2: return tenant.getLastName();
             case 3: return tenant.getEmail();
             case 4: return tenant.getPhone();
+            case 5: return tenant.getStudyProof() != null
+                    ? "Until: " + Common.datetimeToString(tenant.getStudyProof().getStudentUntilDate())
+                    : "Not provided";
             // TODO: Stubbed out for now
             case 6: return "(2) Room A, Room B";
             default: return "ERROR";

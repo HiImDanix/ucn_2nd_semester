@@ -20,10 +20,7 @@ import gui.Palette;
 import gui.panels.tablemodels.TenantTableModel;
 import model.Tenant;
 
-/**
- * @author Daniels Kanepe
- *
- */
+
 public class CRUDTenants extends JPanel {
 
 

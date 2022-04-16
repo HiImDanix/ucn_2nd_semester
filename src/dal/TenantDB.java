@@ -6,25 +6,14 @@ package dal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Arrays;
 
-import controller.RoomCategoryController;
-import controller.RoomController;
-import controller.TenantController;
 import db.DataAccessException;
 import model.Contract;
-import model.Room;
 import model.StudyProof;
 import model.Tenant;
 
-/**
- * @author Andriis
- *
- */
 public class TenantDB extends DAO<Tenant> implements TenantDBIF {
 	
 	private static final String tableName = "tenant";

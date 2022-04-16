@@ -14,10 +14,6 @@ import gui.Messages;
 import model.Room;
 import model.RoomCategory;
 
-/**
- * @author Daniels Kanepe
- *
- */
 public class WindowRoom extends JDialog {
 	
 	public enum Mode {

@@ -9,10 +9,6 @@ import javax.swing.table.AbstractTableModel;
 
 import model.Room;
 
-/**
- * @author Daniels Kanepe
- *
- */
 public class RoomTableModel extends AbstractTableModel {
 
 	private static final long serialVersionUID = -2367962812947993282L;

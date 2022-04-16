@@ -19,6 +19,7 @@ import controller.RoomController;
 import controller.SessionController;
 import db.DataAccessException;
 import gui.panels.CRUDRooms;
+import gui.panels.CRUDTenants;
 import model.Room;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
@@ -139,36 +140,50 @@ public class Dashboard extends JFrame {
 			contentPane.add(tabsPane, BorderLayout.CENTER);
 			
 			
-			// Add tabs
+			// Home tab
 			JPanel emptyPanel1 = new JPanel();
 			emptyPanel1.setBorder(new EmptyBorder(15, 0, 0, 0));
 			tabsPane.addTab("Home", null, emptyPanel1, "Dashboard");
 
-		JPanel emptyPanel2 = null;
-		try {
-			emptyPanel2 = new CRUDRooms();
-		} catch (DataAccessException e) {
-			e.printStackTrace();
-		}
-		emptyPanel2.setBorder(new EmptyBorder(15, 0, 0, 0));
+			// CRUD rooms tab
+			JPanel emptyPanel2 = null;
+			try {
+				emptyPanel2 = new CRUDRooms();
+			} catch (DataAccessException e) {
+				e.printStackTrace();
+				System.exit(0);
+			}
+			emptyPanel2.setBorder(new EmptyBorder(15, 0, 0, 0));
 			tabsPane.addTab("Rooms", null, emptyPanel2, "Manage rooms");
-			
+
+			// CRUD employees tab
 			JPanel emptyPanel3 = new JPanel();
 			emptyPanel3.setBorder(new EmptyBorder(15, 0, 0, 0));
 			tabsPane.addTab("Employees", null, emptyPanel3, "Manage employees");
-			
+
+			// CRUD contracts tab
 			JPanel emptyPanel4 = new JPanel();
 			emptyPanel4.setBorder(new EmptyBorder(15, 0, 0, 0));
 			tabsPane.addTab("Contracts", null, emptyPanel4, "Manage contracts");
-			
-			JPanel emptyPanel5 = new JPanel();
-			emptyPanel5.setBorder(new EmptyBorder(15, 0, 0, 0));
-			tabsPane.addTab("Tenants", null, emptyPanel5, "Manage tenants");
-			
+
+			// CRUD tenants tab
+			JPanel tenantsCRUDPanel = null;
+			try {
+				tenantsCRUDPanel = new CRUDTenants();
+			} catch (DataAccessException e) {
+				e.printStackTrace();
+				// exit
+				System.exit(0);
+			}
+			tenantsCRUDPanel.setBorder(new EmptyBorder(15, 0, 0, 0));
+			tabsPane.addTab("Tenants", null, tenantsCRUDPanel, "Manage tenants");
+
+			// CRUD leaving notices tab
 			JPanel emptyPanel6 = new JPanel();
 			emptyPanel6.setBorder(new EmptyBorder(15, 0, 0, 0));
 			tabsPane.addTab("Leaving notices", null, emptyPanel6, "Manage leave notices");
-			
+
+			// CRUD Reports tab
 			JPanel emptyPanel7 = new JPanel();
 			emptyPanel7.setBorder(new EmptyBorder(15, 0, 0, 0));
 			tabsPane.addTab("Reports", null, emptyPanel7, "View statistics");
