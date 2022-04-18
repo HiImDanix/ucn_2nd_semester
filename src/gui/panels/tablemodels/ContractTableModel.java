@@ -54,7 +54,9 @@ public class ContractTableModel extends AbstractTableModel {
                             "(%d) %s %s %s, ", tenant.getId(), tenant.getFirstName(), tenant.getLastName())
             );
         }
-        tenantRepresentation.deleteCharAt(tenantRepresentation.length() - 1); // remove last comma
+        if (tenantRepresentation.length() > 0) {
+            tenantRepresentation.deleteCharAt(tenantRepresentation.length() - 1); // remove last comma
+        }
 
         // Contract end date representation
         String endDateRepresentation = "-";

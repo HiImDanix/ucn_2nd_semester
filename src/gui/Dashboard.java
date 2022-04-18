@@ -20,6 +20,7 @@ import controller.RoomController;
 import controller.SessionController;
 import dal.ContractDB;
 import db.DataAccessException;
+import gui.panels.CRUDContracts;
 import gui.panels.CRUDRooms;
 import gui.panels.CRUDTenants;
 import model.Room;
@@ -164,9 +165,16 @@ public class Dashboard extends JFrame {
 			tabsPane.addTab("Employees", null, emptyPanel3, "Manage employees");
 
 			// CRUD contracts tab
-			JPanel emptyPanel4 = new JPanel();
-			emptyPanel4.setBorder(new EmptyBorder(15, 0, 0, 0));
-			tabsPane.addTab("Contracts", null, emptyPanel4, "Manage contracts");
+			JPanel contractsCRUDPanel = null;
+			try {
+				contractsCRUDPanel = new CRUDContracts();
+			} catch (DataAccessException e) {
+				e.printStackTrace();
+				// exit
+				System.exit(0);
+			}
+			contractsCRUDPanel.setBorder(new EmptyBorder(15, 0, 0, 0));
+			tabsPane.addTab("Contracts", null, contractsCRUDPanel, "Manage contracts");
 
 			// CRUD tenants tab
 			JPanel tenantsCRUDPanel = null;
@@ -233,18 +241,6 @@ public class Dashboard extends JFrame {
 		    	// free up memory by destroying the current dashboard
 		    	Dashboard.this.dispose();
 	    	}
-		});
-
-		// Once you click on contract tab
-		tabsPane.addChangeListener(e -> {
-			if (tabsPane.getSelectedIndex() == 3) {
-				// TODO: REMOVE
-				try {
-					System.out.println(new ContractController().getAllContracts());
-				} catch (DataAccessException e2) {
-					e2.printStackTrace();
-				}
-			}
 		});
 		
 	} // end of event handlers
