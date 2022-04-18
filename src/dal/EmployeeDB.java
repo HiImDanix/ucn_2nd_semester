@@ -43,15 +43,18 @@ public class EmployeeDB extends DAO<Employee> implements EmployeeDBIF {
     }
 
     @Override
-    public Employee buildDomainObject(ResultSet rs) throws SQLException {
-        Employee employee = new Employee(
-                rs.getInt(ID.fieldName()),
-                rs.getString(FIRST_NAME.fieldName()),
-                rs.getString(LAST_NAME.fieldName()),
-                rs.getString(EMAIL.fieldName()),
-                rs.getString(PASSWORD_HASH.fieldName())
-        );
-        return employee;
+    public Employee buildDomainObject(ResultSet rs) throws DataAccessException {
+        try {
+            return new Employee(
+                    rs.getInt(ID.fieldName()),
+                    rs.getString(FIRST_NAME.fieldName()),
+                    rs.getString(LAST_NAME.fieldName()),
+                    rs.getString(EMAIL.fieldName()),
+                    rs.getString(PASSWORD_HASH.fieldName())
+            );
+        } catch (SQLException e) {
+            throw new DataAccessException("Error building Employee object from ResultSet", e);
+        }
 
     }
 

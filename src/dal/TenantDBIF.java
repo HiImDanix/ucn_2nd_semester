@@ -1,5 +1,6 @@
 package dal;
 
+import java.sql.ResultSet;
 import java.util.List;
 
 import db.DataAccessException;
@@ -40,4 +41,6 @@ public interface TenantDBIF {
 	void delete(Tenant t) throws DataAccessException; 
 	
 	List<Tenant> getAll() throws DataAccessException;
+
+	List<Tenant> buildDomainObjects(ResultSet rs) throws DataAccessException;
 }

@@ -42,13 +42,15 @@ public class RoomDB extends DAO<Room> implements RoomDBIF {
     }
 
     @Override
-    public Room buildDomainObject(ResultSet rs) throws SQLException, DataAccessException {
-        Room room = new Room(
-                rs.getInt(ID.fieldName()),
-                new RoomCategoryController().getRoomCategoryById(rs.getInt(ROOM_CATEGORY_ID.fieldName())),
-                rs.getBoolean(IS_OUT_OF_SERVICE.fieldName())
-        );
-        return room;
-
+    public Room buildDomainObject(ResultSet rs) throws DataAccessException {
+        try {
+            return new Room(
+                    rs.getInt(ID.fieldName()),
+                    new RoomCategoryController().getRoomCategoryById(rs.getInt(ROOM_CATEGORY_ID.fieldName())),
+                    rs.getBoolean(IS_OUT_OF_SERVICE.fieldName())
+            );
+            } catch (SQLException e) {
+                throw new DataAccessException("Error building Room object", e);
+        }
     }
 }

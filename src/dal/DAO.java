@@ -81,11 +81,15 @@ public abstract class DAO<T> {
     protected abstract int getId(T obj);
 
     // Methods for building objects from ResultSet
-    protected abstract T buildDomainObject(ResultSet resultSet) throws SQLException, DataAccessException;
-    protected List<T> buildDomainObjects(ResultSet resultSet) throws SQLException, DataAccessException {
+    protected abstract T buildDomainObject(ResultSet resultSet) throws DataAccessException;
+    public List<T> buildDomainObjects(ResultSet resultSet) throws DataAccessException {
         List<T> list = new ArrayList<>();
-        while (resultSet.next()) {
-            list.add(buildDomainObject(resultSet));
+        try {
+            while (resultSet.next()) {
+                list.add(buildDomainObject(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new DataAccessException("Error building domain objects", e);
         }
         return list;
     }

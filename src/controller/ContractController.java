@@ -24,22 +24,22 @@ public class ContractController {
     /*
      * Add contract with tenants
      */
-    public Contract addRoom(boolean includeInternet, LocalDateTime startDateTime, Room room, List<Tenant> tenants) throws DataAccessException {
-        Contract contract = new Contract(-1, includeInternet, startDateTime, room, tenants, Collections.emptyList(), Collections.emptyList(), null);
-        // TODO: transaction
-        contract.setID(contractDB.add(contract));
-        for (Tenant tenant : tenants) {
-            tenant.addContract(contract);
-            new TenantController().addTenant(tenant);
-        }
+//    public Contract addRoom(boolean includeInternet, LocalDateTime startDateTime, Room room, List<Tenant> tenants) throws DataAccessException {
+//        Contract contract = new Contract(-1, includeInternet, startDateTime, room, tenants, Collections.emptyList(), Collections.emptyList(), null);
+//        // TODO: transaction
+//        contract.setID(contractDB.add(contract));
+//        for (Tenant tenant : tenants) {
+//            tenant.addContract(contract);
+//            new TenantController().addTenant(tenant);
+//        }
         // if fails, remove contracts from tenants
         // for (Tenant tenant : tenants) {
         //     tenant.removeContract(contract);
         // }
 
-        return contract;
-
-    }
+//        return contract;
+//
+//    }
 
     public List<Contract> getAllContracts() throws DataAccessException {
         return contractDB.getAll();
