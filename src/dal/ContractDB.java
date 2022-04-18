@@ -1,7 +1,7 @@
 package dal;
 
 import controller.RoomController;
-import controller.TenantContractController;
+import controller.TenantController;
 import db.DataAccessException;
 import model.Contract;
 
@@ -48,28 +48,24 @@ public class ContractDB extends DAO<Contract> implements ContractDBIF {
     }
 
     @Override
-    public Contract buildDomainObject(ResultSet rs) throws SQLException, DataAccessException {
-        Contract contract = new Contract(
-                rs.getInt(ID.fieldName()),
-                rs.getBoolean(INCLUDE_INTERNET.fieldName()),
-                rs.getDate(START_DATE.fieldName()).toLocalDate(),
-                new RoomController().getRoomById(rs.getInt(ROOM_ID.fieldName())),
-                new TenantContractController().getTenantsByContractID(rs.getInt(ID.fieldName())),
-                // TODO: STUBS
-                Collections.emptyList(),
-                Collections.emptyList(),
-                null
-        );
+    public Contract buildDomainObject(ResultSet rs) throws DataAccessException {
+        System.out.println(new TenantController().getTenantsByContractID(1));
 
-
-
-
-//        Room room = new Room(
-//                rs.getInt(ID.fieldName()),
-//                new RoomCategoryController().getRoomCategoryById(rs.getInt(ROOM_CATEGORY_ID.fieldName())),
-//                rs.getBoolean(IS_OUT_OF_SERVICE.fieldName())
-//        );
-        return contract;
+        try {
+            return new Contract(
+                    rs.getInt(ID.fieldName()),
+                    rs.getBoolean(INCLUDE_INTERNET.fieldName()),
+                    rs.getDate(START_DATE.fieldName()).toLocalDate(),
+                    new RoomController().getRoomById(rs.getInt(ROOM_ID.fieldName())),
+                    new TenantController().getTenantsByContractID(rs.getInt(ID.fieldName())),
+                    // TODO: STUBS
+                    Collections.emptyList(),
+                    Collections.emptyList(),
+                    null
+            );
+        } catch (SQLException e) {
+            throw new DataAccessException("Error building Contract object from ResultSet", e);
+        }
 
     }
 }

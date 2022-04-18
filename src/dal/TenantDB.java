@@ -56,21 +56,24 @@ public class TenantDB extends DAO<Tenant> implements TenantDBIF {
 	}
 
 	@Override
-	protected Tenant buildDomainObject(ResultSet resultSet) throws SQLException, DataAccessException {
-		return new Tenant(
-				resultSet.getInt(Columns.ID.fieldName()),
-				resultSet.getString(Columns.first_name.fieldName()),
-				resultSet.getString(Columns.last_name.fieldName()),
-				resultSet.getString(Columns.email.fieldName()),
-				resultSet.getString(Columns.phone.fieldName()),
-				// TODO: stubbed for now
-				new StudyProof(1, "", LocalDate.now()),
-				new ArrayList<Contract>()
-		);
-
-
+	public Tenant buildDomainObject(ResultSet resultSet) throws DataAccessException {
+		try {
+			return new Tenant(
+					resultSet.getInt(Columns.ID.fieldName()),
+					resultSet.getString(Columns.first_name.fieldName()),
+					resultSet.getString(Columns.last_name.fieldName()),
+					resultSet.getString(Columns.email.fieldName()),
+					resultSet.getString(Columns.phone.fieldName()),
+					// TODO: stubbed for now
+					new StudyProof(1, "", LocalDate.now()),
+					new ArrayList<Contract>()
+			);
+		} catch (SQLException e) {
+			throw new DataAccessException("Error building Tenant object from ResultSet", e);
+		}
 	}
-	
+
+
 
 	
 }
