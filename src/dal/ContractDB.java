@@ -1,9 +1,7 @@
 package dal;
 
-import controller.RoomCategoryController;
 import controller.RoomController;
 import controller.TenantContractController;
-import controller.TenantController;
 import db.DataAccessException;
 import model.Contract;
 
@@ -19,7 +17,7 @@ public class ContractDB extends DAO<Contract> implements ContractDBIF {
     public enum Columns {
         ID,
         INCLUDE_INTERNET,
-        START_DATE_TIME,
+        START_DATE,
         ROOM_ID;
 
         public String fieldName() {
@@ -32,7 +30,7 @@ public class ContractDB extends DAO<Contract> implements ContractDBIF {
         super(tableName, new String[] {
                 ID.fieldName(),
                 INCLUDE_INTERNET.fieldName(),
-                START_DATE_TIME.fieldName(),
+                START_DATE.fieldName(),
                 ROOM_ID.fieldName()
         });
     }
@@ -40,7 +38,7 @@ public class ContractDB extends DAO<Contract> implements ContractDBIF {
     @Override
     public void setValues(PreparedStatement stmt, Contract obj) throws SQLException {
         stmt.setBoolean(1, obj.isIncludeInternet());
-        stmt.setTimestamp(2, java.sql.Timestamp.valueOf(obj.getStartDatetime()));
+        stmt.setDate(2, java.sql.Date.valueOf(obj.getStartDate()));
         stmt.setInt(3, obj.getRoom().getId());
     }
 
@@ -54,7 +52,7 @@ public class ContractDB extends DAO<Contract> implements ContractDBIF {
         Contract contract = new Contract(
                 rs.getInt(ID.fieldName()),
                 rs.getBoolean(INCLUDE_INTERNET.fieldName()),
-                rs.getTimestamp(START_DATE_TIME.fieldName()).toLocalDateTime(),
+                rs.getDate(START_DATE.fieldName()).toLocalDate(),
                 new RoomController().getRoomById(rs.getInt(ROOM_ID.fieldName())),
                 new TenantContractController().getTenantsByContractID(rs.getInt(ID.fieldName())),
                 // TODO: STUBS

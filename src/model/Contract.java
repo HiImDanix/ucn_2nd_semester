@@ -1,24 +1,25 @@
 package model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
 public class Contract {
     private int ID;
     private boolean includeInternet;
-    private LocalDateTime startDatetime;
+    private LocalDate startDate;
     private Room room;
     private List<Tenant> tenants;
     private List<RoomCondition> roomConditions;
     private List<Notification> notifications;
     private LeaveNotice leaveNotice;
 
-    public Contract(int ID, boolean includeInternet, LocalDateTime startDate,
+    public Contract(int ID, boolean includeInternet, LocalDate startDate,
                     Room room, List<Tenant> tenants, List<RoomCondition> roomConditions,
                     List<Notification> notifications, LeaveNotice leaveNotice) {
         this.ID = ID;
         this.includeInternet = includeInternet;
-        this.startDatetime = startDate;
+        this.startDate = startDate;
         this.room = room;
         this.tenants = tenants;
         this.roomConditions = roomConditions;
@@ -51,12 +52,12 @@ public class Contract {
         this.includeInternet = includeInternet;
     }
 
-    public LocalDateTime getStartDatetime() {
-        return startDatetime;
+    public LocalDate getStartDate() {
+        return startDate;
     }
 
-    public void setStartDatetime(LocalDateTime startDatetime) {
-        this.startDatetime = startDatetime;
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
     }
 
     public Room getRoom() {
@@ -97,7 +98,7 @@ public class Contract {
         return "Contract{" +
                 "ID=" + ID +
                 ", includeInternet=" + includeInternet +
-                ", startDatetime=" + startDatetime +
+                ", startDate=" + startDate +
                 ", room=" + room +
                 ", tenants=" + tenants +
                 ", roomConditions=" + roomConditions +
