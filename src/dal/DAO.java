@@ -100,6 +100,7 @@ public abstract class DAO<T> {
             rs.next();
             return rs.getInt(1);
         } catch (SQLException e) {
+            System.out.println(e);
             throw new DataAccessException("Could not add " + obj.getClass().getSimpleName() + " to database", e);
         }
     }

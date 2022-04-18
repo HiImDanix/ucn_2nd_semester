@@ -9,7 +9,6 @@ public class Tenant {
     private String email;
     private String phone;
     private StudyProof studyProof;
-    private Room room;
     private List<Contract> contracts;
 
 
@@ -21,15 +20,6 @@ public class Tenant {
         this.phone = phone;
         this.studyProof = studyProof;
 		this.contracts = contracts;
-    }
-
-	public Tenant(int id, String firstName, String lastName, String email, String phone, Room room) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.phone = phone;
-        this.room = room;
     }
 
     public int getId() {
@@ -102,7 +92,6 @@ public class Tenant {
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
                 ", studyProof=" + studyProof +
-                ", room=" + room +
                 ", contracts=" + contracts +
                 '}';
     }

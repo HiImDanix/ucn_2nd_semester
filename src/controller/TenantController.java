@@ -6,7 +6,7 @@ import dal.TenantDB;
 import dal.TenantDBIF;
 import db.DataAccessException;
 import model.Contract;
-import model.Room;
+import model.StudyProof;
 import model.Tenant;
 
 public class TenantController {
@@ -21,8 +21,8 @@ public class TenantController {
 		return tenantDb.getById(id);
 	}
 	
-	public Tenant addTenant(String fname, String lname, String email, String phone, Room room) throws DataAccessException{
-		Tenant tenant = new Tenant(-1, fname, lname, email, phone, room);
+	public Tenant addTenant(String fname, String lname, String email, String phone, StudyProof studyProof, List<Contract> contracts) throws DataAccessException{
+		Tenant tenant = new Tenant(-1, fname, lname, email, phone, studyProof, contracts);
 		tenant.setId(tenantDb.add(tenant));
 		return tenant;
 	}

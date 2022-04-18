@@ -18,13 +18,16 @@ import gui.JLink;
 import gui.Messages;
 import gui.Palette;
 import gui.panels.tablemodels.TenantTableModel;
+import gui.windows.WindowTenant;
 import model.Tenant;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 
 public class CRUDTenants extends JPanel {
 
 
-	private JButton btnAddCustomer;
+	private JButton btnAddTenant;
 	private TenantController tenantCtrl;
 	private static final long serialVersionUID = -8329527605114016878L;
 	private JTable tableMain;
@@ -72,13 +75,23 @@ public class CRUDTenants extends JPanel {
 		txtSearch.setColumns(10);
 
 		// ***** button: Add tenant  *****
-		btnAddCustomer = new JButton("Add tenant");
+		btnAddTenant = new JButton("Add tenant");
+		btnAddTenant.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				WindowTenant frame = new WindowTenant();
+				frame.setVisible(true);
+				if (frame.getTenant() != null) {
+					tableModel.add(frame.getTenant());
+					setTableModel(tableModel);
+				}
+			}
+		});
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.insets = new Insets(0, 0, 5, 0);
 		gbc_btnNewButton.gridx = 2;
 		gbc_btnNewButton.gridy = 1;
-		topPanel.add(btnAddCustomer, gbc_btnNewButton);
-		btnAddCustomer.setIcon(Images.ADD_ITEM.getImageIcon(btnAddCustomer));
+		topPanel.add(btnAddTenant, gbc_btnNewButton);
+		btnAddTenant.setIcon(Images.ADD_ITEM.getImageIcon(btnAddTenant));
 
 		// ***** Middle panel: Scroll panel *****
 		JScrollPane scrollPanel = new JScrollPane();

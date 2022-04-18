@@ -47,7 +47,12 @@ public class TenantDB extends DAO<Tenant> implements TenantDBIF {
 		stmt.setString(2, obj.getLastName());
 		stmt.setString(3, obj.getEmail());
 		stmt.setString(4, obj.getPhone());
-		stmt.setInt(5, obj.getStudyProof().getId());
+		if (obj.getStudyProof() != null) {
+			stmt.setInt(5, obj.getStudyProof().getId());
+		} else {
+			stmt.setNull(5, java.sql.Types.NULL);
+		}
+		// stmt.setInt(5, obj.getStudyProof().getId()); - Error: If tenant is registered without a study proof (NullPointerex..)
 	}
 
 	@Override
