@@ -40,12 +40,13 @@ public class ContractDB extends DAO<Contract> implements ContractDBIF {
 
     @Override
     public int add(Contract contract) throws DataAccessException {
+        int id = -1;
         try {
             // start transaction
             DBConnection.getInstance().startTransaction();
 
             // add contract to db, return auto-generated id
-            int id = super.add(contract);
+            contract.setID(super.add(contract));
 
             // link tenant-contract in db
             for (Tenant tenant : contract.getTenants()) {
@@ -54,18 +55,17 @@ public class ContractDB extends DAO<Contract> implements ContractDBIF {
 
             // commit transaction
             DBConnection.getInstance().commitTransaction();
-
-            // link tenant-contract in domain
-            for (Tenant tenant : contract.getTenants()) {
-                tenant.addContract(contract);
-                contract.addTenant(tenant);
-            }
-            return id;
         } catch (DataAccessException e) {
             // Rollback transaction
             DBConnection.getInstance().rollbackTransaction();
             throw new DataAccessException("Error adding Contract to DB", e);
         }
+
+        // link tenant-contract in domain
+        for (Tenant tenant : contract.getTenants()) {
+            tenant.addContract(contract);
+        }
+        return id;
     }
 
     @Override

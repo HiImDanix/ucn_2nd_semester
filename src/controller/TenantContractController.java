@@ -55,6 +55,7 @@ public class TenantContractController {
             PreparedStatement stmt = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
             stmt.setInt(1, contract.getID());
             stmt.setInt(2, tenant.getId());
+            stmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             throw new DataAccessException("Could not add tenant to contract", e);
