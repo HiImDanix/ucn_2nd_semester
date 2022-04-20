@@ -1,8 +1,7 @@
 package gui.windows;
 
 
-import javax.swing.JDialog;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import db.DataAccessException;
@@ -14,20 +13,30 @@ import model.Tenant;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import javax.swing.JTable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ChooseTenant extends JDialog {
 
-    private Tenant selectedObject = null;
+    private List<Tenant> selectedObjects = new ArrayList<>();
     private CRUDTenants CRUDPanel;
 
     private static final long serialVersionUID = 2968937672159813565L;
     private final JPanel contentPane;
     private JButtonPrimary btnChoose;
 
+    /*
+     * Choose multiple tenants window
+     */
+    public ChooseTenant(boolean multiple) throws DataAccessException  {
+        this();
+        if (multiple) {
+            this.CRUDPanel.getTable().setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        }
+    }
 
     /**
-     * Create the dialog.
+     * Choose a tenant window
      */
     public ChooseTenant() throws DataAccessException {
         this.setTitle("Choose a tenant...");
@@ -63,6 +72,7 @@ public class ChooseTenant extends JDialog {
         // Attach event handlers
         this.addEventHandlers();
     }
+
     /*
      * *******************************************************
      * *******************  Methods *******************
@@ -70,7 +80,14 @@ public class ChooseTenant extends JDialog {
      */
 
     public Tenant getSelectedObject() {
-        return selectedObject;
+        if (this.selectedObjects.size() > 0) {
+            return this.selectedObjects.get(0);
+        }
+        return null;
+    }
+
+    public List<Tenant> getSelectedObjects() {
+        return this.selectedObjects;
     }
 
     /*
@@ -78,6 +95,7 @@ public class ChooseTenant extends JDialog {
      * *******************  EVENT HANDLERS *******************
      * *******************************************************
      */
+
     private void addEventHandlers() {
         CRUDPanel.getTable().getSelectionModel().addListSelectionListener(e -> {
             JTable table = CRUDPanel.getTable();
@@ -95,7 +113,9 @@ public class ChooseTenant extends JDialog {
             if (!table.getSelectionModel().isSelectionEmpty()) {
                 TenantTableModel tableModel = CRUDPanel.getTableModel();
                 Tenant object = tableModel.getObj(table.getSelectedRow());
-                selectedObject = object;
+                for (int index: table.getSelectedRows()) {
+                    this.selectedObjects.add(tableModel.getObj(index));
+                }
                 this.dispose();
             }
         });
