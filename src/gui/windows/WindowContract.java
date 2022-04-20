@@ -1,5 +1,6 @@
 package gui.windows;
 
+import controller.ContractController;
 import controller.TenantContractController;
 import db.DataAccessException;
 import gui.Common;
@@ -21,7 +22,7 @@ public class WindowContract extends JDialog {
 	private Contract contract;
 	private Room room;
 	private List<Tenant> tenants;
-	private TenantContractController tenantContractCtrl;
+	private ContractController contractCtrl;
 	private Mode mode;
 
 	public enum Mode {
@@ -68,7 +69,7 @@ public class WindowContract extends JDialog {
 	public WindowContract(Contract contract, Mode mode) {
 		this.mode = mode;
 
-		tenantContractCtrl = new TenantContractController();
+		contractCtrl = new ContractController();
 		this.contract = contract;
 		this.room = contract != null ? contract.getRoom() : null;
 		this.tenants = contract != null ? contract.getTenants() : null;
@@ -386,14 +387,14 @@ public class WindowContract extends JDialog {
 
 				if (mode == Mode.EDIT) {
 					try {
-						tenantContractCtrl.updateContract(contract, newStartDate, tenants, room, includeInternet);
+						contractCtrl.updateContract(contract, newStartDate, tenants, room, includeInternet);
 					} catch (DataAccessException ex) {
 						Messages.error("Error updating room", "error");
 					}
 
 				} else if (mode == Mode.CREATE) {
 					try {
-						this.contract = tenantContractCtrl.createContract(newStartDate, tenants, room, includeInternet);
+						this.contract = contractCtrl.addContract(newStartDate, tenants, room, includeInternet);
 					} catch (DataAccessException ex) {
 						Messages.error("Error creating room", "error");
 					}

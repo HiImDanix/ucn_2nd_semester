@@ -43,15 +43,4 @@ public class TenantContractController {
         return tenants;
 
     }
-
-    public void updateContract(Contract contract, LocalDate newStartDate,
-                               List<Tenant> tenants, Room room, boolean includeInternet) throws DataAccessException {
-        Messages.info("Updating contract...", "Updating contract...");
-    }
-
-    public Contract createContract(LocalDate newStartDate, List<Tenant> tenants, Room room, boolean includeInternet)
-            throws DataAccessException {
-        Messages.info("Creating contract...", "Creating contract...");
-        return null;
-    }
 }

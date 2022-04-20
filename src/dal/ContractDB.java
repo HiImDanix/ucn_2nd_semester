@@ -28,7 +28,6 @@ public class ContractDB extends DAO<Contract> implements ContractDBIF {
     public ContractDB() {
         // Passing table name and settable column names
         super(tableName, new String[] {
-                ID.fieldName(),
                 INCLUDE_INTERNET.fieldName(),
                 START_DATE.fieldName(),
                 ROOM_ID.fieldName()
@@ -49,8 +48,6 @@ public class ContractDB extends DAO<Contract> implements ContractDBIF {
 
     @Override
     public Contract buildDomainObject(ResultSet rs) throws DataAccessException {
-        System.out.println(new TenantController().getTenantsByContractID(1));
-
         try {
             return new Contract(
                     rs.getInt(ID.fieldName()),
