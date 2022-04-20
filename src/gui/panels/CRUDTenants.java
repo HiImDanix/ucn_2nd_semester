@@ -77,16 +77,6 @@ public class CRUDTenants extends JPanel {
 
 		// ***** button: Add tenant  *****
 		btnAddTenant = new JButton("Add tenant");
-		btnAddTenant.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				WindowTenant frame = new WindowTenant();
-				frame.setVisible(true);
-				if (frame.getTenant() != null) {
-					tableModel.add(frame.getTenant());
-					setTableModel(tableModel);
-				}
-			}
-		});
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.insets = new Insets(0, 0, 5, 0);
 		gbc_btnNewButton.gridx = 2;
@@ -156,19 +146,13 @@ public class CRUDTenants extends JPanel {
 	 * *******************************************************
 	 */
 
-	//	/**
-//	 * @return JTable tableMain
-//	 */
-//	public JTable getTable() {
-//		return tableMain;
-//	}
-//
-//	/**
-//	 * @return CustomerTableModel tableModel
-//	 */
-//	public CustomerTableModel getTableModel() {
-//		return tableModel;
-//	}
+	public JTable getTable() {
+		return tableMain;
+	}
+
+	public TenantTableModel getTableModel() {
+		return tableModel;
+	}
 //
 	public void setTableModel(TenantTableModel tableModel) {
 		this.tableMain.setModel(tableModel);
@@ -262,14 +246,16 @@ public class CRUDTenants extends JPanel {
 		/*
 		 * 'Add new' button
 		 */
-//		btnAddCustomer.addActionListener(e -> {
-//			WindowRoom frame = new WindowRoom();
-//			frame.setVisible(true);
-//			if (frame.getRoom() != null) {
-//				tableModel.add(frame.getRoom());
-//				setTableModel(tableModel);
-//			}
-//		});
+		btnAddTenant.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				WindowTenant frame = new WindowTenant();
+				frame.setVisible(true);
+				if (frame.getTenant() != null) {
+					tableModel.add(frame.getTenant());
+					setTableModel(tableModel);
+				}
+			}
+		});
 
 		/*
 		 * Search
