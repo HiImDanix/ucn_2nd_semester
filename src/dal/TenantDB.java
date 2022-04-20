@@ -52,7 +52,6 @@ public class TenantDB extends DAO<Tenant> implements TenantDBIF {
 		} else {
 			stmt.setNull(5, java.sql.Types.NULL);
 		}
-		// stmt.setInt(5, obj.getStudyProof().getId()); - Error: If tenant is registered without a study proof (NullPointerex..)
 	}
 
 	@Override
@@ -70,7 +69,7 @@ public class TenantDB extends DAO<Tenant> implements TenantDBIF {
 					resultSet.getString(Columns.email.fieldName()),
 					resultSet.getString(Columns.phone.fieldName()),
 					// TODO: stubbed for now
-					new StudyProof(1, "", LocalDate.now()),
+					null,
 					new ArrayList<Contract>()
 			);
 		} catch (SQLException e) {
