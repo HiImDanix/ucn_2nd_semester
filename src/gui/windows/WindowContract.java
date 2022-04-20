@@ -236,18 +236,24 @@ public class WindowContract extends JDialog {
 				message = "Create contract?";
 			}
 			if (Messages.confirm(this, message)) {
-//
-//				// Validate Room Category
-//				if (roomCategory == null) {
-//					Messages.error(this, "You must choose a room category!");
-//					return;
-//				}
-//
-//				// Validate that out of service is either true or false
-//				if (rdbtnOutOfServiceYes.isSelected() == false && rdbtnOutOfServiceNo.isSelected() == false) {
-//					Messages.error(this, "You must choose whether the room is out of service!");
-//					return;
-//				}
+
+				// Validate Room Category
+				if (room == null) {
+					Messages.error(this, "Please choose a room.");
+					return;
+				}
+
+				// Validate tenants
+				if (tenants == null || tenants.size() == 0) {
+					Messages.error(this, "Please choose at least one tenant.");
+					return;
+				}
+				if (tenants.size() > room.getRoomCategory().getMaxTenants()) {
+					Messages.error(this, "The room category allows only " + room.getRoomCategory().getMaxTenants() + " tenants.");
+				}
+
+				// Stub
+				Messages.info(this, "NOT IMPLEMENTED YET");
 //
 //				if (mode == Mode.EDIT) {
 //					try {
