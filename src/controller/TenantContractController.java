@@ -4,11 +4,15 @@ import dal.TenantDB;
 import dal.TenantDBIF;
 import db.DBConnection;
 import db.DataAccessException;
+import gui.Messages;
+import model.Contract;
+import model.Room;
 import model.Tenant;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,5 +42,16 @@ public class TenantContractController {
         }
         return tenants;
 
+    }
+
+    public void updateContract(Contract contract, LocalDate newStartDate,
+                               List<Tenant> tenants, Room room, boolean includeInternet) throws DataAccessException {
+        Messages.info("Updating contract...", "Updating contract...");
+    }
+
+    public Contract createContract(LocalDate newStartDate, List<Tenant> tenants, Room room, boolean includeInternet)
+            throws DataAccessException {
+        Messages.info("Creating contract...", "Creating contract...");
+        return null;
     }
 }
