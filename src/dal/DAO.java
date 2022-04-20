@@ -96,7 +96,8 @@ public abstract class DAO<T> {
 
     // add & return id
     public int add(T obj) throws DataAccessException {
-        try (Connection conn = DBConnection.getInstance().getConnection()) {
+        Connection conn = DBConnection.getInstance().getConnection();
+        try {
             PreparedStatement stmt = conn.prepareStatement(getQueryCreate(), PreparedStatement.RETURN_GENERATED_KEYS);
             setValues(stmt, obj);
             stmt.executeUpdate();
@@ -110,7 +111,8 @@ public abstract class DAO<T> {
     }
 
     public void update(T obj) throws DataAccessException {
-        try (Connection conn = DBConnection.getInstance().getConnection()) {
+        Connection conn = DBConnection.getInstance().getConnection();
+        try {
             PreparedStatement stmt = conn.prepareStatement(getQueryUpdate());
             setValues(stmt, obj);
             stmt.setInt(getFields().length + 1, getId(obj));
@@ -121,7 +123,8 @@ public abstract class DAO<T> {
     }
 
     public void delete(T obj) throws DataAccessException {
-        try (Connection conn = DBConnection.getInstance().getConnection()) {
+        Connection conn = DBConnection.getInstance().getConnection();
+        try {
             PreparedStatement stmt = conn.prepareStatement(getQueryDelete());
             stmt.setInt(1, getId(obj));
             stmt.executeUpdate();
@@ -131,7 +134,8 @@ public abstract class DAO<T> {
     }
 
     public T getById(int id) throws DataAccessException {
-        try (Connection conn = DBConnection.getInstance().getConnection()) {
+        Connection conn = DBConnection.getInstance().getConnection();
+        try {
             PreparedStatement stmt = conn.prepareStatement(getQuerySelectById());
             stmt.setInt(1, id);
             ResultSet resultSet = stmt.executeQuery();
@@ -145,7 +149,8 @@ public abstract class DAO<T> {
     }
 
     public T getByField(String field, String value) throws DataAccessException {
-        try (Connection conn = DBConnection.getInstance().getConnection()) {
+        Connection conn = DBConnection.getInstance().getConnection();
+        try {
             PreparedStatement stmt = conn.prepareStatement(getQuerySelectByField(field));
             stmt.setString(1, value);
             ResultSet resultSet = stmt.executeQuery();
@@ -159,7 +164,8 @@ public abstract class DAO<T> {
     }
 
     public List<T> getAll() throws DataAccessException {
-        try (Connection conn = DBConnection.getInstance().getConnection()) {
+        Connection conn = DBConnection.getInstance().getConnection();
+        try {
             PreparedStatement stmt = conn.prepareStatement(getQuerySelectAll());
             ResultSet resultSet = stmt.executeQuery();
             List<T> objects = buildDomainObjects(resultSet);
@@ -170,7 +176,8 @@ public abstract class DAO<T> {
     }
 
     public List<T> getAllByField(String field, String value) throws DataAccessException {
-        try (Connection conn = DBConnection.getInstance().getConnection()) {
+        Connection conn = DBConnection.getInstance().getConnection();
+        try {
             PreparedStatement stmt = conn.prepareStatement(getQuerySelectByField(field));
             stmt.setString(1, value);
             ResultSet resultSet = stmt.executeQuery();

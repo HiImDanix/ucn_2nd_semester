@@ -117,22 +117,6 @@ public class DBConnection {
      * Get the database's Connection object
      */
     public Connection getConnection() {
-        // TODO: Very bad. No point for singleton.
-        // Using because in buildObjects (DAO), we are making queries while iterating over resultSet, thus
-        // closing it after the inner query is done, causing an exception for the iterator.
-        try {
-            instance = new DBConnection();
-        } catch (DataAccessException e) {
-            e.printStackTrace();
-        }
-        // print if closed
-        try {
-            if (con.isClosed()) {
-                Messages.error("Connection to the database has been closed.", "Database connection");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
         return con;
     }
 
@@ -140,14 +124,8 @@ public class DBConnection {
      * Singleton pattern
      */
     public static synchronized DBConnection getInstance() throws DataAccessException {
-        // TODO: a hack to make sure connection is open. Look into a better solution
-        try {
-            if (instance == null || con == null || instance.con.isClosed()) {
-                System.out.println("Creating new connection");
-                instance = new DBConnection();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if (con == null) {
+            instance = new DBConnection();
         }
         return instance;
     }
