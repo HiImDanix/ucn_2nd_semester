@@ -164,6 +164,15 @@ public class CRUDRooms extends JPanel {
 		rowSorter = new TableRowSorter<>(tableMain.getModel());
 		tableMain.setRowSorter(rowSorter);
 	}
+	
+	public JTable getTable() {
+		return tableMain;
+	}
+	
+	public RoomTableModel getTableModel() {
+		return tableModel;
+	}
+	
 //
 //	/**
 //	 * Select a customer in the CRUD table.

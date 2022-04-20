@@ -18,6 +18,7 @@ import gui.JLink;
 import gui.Messages;
 import gui.Palette;
 import gui.panels.tablemodels.TenantTableModel;
+import gui.windows.ChooseRoom;
 import gui.windows.WindowTenant;
 import model.Tenant;
 import java.awt.event.ActionListener;
