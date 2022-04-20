@@ -43,21 +43,6 @@ public class TenantController {
 
 	// TODO: Improve this using a JOIN & exposed buildObjects() method for tenants
 	public List<Tenant> getTenantsByContractID(int contractID) throws DataAccessException {
-		String query = "SELECT tenant_id FROM tenant_contract WHERE contract_id = " + contractID;
-		Connection connection = DBConnection.getInstance().getConnection();
-		List<Tenant> tenants = new ArrayList<>();
-		try {
-			ResultSet resultSet = connection.prepareStatement(query).executeQuery();
-			while (resultSet.next()) {
-				int tenantID = resultSet.getInt("tenant_id");
-				Tenant tenant = tenantDb.getById(tenantID);
-				tenants.add(tenant);
-			}
-			// tenants = tenantDb.buildDomainObjects(resultSet);
-		} catch (SQLException e) {
-			throw new DataAccessException("Could not get tenants by contract ID", e);
-		}
-		return tenants;
-
+		return new TenantContractController().getTenantsByContractID(contractID);
 	}
 }

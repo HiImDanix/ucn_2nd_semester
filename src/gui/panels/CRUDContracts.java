@@ -9,6 +9,7 @@ import gui.Messages;
 import gui.Palette;
 import gui.panels.tablemodels.ContractTableModel;
 import gui.panels.tablemodels.TenantTableModel;
+import gui.windows.WindowContract;
 import model.Tenant;
 
 import javax.swing.*;
@@ -247,14 +248,14 @@ public class CRUDContracts extends JPanel {
 		/*
 		 * 'Add new' button
 		 */
-//		btnAddCustomer.addActionListener(e -> {
-//			WindowRoom frame = new WindowRoom();
-//			frame.setVisible(true);
-//			if (frame.getRoom() != null) {
-//				tableModel.add(frame.getRoom());
-//				setTableModel(tableModel);
-//			}
-//		});
+		btnAdd.addActionListener(e -> {
+			WindowContract frame = new WindowContract();
+			frame.setVisible(true);
+			if (frame.getObject() != null) {
+				tableModel.add(frame.getObject());
+				setTableModel(tableModel);
+			}
+		});
 
 		/*
 		 * Search
