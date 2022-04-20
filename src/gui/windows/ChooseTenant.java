@@ -6,6 +6,7 @@ import javax.swing.border.EmptyBorder;
 
 import db.DataAccessException;
 import gui.JButtonPrimary;
+import gui.Messages;
 import gui.panels.CRUDTenants;
 import gui.panels.tablemodels.TenantTableModel;
 import model.Tenant;
@@ -20,6 +21,7 @@ public class ChooseTenant extends JDialog {
 
     private List<Tenant> selectedObjects = new ArrayList<>();
     private CRUDTenants CRUDPanel;
+    private Integer maxTenants = null;
 
     private static final long serialVersionUID = 2968937672159813565L;
     private final JPanel contentPane;
@@ -28,11 +30,11 @@ public class ChooseTenant extends JDialog {
     /*
      * Choose multiple tenants window
      */
-    public ChooseTenant(boolean multiple) throws DataAccessException  {
+    public ChooseTenant(int maxTenants) throws DataAccessException  {
         this();
-        if (multiple) {
-            this.CRUDPanel.getTable().setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        }
+        this.maxTenants = maxTenants;
+        this.setTitle("Choose up to " + maxTenants + " tenants...");
+        this.CRUDPanel.getTable().setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
     }
 
     /**
@@ -112,11 +114,14 @@ public class ChooseTenant extends JDialog {
             JTable table = CRUDPanel.getTable();
             if (!table.getSelectionModel().isSelectionEmpty()) {
                 TenantTableModel tableModel = CRUDPanel.getTableModel();
-                Tenant object = tableModel.getObj(table.getSelectedRow());
-                for (int index: table.getSelectedRows()) {
-                    this.selectedObjects.add(tableModel.getObj(index));
+                if (table.getSelectedRows().length > maxTenants) {
+                    Messages.error("You can only choose up to " + maxTenants + " tenants.", "Error");
+                } else {
+                    for (int index: table.getSelectedRows()) {
+                        this.selectedObjects.add(tableModel.getObj(index));
+                    }
+                    this.dispose();
                 }
-                this.dispose();
             }
         });
     }

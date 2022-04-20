@@ -19,6 +19,6 @@ public class RoomCategoryController {
 
     public RoomCategory getRoomCategoryById(int roomCategoryId) throws DataAccessException {
         // return stubbed data for constructor (int id, String name, String description, BigDecimal pricePerMonth, BigDecimal PricePerMonthForInternet, BigDecimal pricePerMonthForExtraTenant, int maxTenants, int leaveNoticeDays, List<Furniture> furniture)
-        return new RoomCategory(1, "Single", "Single", BigDecimal.valueOf(100), BigDecimal.valueOf(100), BigDecimal.valueOf(100), 1, 1, new FurnitureController().getFurnitureByRoomCategoryId(1));
+        return new RoomCategory(1, "Single", "Single", BigDecimal.valueOf(100), BigDecimal.valueOf(100), BigDecimal.valueOf(100), 2, 1, new FurnitureController().getFurnitureByRoomCategoryId(1));
     }
 }

@@ -269,6 +269,9 @@ public class WindowContract extends JDialog {
 
 		}
 
+		// Choose tenants should by default be disabled, until a room is selected
+		btnChooseTenants.setEnabled(false);
+
 		addEventHandlers();
 
 	}
@@ -415,6 +418,11 @@ public class WindowContract extends JDialog {
 			if (frame.getSelectedObject() != null) {
 				this.room = frame.getSelectedObject();
 				txtDisplayRoom.setText(getRoomRepresentation(room));
+				// Enable choose tenants button
+				btnChooseTenants.setEnabled(true);
+			} else {
+				// Disable choose tenants button
+				btnChooseTenants.setEnabled(false);
 			}
 		});
 
@@ -422,7 +430,12 @@ public class WindowContract extends JDialog {
 
 			ChooseTenant frame = null;
 			try {
-				frame = new ChooseTenant(true);
+				if (this.room != null && this.room.getRoomCategory() != null && this.room.getRoomCategory().getMaxTenants() > 1) {
+					frame = new ChooseTenant(this.room.getRoomCategory().getMaxTenants());
+				} else {
+					System.out.println(room);
+					frame = new ChooseTenant();
+				}
 			} catch (DataAccessException ex) {
 				Messages.error("Error opening choose tenant window", "error");
 			}
