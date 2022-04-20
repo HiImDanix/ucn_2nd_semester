@@ -233,14 +233,14 @@ public class CRUDTenants extends JPanel {
 		/*
 		 * 'Edit' button
 		 */
-//		btnEdit.addActionListener(e -> {
-//			int row = tableMain.convertRowIndexToModel(tableMain.getSelectedRow());
-//			Room room = tableModel.getObj(row);
-//			WindowRoom frame = new WindowRoom(room, WindowRoom.Mode.EDIT);
-//			frame.setVisible(true);
-//			tableModel.fireTableRowsUpdated(row, row);
-//			setTableModel(tableModel);
-//		});
+		btnEdit.addActionListener(e -> {
+			int row = tableMain.convertRowIndexToModel(tableMain.getSelectedRow());
+			Tenant tenant = tableModel.getObj(row);
+			WindowTenant frame = new WindowTenant(tenant, WindowTenant.Mode.EDIT);
+			frame.setVisible(true);
+			tableModel.fireTableRowsUpdated(row, row);
+			setTableModel(tableModel);
+		});
 
 		/*
 		 * 'Add new' button

@@ -45,4 +45,32 @@ public class TenantController {
 	public List<Tenant> getTenantsByContractID(int contractID) throws DataAccessException {
 		return new TenantContractController().getTenantsByContractID(contractID);
 	}
+
+    public void updateTenant(Tenant tenant, String firstName, String lastName, String email, String phone)
+			throws DataAccessException {
+		// capture old values
+		String oldFirstName = tenant.getFirstName();
+		String oldLastName = tenant.getLastName();
+		String oldEmail = tenant.getEmail();
+		String oldPhone = tenant.getPhone();
+
+		// update new values
+		tenant.setFirstName(firstName);
+		tenant.setLastName(lastName);
+		tenant.setEmail(email);
+		tenant.setPhone(phone);
+
+		// update database
+		try {
+			tenantDb.update(tenant);
+		} catch (DataAccessException e) {
+			// revert to old values
+			tenant.setFirstName(oldFirstName);
+			tenant.setLastName(oldLastName);
+			tenant.setEmail(oldEmail);
+			tenant.setPhone(oldPhone);
+			throw e;
+		}
+	}
+
 }

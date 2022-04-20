@@ -6,9 +6,9 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -49,10 +49,10 @@ public class WindowTenant extends JDialog {
 	}
 
 	private JPanel contentPane;
-	private JTextField txtFname;
+	private JTextField txtFirstName;
 	private JButton btnSubmit;
 	private JPanel typePanel;
-	private JTextField txtStudyProof;
+	private JTextField txtDisplayStudyProof;
 	private JButton btnChooseStudyProof;
 	
 	Tenant tenant;
@@ -60,16 +60,13 @@ public class WindowTenant extends JDialog {
 	List<Contract> contracts;
 	TenantController tenantCtrl;
 	Mode mode;
-	private final ButtonGroup buttonGroup = new ButtonGroup();
-	private JLabel lblFname;
-	private JLabel lblLname;
-	private JTextField txtLname;
+	private JLabel lblFirstName;
+	private JLabel lblLastName;
+	private JTextField txtLastName;
 	private JLabel lblEmailAddress;
 	private JTextField txtEmail;
 	private JLabel lblPhone;
 	private JTextField txtPhone;
-	private JSpinner spinner;
-	private JLabel lblNewLabel;
 	private JTextField txtID;
 	private JLabel lblID;
 
@@ -86,9 +83,6 @@ public class WindowTenant extends JDialog {
 
 	/**
 	 * Constructor for view/edit
-	 *
-	 * @param room the room
-	 * @param mode the mode
 	 */
 	public WindowTenant(Tenant tenant, Mode mode) {
 		this.mode = mode;
@@ -104,118 +98,119 @@ public class WindowTenant extends JDialog {
 		contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
-		gbl_contentPanel.columnWidths = new int[]{0, 0, 0, 0, 0};
-		gbl_contentPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gbl_contentPanel.columnWeights = new double[]{0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
-		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPanel.columnWidths = new int[]{0, 0, 0};
+		gbl_contentPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_contentPanel.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
+		gbl_contentPanel.rowWeights = new double[]{1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPanel);
 		
-		lblFname = new JLabel("First name *");
-		GridBagConstraints gbc_lblFname = new GridBagConstraints();
-		gbc_lblFname.anchor = GridBagConstraints.WEST;
-		gbc_lblFname.insets = new Insets(0, 0, 5, 5);
-		gbc_lblFname.gridx = 2;
-		gbc_lblFname.gridy = 0;
-		contentPane.add(lblFname, gbc_lblFname);
+		lblID = new JLabel("First name *");
+		GridBagConstraints gbc_lblID = new GridBagConstraints();
+		gbc_lblID.anchor = GridBagConstraints.SOUTHWEST;
+		gbc_lblID.insets = new Insets(0, 0, 5, 5);
+		gbc_lblID.gridx = 0;
+		gbc_lblID.gridy = 0;
+		contentPane.add(lblID, gbc_lblID);
+		
+		lblFirstName = new JLabel("First name *");
+		GridBagConstraints gbc_lblFirstName = new GridBagConstraints();
+		gbc_lblFirstName.anchor = GridBagConstraints.SOUTHWEST;
+		gbc_lblFirstName.insets = new Insets(0, 0, 5, 0);
+		gbc_lblFirstName.gridx = 1;
+		gbc_lblFirstName.gridy = 0;
+		contentPane.add(lblFirstName, gbc_lblFirstName);
+		
+		txtID = new JTextField();
+		txtID.setColumns(10);
+		GridBagConstraints gbc_txtID = new GridBagConstraints();
+		gbc_txtID.anchor = GridBagConstraints.NORTH;
+		gbc_txtID.insets = new Insets(0, 0, 5, 5);
+		gbc_txtID.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtID.gridx = 0;
+		gbc_txtID.gridy = 1;
+		contentPane.add(txtID, gbc_txtID);
 		
 		
-		txtFname = new JTextField();
-		txtFname.setEnabled(false);
-		GridBagConstraints gbc_txtFname = new GridBagConstraints();
-		gbc_txtFname.anchor = GridBagConstraints.NORTH;
-		gbc_txtFname.insets = new Insets(0, 0, 5, 5);
-		gbc_txtFname.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtFname.gridx = 2;
-		gbc_txtFname.gridy = 1;
-		contentPane.add(txtFname, gbc_txtFname);
-		txtFname.setColumns(10);
+		txtFirstName = new JTextField();
+		GridBagConstraints gbc_txtFirstName = new GridBagConstraints();
+		gbc_txtFirstName.anchor = GridBagConstraints.NORTH;
+		gbc_txtFirstName.insets = new Insets(0, 0, 5, 0);
+		gbc_txtFirstName.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtFirstName.gridx = 1;
+		gbc_txtFirstName.gridy = 1;
+		contentPane.add(txtFirstName, gbc_txtFirstName);
+		txtFirstName.setColumns(10);
 		
-		lblLname = new JLabel("Last name *");
-		GridBagConstraints gbc_lblLname = new GridBagConstraints();
-		gbc_lblLname.anchor = GridBagConstraints.WEST;
-		gbc_lblLname.insets = new Insets(0, 0, 5, 5);
-		gbc_lblLname.gridx = 2;
-		gbc_lblLname.gridy = 2;
-		contentPane.add(lblLname, gbc_lblLname);
-		
-		txtLname = new JTextField();
-		txtLname.setEnabled(false);
-		txtLname.setColumns(10);
-		GridBagConstraints gbc_txtLname = new GridBagConstraints();
-		gbc_txtLname.insets = new Insets(0, 0, 5, 5);
-		gbc_txtLname.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtLname.gridx = 2;
-		gbc_txtLname.gridy = 3;
-		contentPane.add(txtLname, gbc_txtLname);
+		lblLastName = new JLabel("Last name *");
+		GridBagConstraints gbc_lblLastName = new GridBagConstraints();
+		gbc_lblLastName.anchor = GridBagConstraints.SOUTHWEST;
+		gbc_lblLastName.insets = new Insets(0, 0, 5, 5);
+		gbc_lblLastName.gridx = 0;
+		gbc_lblLastName.gridy = 2;
+		contentPane.add(lblLastName, gbc_lblLastName);
 		
 		lblEmailAddress = new JLabel("Email address *");
 		GridBagConstraints gbc_lblEmailAddress = new GridBagConstraints();
-		gbc_lblEmailAddress.anchor = GridBagConstraints.WEST;
-		gbc_lblEmailAddress.insets = new Insets(0, 0, 5, 5);
-		gbc_lblEmailAddress.gridx = 2;
-		gbc_lblEmailAddress.gridy = 4;
+		gbc_lblEmailAddress.anchor = GridBagConstraints.SOUTHWEST;
+		gbc_lblEmailAddress.insets = new Insets(0, 0, 5, 0);
+		gbc_lblEmailAddress.gridx = 1;
+		gbc_lblEmailAddress.gridy = 2;
 		contentPane.add(lblEmailAddress, gbc_lblEmailAddress);
 		
+		txtLastName = new JTextField();
+		txtLastName.setColumns(10);
+		GridBagConstraints gbc_txtLastName = new GridBagConstraints();
+		gbc_txtLastName.anchor = GridBagConstraints.NORTH;
+		gbc_txtLastName.insets = new Insets(0, 0, 5, 5);
+		gbc_txtLastName.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtLastName.gridx = 0;
+		gbc_txtLastName.gridy = 3;
+		contentPane.add(txtLastName, gbc_txtLastName);
+		
 		txtEmail = new JTextField();
-		txtEmail.setEnabled(false);
 		txtEmail.setColumns(10);
 		GridBagConstraints gbc_txtEmail = new GridBagConstraints();
-		gbc_txtEmail.insets = new Insets(0, 0, 5, 5);
+		gbc_txtEmail.anchor = GridBagConstraints.NORTH;
+		gbc_txtEmail.insets = new Insets(0, 0, 5, 0);
 		gbc_txtEmail.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtEmail.gridx = 2;
-		gbc_txtEmail.gridy = 5;
+		gbc_txtEmail.gridx = 1;
+		gbc_txtEmail.gridy = 3;
 		contentPane.add(txtEmail, gbc_txtEmail);
 		
 		lblPhone = new JLabel("Phone number *");
 		GridBagConstraints gbc_lblPhone = new GridBagConstraints();
-		gbc_lblPhone.anchor = GridBagConstraints.WEST;
+		gbc_lblPhone.anchor = GridBagConstraints.SOUTHWEST;
 		gbc_lblPhone.insets = new Insets(0, 0, 5, 5);
-		gbc_lblPhone.gridx = 2;
-		gbc_lblPhone.gridy = 6;
+		gbc_lblPhone.gridx = 0;
+		gbc_lblPhone.gridy = 4;
 		contentPane.add(lblPhone, gbc_lblPhone);
-		
-		lblNewLabel = new JLabel("+");
-		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
-		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel.gridx = 0;
-		gbc_lblNewLabel.gridy = 7;
-		contentPane.add(lblNewLabel, gbc_lblNewLabel);
-		
-		spinner = new JSpinner();
-		spinner.setModel(new SpinnerNumberModel(45, 1, 999, 1));
-		GridBagConstraints gbc_spinner = new GridBagConstraints();
-		gbc_spinner.insets = new Insets(0, 0, 5, 5);
-		gbc_spinner.gridx = 1;
-		gbc_spinner.gridy = 7;
-		contentPane.add(spinner, gbc_spinner);
-		
-		txtPhone = new JTextField();
-		txtPhone.setEnabled(false);
-		txtPhone.setColumns(10);
-		GridBagConstraints gbc_txtPhone = new GridBagConstraints();
-		gbc_txtPhone.insets = new Insets(0, 0, 5, 5);
-		gbc_txtPhone.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtPhone.gridx = 2;
-		gbc_txtPhone.gridy = 7;
-		contentPane.add(txtPhone, gbc_txtPhone);
 		
 		
 		JLabel lblStudyProof = new JLabel("StufyProof");
 		GridBagConstraints gbc_lblStudyProof = new GridBagConstraints();
 		gbc_lblStudyProof.anchor = GridBagConstraints.SOUTH;
 		gbc_lblStudyProof.fill = GridBagConstraints.HORIZONTAL;
-		gbc_lblStudyProof.insets = new Insets(0, 0, 5, 5);
-		gbc_lblStudyProof.gridx = 2;
-		gbc_lblStudyProof.gridy = 8;
+		gbc_lblStudyProof.insets = new Insets(0, 0, 5, 0);
+		gbc_lblStudyProof.gridx = 1;
+		gbc_lblStudyProof.gridy = 4;
 		contentPane.add(lblStudyProof, gbc_lblStudyProof);
+		
+		txtPhone = new JTextField();
+		txtPhone.setColumns(10);
+		GridBagConstraints gbc_txtPhone = new GridBagConstraints();
+		gbc_txtPhone.anchor = GridBagConstraints.NORTH;
+		gbc_txtPhone.insets = new Insets(0, 0, 5, 5);
+		gbc_txtPhone.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtPhone.gridx = 0;
+		gbc_txtPhone.gridy = 5;
+		contentPane.add(txtPhone, gbc_txtPhone);
 		
 		typePanel = new JPanel();
 		GridBagConstraints gbc_typePanel = new GridBagConstraints();
-		gbc_typePanel.gridwidth = 2;
 		gbc_typePanel.insets = new Insets(0, 0, 5, 0);
 		gbc_typePanel.fill = GridBagConstraints.BOTH;
-		gbc_typePanel.gridx = 2;
-		gbc_typePanel.gridy = 9;
+		gbc_typePanel.gridx = 1;
+		gbc_typePanel.gridy = 5;
 		contentPane.add(typePanel, gbc_typePanel);
 		GridBagLayout gbl_typePanel = new GridBagLayout();
 		gbl_typePanel.columnWidths = new int[]{0, 0, 0};
@@ -224,15 +219,14 @@ public class WindowTenant extends JDialog {
 		gbl_typePanel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		typePanel.setLayout(gbl_typePanel);
 		
-		txtStudyProof = new JTextField();
-		txtStudyProof.setEnabled(false);
-		GridBagConstraints gbc_txtStudyProof = new GridBagConstraints();
-		gbc_txtStudyProof.insets = new Insets(0, 0, 0, 5);
-		gbc_txtStudyProof.fill = GridBagConstraints.BOTH;
-		gbc_txtStudyProof.gridx = 0;
-		gbc_txtStudyProof.gridy = 0;
-		typePanel.add(txtStudyProof, gbc_txtStudyProof);
-		txtStudyProof.setColumns(10);
+		txtDisplayStudyProof = new JTextField();
+		GridBagConstraints gbc_txtDisplayStudyProof = new GridBagConstraints();
+		gbc_txtDisplayStudyProof.insets = new Insets(0, 0, 0, 5);
+		gbc_txtDisplayStudyProof.fill = GridBagConstraints.BOTH;
+		gbc_txtDisplayStudyProof.gridx = 0;
+		gbc_txtDisplayStudyProof.gridy = 0;
+		typePanel.add(txtDisplayStudyProof, gbc_txtDisplayStudyProof);
+		txtDisplayStudyProof.setColumns(10);
 		
 		btnChooseStudyProof = new JButton("Choose...");
 		GridBagConstraints gbc_btnChooseStudyProof = new GridBagConstraints();
@@ -241,30 +235,13 @@ public class WindowTenant extends JDialog {
 		gbc_btnChooseStudyProof.gridy = 0;
 		typePanel.add(btnChooseStudyProof, gbc_btnChooseStudyProof);
 		
-		lblID = new JLabel("ID");
-		GridBagConstraints gbc_lblID = new GridBagConstraints();
-		gbc_lblID.insets = new Insets(0, 0, 5, 5);
-		gbc_lblID.anchor = GridBagConstraints.EAST;
-		gbc_lblID.gridx = 1;
-		gbc_lblID.gridy = 10;
-		contentPane.add(lblID, gbc_lblID);
-		
-		txtID = new JTextField();
-		txtID.setEnabled(false);
-		txtID.setColumns(10);
-		GridBagConstraints gbc_txtID = new GridBagConstraints();
-		gbc_txtID.insets = new Insets(0, 0, 5, 5);
-		gbc_txtID.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtID.gridx = 2;
-		gbc_txtID.gridy = 10;
-		contentPane.add(txtID, gbc_txtID);
-		
 		
 		btnSubmit = new JButtonPrimary("Update");
 		GridBagConstraints gbc_btnOk = new GridBagConstraints();
+		gbc_btnOk.gridwidth = 2;
 		gbc_btnOk.anchor = GridBagConstraints.NORTHEAST;
-		gbc_btnOk.gridx = 3;
-		gbc_btnOk.gridy = 11;
+		gbc_btnOk.gridx = 0;
+		gbc_btnOk.gridy = 6;
 		contentPane.add(btnSubmit, gbc_btnOk);
 		
 		switch (mode) {
@@ -316,18 +293,20 @@ public class WindowTenant extends JDialog {
 	private void enableFields() {
 		Common.toggleUserComponents(this, true);
 
-		// except ID & Study proof field
+		// except ID & Study proof display field
 		txtID.setEnabled(false);
-		txtStudyProof.setEnabled(false);
+		txtDisplayStudyProof.setEnabled(false);
 	}
 
 	// FIll in the fields
 	private void fillFields(Tenant tenant) {
-		txtFname.setText(String.valueOf(tenant.getFirstName()));
-		txtStudyProof.setText(tenant.getLastName());
+		txtFirstName.setText(String.valueOf(tenant.getFirstName()));
+		txtDisplayStudyProof.setText(tenant.getStudyProof() != null
+				? "Until: " + Common.dateToString(tenant.getStudyProof().getStudentUntilDate())
+				: "-");
 		txtEmail.setText(tenant.getEmail());
+		txtLastName.setText(tenant.getLastName());
 		txtPhone.setText(tenant.getPhone());
-		//studyproof tf
 		txtID.setText(String.valueOf(tenant.getId()));
 	}
 	
@@ -358,14 +337,14 @@ public class WindowTenant extends JDialog {
 			if (Messages.confirm(this, message)) {
 
 				// Validate & parse: First name
-				String fname = txtFname.getText().strip();
-				if (fname.isEmpty()) {
+				String firstName = txtFirstName.getText().strip();
+				if (firstName.isEmpty()) {
 					Messages.error(this, "First name cannot be empty!");
 				}
 
 				// Validate & parse: Last name
-				String lname = txtStudyProof.getText().strip();
-				if (lname.isEmpty()) {
+				String lastName = txtLastName.getText().strip();
+				if (lastName.isEmpty()) {
 					Messages.error(this, "Last name cannot be empty!");
 				}
 
@@ -381,23 +360,17 @@ public class WindowTenant extends JDialog {
 					Messages.error(this, "Phone cannot be empty!");
 				}
 
-				
-
-				// Validate fname,lname,email,phone
-				if (txtFname.getText() == null || txtLname.getText() == null || txtEmail.getText() == null || txtPhone.getText() == null) {
-					Messages.error(this, "You must fill out the fields marked with a star!");
-					return;
-				}
-
-
-
 				if (mode == Mode.EDIT) {
-				//TODO: ctrl class update method calls here
-
+					try {
+						tenantCtrl.updateTenant(tenant, firstName, lastName, email, phone);
+					} catch (DataAccessException ex) {
+						Messages.error(this, "Server error. Failed to update tenant.");
+					}
 				} else if (mode == Mode.CREATE) {
 					// if mode == Create, create a new room
 					try {
-						this.tenant = tenantCtrl.addTenant(txtFname.getText().trim(), txtLname.getText().trim(), txtEmail.getText().trim(), txtPhone.getText().trim(), studyProof, contracts);
+						this.tenant = tenantCtrl.addTenant(firstName, lastName, email, phone,
+								studyProof, Collections.emptyList());
 					} catch (DataAccessException ex) {
 						Messages.error("Error creating tenant", "error");
 					}
