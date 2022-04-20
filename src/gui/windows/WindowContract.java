@@ -362,7 +362,8 @@ public class WindowContract extends JDialog {
 
 				// Validate: Up to max amount of tenants have been chosen
 				if (tenants.size() > room.getRoomCategory().getMaxTenants()) {
-					Messages.error(this, "The room category allows only " + room.getRoomCategory().getMaxTenants() + " tenants.");
+					Messages.error(this, "The room category allows only "
+							+ room.getRoomCategory().getMaxTenants() + " tenants.");
 				}
 
 				// Validate: start date is not empty
@@ -373,7 +374,7 @@ public class WindowContract extends JDialog {
 				// Parse start date
 				LocalDate newStartDate;
 				try {
-					newStartDate = Common.stringToDate(txtStartDate.getText());
+					newStartDate = Common.stringToDate(txtStartDate.getText().strip());
 				} catch (DateTimeParseException e1) {
 					Messages.error(this, "Please enter a valid contract start date in the format of: "
 							+ Common.getDateTimeFormat());
@@ -383,6 +384,11 @@ public class WindowContract extends JDialog {
 				// Validate: start date is not in the past
 				if (newStartDate.isBefore(LocalDate.now())) {
 					Messages.error(this, "The start date cannot be in the past.");
+				}
+
+				// Validate: yes/no radio buttons are selected for internet
+				if (!rdbtnInternetYes.isSelected() && !rdbtnInternetNo.isSelected()) {
+					Messages.error(this, "Please select whether the contract includes internet.");
 				}
 
 				// parse the internet option
@@ -408,6 +414,7 @@ public class WindowContract extends JDialog {
 		});
 
 		btnChooseRoom.addActionListener(e -> {
+			// Open 'choose room' window
 			ChooseRoom frame = null;
 			try {
 				frame = new ChooseRoom();
@@ -415,22 +422,23 @@ public class WindowContract extends JDialog {
 				Messages.error("Error opening choose room window", "error");
 			}
 			frame.setVisible(true);
+
+			// if a room was chosen, update the text field & allow selection of tenants
 			if (frame.getSelectedObject() != null) {
 				this.room = frame.getSelectedObject();
 				txtDisplayRoom.setText(getRoomRepresentation(room));
-				// Enable choose tenants button
 				btnChooseTenants.setEnabled(true);
 			} else {
-				// Disable choose tenants button
 				btnChooseTenants.setEnabled(false);
 			}
 		});
 
 		btnChooseTenants.addActionListener(e -> {
-
+			// Open 'choose tenants' window, specifying max amount of tenants
 			ChooseTenant frame = null;
 			try {
-				if (this.room != null && this.room.getRoomCategory() != null && this.room.getRoomCategory().getMaxTenants() > 1) {
+				if (this.room != null && this.room.getRoomCategory() != null
+						&& this.room.getRoomCategory().getMaxTenants() > 1) {
 					frame = new ChooseTenant(this.room.getRoomCategory().getMaxTenants());
 				} else {
 					System.out.println(room);
@@ -441,6 +449,7 @@ public class WindowContract extends JDialog {
 			}
 			frame.setVisible(true);
 
+			// If tenants have been chosen, update the display
 			if (!frame.getSelectedObjects().isEmpty()) {
 				this.tenants = frame.getSelectedObjects();
 				txtDisplayTenants.setText(getTenantRepresentation(tenants));

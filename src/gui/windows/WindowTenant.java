@@ -356,12 +356,40 @@ public class WindowTenant extends JDialog {
 				message = "Create tenant?";
 			}
 			if (Messages.confirm(this, message)) {
+
+				// Validate & parse: First name
+				String fname = txtFname.getText().strip();
+				if (fname.isEmpty()) {
+					Messages.error(this, "First name cannot be empty!");
+				}
+
+				// Validate & parse: Last name
+				String lname = txtStudyProof.getText().strip();
+				if (lname.isEmpty()) {
+					Messages.error(this, "Last name cannot be empty!");
+				}
+
+				// Validate & parse: Email
+				String email = txtEmail.getText().strip();
+				if (email.isEmpty()) {
+					Messages.error(this, "Email cannot be empty!");
+				}
+
+				// Validate & parse: Phone
+				String phone = txtPhone.getText().strip();
+				if (phone.isEmpty()) {
+					Messages.error(this, "Phone cannot be empty!");
+				}
+
 				
+
 				// Validate fname,lname,email,phone
 				if (txtFname.getText() == null || txtLname.getText() == null || txtEmail.getText() == null || txtPhone.getText() == null) {
 					Messages.error(this, "You must fill out the fields marked with a star!");
 					return;
 				}
+
+
 
 				if (mode == Mode.EDIT) {
 				//TODO: ctrl class update method calls here
@@ -374,7 +402,7 @@ public class WindowTenant extends JDialog {
 						Messages.error("Error creating tenant", "error");
 					}
 				}
-				
+
 				// Dispose of the window
 				this.dispose();
 			}
