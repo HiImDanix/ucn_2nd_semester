@@ -124,7 +124,7 @@ public class DBConnection {
      * Singleton pattern
      */
     public static synchronized DBConnection getInstance() throws DataAccessException {
-        if (con == null) {
+        if (instance == null) {
             instance = new DBConnection();
         }
         return instance;
