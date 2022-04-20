@@ -37,10 +37,8 @@ public class WindowContract extends JDialog {
 	private JTextField txtDisplayRoom;
 	private JButton btnChooseRoom;
 	private JLabel lblRoom;
-	private JPanel tenantsPanel1;
-	private JTextField txtDisplayTenant1;
-	private JButton btnChooseTenant1;
-	private JPanel tenantsPanel;
+	private JButton btnChooseTenants;
+	private JTextArea txtDisplayTenants;
 
 
 	/**
@@ -74,9 +72,9 @@ public class WindowContract extends JDialog {
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
 		gbl_contentPanel.columnWidths = new int[]{0, 0};
-		gbl_contentPanel.rowHeights = new int[]{0, 0, 0, 0, 0};
+		gbl_contentPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
 		gbl_contentPanel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gbl_contentPanel.rowWeights = new double[]{1.0, 1.0, 1.0, 1.0, 0.0};
+		gbl_contentPanel.rowWeights = new double[]{1.0, 1.0, 1.0, 1.0, 1.0, 0.0};
 		contentPane.setLayout(gbl_contentPanel);
 		
 				lblRoom = new JLabel("Room *");
@@ -126,8 +124,31 @@ public class WindowContract extends JDialog {
 		gbc_lblTenant.gridx = 0;
 		gbc_lblTenant.gridy = 2;
 		contentPane.add(lblTenant, gbc_lblTenant);
+		
+		btnChooseTenants = new JButton("Choose...");
+		GridBagConstraints gbc_btnChooseTenants = new GridBagConstraints();
+		gbc_btnChooseTenants.anchor = GridBagConstraints.SOUTH;
+		gbc_btnChooseTenants.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnChooseTenants.insets = new Insets(0, 0, 5, 0);
+		gbc_btnChooseTenants.gridx = 0;
+		gbc_btnChooseTenants.gridy = 3;
+		contentPane.add(btnChooseTenants, gbc_btnChooseTenants);
+		
+		txtDisplayTenants = new JTextArea();
+		GridBagConstraints gbc_txtDisplayTenants = new GridBagConstraints();
+		gbc_txtDisplayTenants.insets = new Insets(0, 0, 5, 0);
+		gbc_txtDisplayTenants.fill = GridBagConstraints.BOTH;
+		gbc_txtDisplayTenants.gridx = 0;
+		gbc_txtDisplayTenants.gridy = 4;
+		contentPane.add(txtDisplayTenants, gbc_txtDisplayTenants);
+		txtDisplayTenants.setColumns(10);
 
-		addTenantChooseButtons(room != null ? room.getRoomCategory().getMaxTenants() : 0);
+		btnSubmit = new JButtonPrimary("Update");
+		GridBagConstraints gbc_btnOk = new GridBagConstraints();
+		gbc_btnOk.anchor = GridBagConstraints.NORTHEAST;
+		gbc_btnOk.gridx = 0;
+		gbc_btnOk.gridy = 5;
+		contentPane.add(btnSubmit, gbc_btnOk);
 
 		switch (mode) {
 			case VIEW:
@@ -165,75 +186,6 @@ public class WindowContract extends JDialog {
 	}
 
 	/*
-	 * Does not work for high amounts
-	 */
-	public void addTenantChooseButtons(int numberOfButtons) {
-
-		// Generate the required amount of tenant choose buttons & display text fields
-		for (int i = 0; i < numberOfButtons; i++) {
-
-			tenantsPanel1 = new JPanel();
-			GridBagConstraints gbc_tenantsPanel1 = new GridBagConstraints();
-			gbc_tenantsPanel1.fill = GridBagConstraints.BOTH;
-			gbc_tenantsPanel1.gridx = 0;
-			gbc_tenantsPanel1.gridy = 0+i;
-			tenantsPanel.add(tenantsPanel1, gbc_tenantsPanel1);
-			GridBagLayout gbl_tenantsPanel1 = new GridBagLayout();
-			gbl_tenantsPanel1.columnWidths = new int[]{0, 0, 0};
-			gbl_tenantsPanel1.rowHeights = new int[]{0, 0};
-			gbl_tenantsPanel1.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
-			gbl_tenantsPanel1.rowWeights = new double[]{0.0, Double.MIN_VALUE};
-			tenantsPanel1.setLayout(gbl_tenantsPanel1);
-
-			txtDisplayTenant1 = new JTextField();
-			txtDisplayTenant1.setEnabled(false);
-			txtDisplayTenant1.setColumns(10);
-			GridBagConstraints gbc_txtDisplayTenant1 = new GridBagConstraints();
-			gbc_txtDisplayTenant1.fill = GridBagConstraints.BOTH;
-			gbc_txtDisplayTenant1.insets = new Insets(0, 0, 0, 5);
-			gbc_txtDisplayTenant1.gridx = 0;
-			gbc_txtDisplayTenant1.gridy = 0;
-			tenantsPanel1.add(txtDisplayTenant1, gbc_txtDisplayTenant1);
-
-			btnChooseTenant1 = new JButton("Choose...");
-			GridBagConstraints gbc_btnChooseTenant1 = new GridBagConstraints();
-			gbc_btnChooseTenant1.fill = GridBagConstraints.BOTH;
-			gbc_btnChooseTenant1.gridx = 1;
-			gbc_btnChooseTenant1.gridy = 0;
-			tenantsPanel1.add(btnChooseTenant1, gbc_btnChooseTenant1);
-		}
-		
-		tenantsPanel = new JPanel();
-		GridBagConstraints gbc_tenantsPanel = new GridBagConstraints();
-		gbc_tenantsPanel.insets = new Insets(0, 0, 5, 0);
-		gbc_tenantsPanel.fill = GridBagConstraints.BOTH;
-		gbc_tenantsPanel.gridx = 0;
-		gbc_tenantsPanel.gridy = 3;
-		contentPane.add(tenantsPanel, gbc_tenantsPanel);
-		GridBagLayout gbl_tenantsPanel = new GridBagLayout();
-		gbl_tenantsPanel.columnWidths = new int[]{0, 0};
-		gbl_tenantsPanel.rowHeights = new int[]{0, 0};
-		gbl_tenantsPanel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gbl_tenantsPanel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
-		tenantsPanel.setLayout(gbl_tenantsPanel);
-
-		btnSubmit = new JButtonPrimary("Update");
-		GridBagConstraints gbc_btnOk = new GridBagConstraints();
-		gbc_btnOk.anchor = GridBagConstraints.NORTHEAST;
-		gbc_btnOk.gridx = 0;
-		gbc_btnOk.gridy = 4;
-		contentPane.add(btnSubmit, gbc_btnOk);
-
-		// resize to fit all new buttons & redraw UI
-		this.doLayout();
-		this.revalidate();
-		this.repaint();
-
-
-
-	}
-
-	/*
 	 * *******************************************************
 	 * *******************  Methods *******************
 	 * *******************************************************
@@ -249,7 +201,7 @@ public class WindowContract extends JDialog {
 //		// except ID & Category field
 //		txtID.setEnabled(false);
 		txtDisplayRoom.setEnabled(false);
-//		txtDisplayTenant.setEnabled(false);
+		txtDisplayTenants.setEnabled(false);
 	}
 
 	// FIll in the fields
@@ -331,8 +283,33 @@ public class WindowContract extends JDialog {
 				txtDisplayRoom.setText(String.format("Room %d category %s",
 						room.getId(), room.getRoomCategory().getName()));
 			}
+		});
 
-			addTenantChooseButtons(this.room != null ? this.room.getRoomCategory().getMaxTenants() : 0);
+		btnChooseTenants.addActionListener(e -> {
+
+			ChooseTenant frame = null;
+			try {
+				frame = new ChooseTenant(true);
+			} catch (DataAccessException ex) {
+				Messages.error("Error opening choose tenant window", "error");
+			}
+			frame.setVisible(true);
+
+			if (!frame.getSelectedObjects().isEmpty()) {
+				this.tenants = frame.getSelectedObjects();
+				StringBuilder tenantRepr = new StringBuilder();
+				for (Tenant tenant : tenants) {
+					tenantRepr.append(
+							String.format("(%d) %s %s\n",
+									tenant.getId(),
+									tenant.getFirstName(),
+									tenant.getLastName()
+							)
+					);
+				}
+				txtDisplayTenants.setText(tenantRepr.toString());
+			}
+
 		});
 	}
 }
