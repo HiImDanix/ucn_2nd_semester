@@ -10,6 +10,7 @@ import model.Room;
 import model.Tenant;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -19,9 +20,11 @@ import java.util.List;
 public class TenantContractController {
 
     private TenantDBIF tenantDb;
+//    private TenantContractDB tenantContractDB;
 
     public TenantContractController() {
         tenantDb = new TenantDB();
+//        tenantContractDB = new TenantContractDB();
     }
 
     // TODO: Improve this using a JOIN & exposed buildObjects() method for tenants
@@ -42,5 +45,19 @@ public class TenantContractController {
         }
         return tenants;
 
+    }
+
+    public void add(Tenant tenant, Contract contract) throws DataAccessException {
+//        tenantContractDB.add(tenant, contract);
+        String query = "INSERT INTO tenant_contract (contract_id, tenant_id) VALUES (?, ?)";
+        try {
+            Connection conn = DBConnection.getInstance().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+            stmt.setInt(1, contract.getID());
+            stmt.setInt(2, tenant.getId());
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new DataAccessException("Could not add tenant to contract", e);
+        }
     }
 }

@@ -78,6 +78,10 @@ public class Tenant {
         this.contracts = contracts;
     }
 
+    public void removeContract(Contract contract) {
+    	contracts.remove(contract);
+    }
+
     // add contract
     public void addContract(Contract contract) {
     	this.contracts.add(contract);

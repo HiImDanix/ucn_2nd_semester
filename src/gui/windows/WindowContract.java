@@ -389,14 +389,14 @@ public class WindowContract extends JDialog {
 					try {
 						contractCtrl.updateContract(contract, newStartDate, tenants, room, includeInternet);
 					} catch (DataAccessException ex) {
-						Messages.error("Error updating room", "error");
+						Messages.error("Error updating contract", "error");
 					}
 
 				} else if (mode == Mode.CREATE) {
 					try {
 						this.contract = contractCtrl.addContract(newStartDate, tenants, room, includeInternet);
 					} catch (DataAccessException ex) {
-						Messages.error("Error creating room", "error");
+						Messages.error("Error creating contract", "error");
 					}
 				}
 			}

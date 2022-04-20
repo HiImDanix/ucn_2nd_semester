@@ -76,6 +76,14 @@ public class Contract {
         this.tenants = tenants;
     }
 
+    public void addTenant(Tenant tenant) {
+        this.tenants.add(tenant);
+    }
+
+    public void removeTenant(Tenant tenant) {
+        this.tenants.remove(tenant);
+    }
+
     public List<RoomCondition> getRoomConditions() {
         return roomConditions;
     }

@@ -1,10 +1,14 @@
 package dal;
 
 import controller.RoomController;
+import controller.TenantContractController;
 import controller.TenantController;
+import db.DBConnection;
 import db.DataAccessException;
 import model.Contract;
+import model.Tenant;
 
+import javax.xml.crypto.Data;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -32,6 +36,36 @@ public class ContractDB extends DAO<Contract> implements ContractDBIF {
                 START_DATE.fieldName(),
                 ROOM_ID.fieldName()
         });
+    }
+
+    @Override
+    public int add(Contract contract) throws DataAccessException {
+        try {
+            // start transaction
+            DBConnection.getInstance().startTransaction();
+
+            // add contract to db, return auto-generated id
+            int id = super.add(contract);
+
+            // link tenant-contract in db
+            for (Tenant tenant : contract.getTenants()) {
+                new TenantContractController().add(tenant, contract);
+            }
+
+            // commit transaction
+            DBConnection.getInstance().commitTransaction();
+
+            // link tenant-contract in domain
+            for (Tenant tenant : contract.getTenants()) {
+                tenant.addContract(contract);
+                contract.addTenant(tenant);
+            }
+            return id;
+        } catch (DataAccessException e) {
+            // Rollback transaction
+            DBConnection.getInstance().rollbackTransaction();
+            throw new DataAccessException("Error adding Contract to DB", e);
+        }
     }
 
     @Override
