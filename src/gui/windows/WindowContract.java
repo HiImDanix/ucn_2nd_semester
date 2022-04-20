@@ -402,9 +402,9 @@ public class WindowContract extends JDialog {
 						Messages.error("Error creating contract", "error");
 					}
 				}
+				// Dispose of the window
+				this.dispose();
 			}
-			// Dispose of the window
-			this.dispose();
 		});
 
 		btnChooseRoom.addActionListener(e -> {

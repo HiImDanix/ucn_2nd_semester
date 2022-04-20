@@ -374,9 +374,10 @@ public class WindowTenant extends JDialog {
 						Messages.error("Error creating tenant", "error");
 					}
 				}
+				
+				// Dispose of the window
+				this.dispose();
 			}
-			// Dispose of the window
-			this.dispose();
 		});
 
 		btnChooseStudyProof.addActionListener(e -> {

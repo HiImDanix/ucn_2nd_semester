@@ -299,9 +299,9 @@ public class WindowRoom extends JDialog {
 						Messages.error("Error creating room", "error");
 					}
 				}
+				// Dispose of the window
+				this.dispose();
 			}
-			// Dispose of the window
-			this.dispose();
 		});
 
 		btnChooseCategory.addActionListener(e -> {
