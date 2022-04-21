@@ -4,12 +4,11 @@ import gui.Common;
 import model.Contract;
 import model.Tenant;
 
-import javax.swing.table.AbstractTableModel;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ContractTableModel extends AbstractTableModel {
+public class ContractTableModel extends MyAbstractTableModel<Contract> {
 
 	private static final String[] COLUMN_NAMES = {"Contract ID", "Tenants", "Room ID", "Room category", "start date", "end date"};
 

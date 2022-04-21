@@ -8,7 +8,7 @@ import db.DataAccessException;
 import gui.JButtonPrimary;
 import gui.Messages;
 import gui.panels.CRUDTenants;
-import gui.panels.tablemodels.TenantTableModel;
+import gui.panels.tablemodels.MyAbstractTableModel;
 import model.Tenant;
 
 import java.awt.GridBagLayout;
@@ -113,12 +113,13 @@ public class ChooseTenant extends JDialog {
         btnChoose.addActionListener(e -> {
             JTable table = CRUDPanel.getTable();
             if (!table.getSelectionModel().isSelectionEmpty()) {
-                TenantTableModel tableModel = CRUDPanel.getTableModel();
+                MyAbstractTableModel tableModel = CRUDPanel.getTableModel();
                 if (table.getSelectedRows().length > maxTenants) {
                     Messages.error("You can only choose up to " + maxTenants + " tenants.", "Error");
                 } else {
                     for (int index: table.getSelectedRows()) {
-                        this.selectedObjects.add(tableModel.getObj(index));
+                        // TODO: fix this casting
+                        this.selectedObjects.add((Tenant) tableModel.getObj(index));
                     }
                     this.dispose();
                 }

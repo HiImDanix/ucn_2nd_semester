@@ -5,11 +5,9 @@ package gui.panels.tablemodels;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.table.AbstractTableModel;
-
 import model.Room;
 
-public class RoomTableModel extends AbstractTableModel {
+public class RoomTableModel extends MyAbstractTableModel<Room> {
 
 	private static final long serialVersionUID = -2367962812947993282L;
 

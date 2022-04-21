@@ -3,13 +3,10 @@ package gui.panels.tablemodels;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.table.AbstractTableModel;
-
 import gui.Common;
-import model.Room;
 import model.Tenant;
 
-public class TenantTableModel extends AbstractTableModel {
+public class TenantTableModel extends MyAbstractTableModel<Tenant> {
 
 	private static final String[] COLUMN_NAMES = {"ID", "First name", "Last name", "Email", "Phone", "Study proof?", "Contracts"};
 
