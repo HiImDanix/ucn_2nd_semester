@@ -13,17 +13,13 @@ import model.Tenant;
 
 public class CRUDTenants extends AbstractCRUDPanel {
 
-	TenantController tenantCtrl = new TenantController();
-
-
-
 	public CRUDTenants() throws DataAccessException {
 		super("Tenants");
 	}
 
 	@Override
 	protected MyAbstractTableModel<Tenant> createTableModel() throws DataAccessException {
-		return new TenantTableModel(tenantCtrl.getAllTenants());
+		return new TenantTableModel(new TenantController().getAllTenants());
 	}
 
 	@Override
