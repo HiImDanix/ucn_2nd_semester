@@ -68,7 +68,7 @@ public class CRUDTenants extends AbstractCRUDPanel {
 //				Messages.error(this, "There was an error deleting the room.", "error");
 //			}
 //		}
-	});
+//	});
 	}
 
 
