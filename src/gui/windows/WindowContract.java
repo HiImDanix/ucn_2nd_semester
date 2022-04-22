@@ -1,7 +1,6 @@
 package gui.windows;
 
 import controller.ContractController;
-import controller.TenantContractController;
 import db.DataAccessException;
 import gui.Common;
 import gui.JButtonPrimary;
@@ -327,7 +326,7 @@ public class WindowContract extends JDialog {
 	/*
 	 * Returns the selected object, or null
 	 */
-	public Contract getObject() {
+	public Contract getSelectedObject() {
 		return this.contract;
 	}
 
