@@ -4,6 +4,7 @@ package gui.windows;
 import db.DataAccessException;
 import gui.JButtonPrimary;
 import gui.panels.CRUDRooms;
+import gui.panels.tablemodels.MyAbstractTableModel;
 import gui.panels.tablemodels.RoomTableModel;
 import model.Room;
 
@@ -88,8 +89,8 @@ public class ChooseRoom extends JDialog {
         btnChoose.addActionListener(e -> {
             JTable table = CRUDPanel.getTable();
             if (!table.getSelectionModel().isSelectionEmpty()) {
-                RoomTableModel tableModel = CRUDPanel.getTableModel();
-                Room object = tableModel.getObj(table.getSelectedRow());
+                MyAbstractTableModel tableModel = CRUDPanel.getTableModel();
+                Room object = (Room) tableModel.getObj(table.getSelectedRow());
                 selectedObject = object;
                 this.dispose();
             }
