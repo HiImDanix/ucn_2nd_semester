@@ -340,24 +340,28 @@ public class WindowTenant extends JDialog {
 				String firstName = txtFirstName.getText().strip();
 				if (firstName.isEmpty()) {
 					Messages.error(this, "First name cannot be empty!");
+					return;
 				}
 
 				// Validate & parse: Last name
 				String lastName = txtLastName.getText().strip();
 				if (lastName.isEmpty()) {
 					Messages.error(this, "Last name cannot be empty!");
+					return;
 				}
 
 				// Validate & parse: Email
 				String email = txtEmail.getText().strip();
 				if (email.isEmpty()) {
 					Messages.error(this, "Email cannot be empty!");
+					return;
 				}
 
 				// Validate & parse: Phone
 				String phone = txtPhone.getText().strip();
 				if (phone.isEmpty()) {
 					Messages.error(this, "Phone cannot be empty!");
+					return;
 				}
 
 				if (mode == Mode.EDIT) {

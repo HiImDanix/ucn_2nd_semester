@@ -66,32 +66,4 @@ public class CRUDTenants extends AbstractCRUDPanel {
 //		}
 //	});
 	}
-
-
 }
-
-	/*
-	 * *******************************************************
-	 * *******************  Methods *******************
-	 * *******************************************************
-	 */
-////
-////	/**
-////	 * Select a customer in the CRUD table.
-////	 *
-////	 * @param customer the customer
-////	 * @return true, if successful
-////	 */
-////	public boolean selectCustomer(Customer customer) {
-////		int rows = tableModel.getRowCount();
-////		for (int i = 0; i < rows; i++) {
-////			Customer foundCustomer = tableModel.getObj(i);
-////			if (foundCustomer == customer) {
-////				tableMain.getSelectionModel().setSelectionInterval(0, i);
-////				return true;
-////			}
-////		}
-////		return false;
-////	}
-//
-//

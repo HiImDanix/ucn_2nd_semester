@@ -364,11 +364,13 @@ public class WindowContract extends JDialog {
 				if (tenants.size() > room.getRoomCategory().getMaxTenants()) {
 					Messages.error(this, "The room category allows only "
 							+ room.getRoomCategory().getMaxTenants() + " tenants.");
+					return;
 				}
 
 				// Validate: start date is not empty
 				if (txtStartDate.getText().isEmpty()) {
 					Messages.error(this, "Please enter a start date.");
+					return;
 				}
 
 				// Parse start date
@@ -384,11 +386,13 @@ public class WindowContract extends JDialog {
 				// Validate: start date is not in the past
 				if (newStartDate.isBefore(LocalDate.now())) {
 					Messages.error(this, "The start date cannot be in the past.");
+					return;
 				}
 
 				// Validate: yes/no radio buttons are selected for internet
 				if (!rdbtnInternetYes.isSelected() && !rdbtnInternetNo.isSelected()) {
 					Messages.error(this, "Please select whether the contract includes internet.");
+					return;
 				}
 
 				// parse the internet option
