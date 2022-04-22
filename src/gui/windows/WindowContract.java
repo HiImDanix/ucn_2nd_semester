@@ -268,9 +268,6 @@ public class WindowContract extends JDialog {
 
 		}
 
-		// Choose tenants should by default be disabled, until a room is selected
-		btnChooseTenants.setEnabled(false);
-
 		addEventHandlers();
 
 	}
@@ -437,6 +434,12 @@ public class WindowContract extends JDialog {
 		});
 
 		btnChooseTenants.addActionListener(e -> {
+			// A room must be chosen first as to determine the max amount of tenants
+			if (room == null) {
+				Messages.error(this, "Please choose a room.");
+				return;
+			}
+
 			// Open 'choose tenants' window, specifying max amount of tenants
 			ChooseTenant frame = null;
 			try {
