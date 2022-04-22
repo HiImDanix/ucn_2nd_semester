@@ -46,7 +46,9 @@ public class ContractDB extends DAO<Contract> implements ContractDBIF {
             DBConnection.getInstance().startTransaction();
 
             // add contract to db, return auto-generated id
-            contract.setID(super.add(contract));
+            id = (super.add(contract));
+            // Have to set the id here, because tenantContractController will need it
+            contract.setID(id);
 
             // link tenant-contract in db
             for (Tenant tenant : contract.getTenants()) {
