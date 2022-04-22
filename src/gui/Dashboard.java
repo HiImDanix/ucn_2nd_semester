@@ -2,7 +2,6 @@ package gui;
 
 import java.awt.*;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -13,17 +12,12 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.MatteBorder;
 
-import controller.ContractController;
-import controller.RoomController;
 import controller.SessionController;
-import dal.ContractDB;
 import db.DataAccessException;
 import gui.panels.CRUDContracts;
 import gui.panels.CRUDRooms;
 import gui.panels.CRUDTenants;
-import model.Room;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 

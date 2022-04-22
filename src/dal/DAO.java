@@ -129,6 +129,7 @@ public abstract class DAO<T> {
             stmt.setInt(1, getId(obj));
             stmt.executeUpdate();
         } catch (SQLException e) {
+            System.out.println(e);
             throw new DataAccessException("Could not delete " + getTableName(), e);
         }
     }

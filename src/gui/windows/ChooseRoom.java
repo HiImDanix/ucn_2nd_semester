@@ -4,9 +4,7 @@ package gui.windows;
 import db.DataAccessException;
 import gui.JButtonPrimary;
 import gui.panels.CRUDRooms;
-import gui.panels.CRUDTenants;
 import gui.panels.tablemodels.RoomTableModel;
-import gui.panels.tablemodels.TenantTableModel;
 import model.Room;
 
 import javax.swing.*;
