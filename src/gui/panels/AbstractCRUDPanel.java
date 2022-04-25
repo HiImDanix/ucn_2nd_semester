@@ -50,7 +50,7 @@ public abstract class AbstractCRUDPanel extends JPanel {
         topPanel.setLayout(gbl_topPanel);
 
         // ***** Title *****
-        JLabel lblTitle = new JLabel(name + "s");
+        JLabel lblTitle = new JLabel(name);
         GridBagConstraints gbc_lblTitle = new GridBagConstraints();
         gbc_lblTitle.gridwidth = 3;
         gbc_lblTitle.insets = new Insets(0, 0, 5, 0);

@@ -14,7 +14,7 @@ import model.Contract;
 public class CRUDContracts extends AbstractCRUDPanel {
 
 	public CRUDContracts() throws DataAccessException {
-		super("Tenants");
+		super("Contracts");
 	}
 
 	@Override
