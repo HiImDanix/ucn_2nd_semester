@@ -1,8 +1,10 @@
 package dal;
 
+import controller.ContractController;
 import controller.TenantController;
 import db.DBConnection;
 import db.DataAccessException;
+import model.Contract;
 import model.Tenant;
 
 import java.sql.Connection;
@@ -16,29 +18,32 @@ import java.util.List;
 /*
  * This class represents the DB access to the tenant-contract join table.
  */
+// TODO: Improve this method using a JOIN & exposed buildObjects() methods
 public class TenantContractDB implements TenantContractDBIF {
 
     TenantController tenantCtrl = new TenantController();
+    ContractController contractCtrl = new ContractController();
 
     public static final String tableName = "tenant_contract";
 
     public enum Columns {
         ID,
-        tenant_id,
-        contract_id;
+        TENANT_ID,
+        CONTRACT_ID;
         public String fieldName() {
             return this.name().toLowerCase();
         }
     }
 
     private static final String addQuery = String.format("INSERT INTO %s (%s, %s) VALUES (?, ?)",
-            tableName, Columns.tenant_id.fieldName(), Columns.contract_id.fieldName());
+            tableName, Columns.TENANT_ID.fieldName(), Columns.CONTRACT_ID.fieldName());
     private static final String getTenantIdsByContractIdQuery = String.format("SELECT %s FROM %s WHERE %s = ?",
-            Columns.tenant_id.fieldName(), tableName, Columns.contract_id.fieldName());
+            Columns.TENANT_ID.fieldName(), tableName, Columns.CONTRACT_ID.fieldName());
+    private static final String getContractIdsByTenantIdQuery = String.format("SELECT %s FROM %s WHERE %s = ?",
+            Columns.CONTRACT_ID.fieldName(), tableName, Columns.TENANT_ID.fieldName());
 
     @Override
     public List<Tenant> getTenantsByContractID(int contractID) throws DataAccessException {
-        // TODO: Improve this method using a JOIN & exposed buildObjects() method for tenants
         Connection connection = DBConnection.getInstance().getConnection();
         List<Tenant> tenants = new ArrayList<>();
         try {
@@ -46,7 +51,7 @@ public class TenantContractDB implements TenantContractDBIF {
             stmt.setInt(1, contractID);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                int tenantID = rs.getInt("tenant_id");
+                int tenantID = rs.getInt(Columns.TENANT_ID.fieldName());
                 Tenant tenant = tenantCtrl.getTenantById(tenantID);
                 tenants.add(tenant);
             }
@@ -54,6 +59,25 @@ public class TenantContractDB implements TenantContractDBIF {
             throw new DataAccessException("Could not get tenants by contract ID", e);
         }
         return tenants;
+    }
+
+    @Override
+    public List<Contract> getContractsByTenantID(int tenantID) throws DataAccessException {
+        Connection connection = DBConnection.getInstance().getConnection();
+        List<Contract> contracts = new ArrayList<>();
+        try {
+            PreparedStatement stmt = connection.prepareStatement(getContractIdsByTenantIdQuery);
+            stmt.setInt(1, tenantID);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                int contractID = rs.getInt(Columns.CONTRACT_ID.fieldName());
+                Contract contract = contractCtrl.getContractById(contractID);
+                contracts.add(contract);
+            }
+        } catch (SQLException e) {
+            throw new DataAccessException("Could not get contracts by tenant ID", e);
+        }
+        return contracts;
     }
 
     @Override

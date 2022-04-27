@@ -1,6 +1,7 @@
 package dal;
 
 import db.DataAccessException;
+import model.Contract;
 import model.Tenant;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
 public interface TenantContractDBIF {
 
     List<Tenant> getTenantsByContractID(int contractID) throws DataAccessException;
+    List<Contract> getContractsByTenantID(int tenantID) throws DataAccessException;
 
     // Join a tenant to a contract
     void add(int tenantID, int contractID) throws DataAccessException;
