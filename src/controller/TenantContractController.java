@@ -28,6 +28,14 @@ public class TenantContractController {
         return tenantContractDB.getContractsByTenantID(tenantID);
     }
 
+    public List<Integer> getTenantIDsByContractID(int contractID) throws DataAccessException {
+        return tenantContractDB.getTenantIDsByContractID(contractID);
+    }
+
+    public List<Integer> getContractIDsByTenantID(int tenantID) throws DataAccessException {
+        return tenantContractDB.getContractIDsByTenantID(tenantID);
+    }
+
     public void add(Tenant tenant, Contract contract) throws DataAccessException {
         tenantContractDB.add(tenant.getID(), contract.getID());
     }
