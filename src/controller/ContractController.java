@@ -85,4 +85,8 @@ public class ContractController {
             throw e;
         }
     }
+
+    public List<Integer> getAllContractIDsByRoomID(int roomID) throws DataAccessException {
+        return contractDB.getAllContractIDsByRoomID(roomID);
+    }
 }

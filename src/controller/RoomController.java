@@ -6,6 +6,7 @@ import db.DataAccessException;
 import model.Room;
 import model.RoomCategory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -20,7 +21,7 @@ public class RoomController {
      * Add Room
      */
     public Room addRoom(RoomCategory category, boolean isOutOfService) throws DataAccessException {
-        Room room = new Room(-1, category, isOutOfService);
+        Room room = new Room(-1, category, isOutOfService, new ArrayList<>());
         room.setId(roomDB.add(room));
         return room;
     }

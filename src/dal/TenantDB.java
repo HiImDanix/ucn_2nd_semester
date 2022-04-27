@@ -62,7 +62,6 @@ public class TenantDB extends DAO<Tenant> implements TenantDBIF {
 	@Override
 	public Tenant buildDomainObject(ResultSet resultSet) throws DataAccessException {
 		try {
-			System.out.println("Building Tenant");
 			Tenant tenant = new Tenant(
 					resultSet.getInt(Columns.ID.fieldName()),
 					resultSet.getString(Columns.first_name.fieldName()),

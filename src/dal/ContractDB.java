@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import static dal.ContractDB.Columns.*;
 
@@ -29,6 +30,9 @@ public class ContractDB extends DAO<Contract> implements ContractDBIF {
             return this.name().toLowerCase();
         }
     }
+
+    private static final String getAllContractIDsByRoomIDQuery =
+            "SELECT " + ID.fieldName() + " FROM " + tableName + " WHERE " + ROOM_ID.fieldName() + " = ?";
 
     public ContractDB() {
         // Passing table name and settable column names
@@ -69,6 +73,23 @@ public class ContractDB extends DAO<Contract> implements ContractDBIF {
             tenant.addContract(contract);
         }
         return id;
+    }
+
+    @Override
+    public List<Integer> getAllContractIDsByRoomID(int roomID) throws DataAccessException {
+        List<Integer> contractIDs = new ArrayList<>();
+        try {
+            PreparedStatement stmt = DBConnection.getInstance().getConnection()
+                    .prepareStatement(getAllContractIDsByRoomIDQuery);
+            stmt.setInt(1, roomID);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                contractIDs.add(rs.getInt(ID.fieldName()));
+            }
+        } catch (SQLException e) {
+            throw new DataAccessException("Error getting all contract ids by room id", e);
+        }
+        return contractIDs;
     }
 
     @Override

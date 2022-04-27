@@ -14,5 +14,5 @@ public interface ContractDBIF {
     void delete(Contract c) throws DataAccessException;
 
     List<Contract> getAll() throws DataAccessException;
-
+    List<Integer> getAllContractIDsByRoomID(int roomID) throws DataAccessException;
 }

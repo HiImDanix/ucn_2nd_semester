@@ -1,12 +1,15 @@
 package dal;
 
+import controller.ContractController;
 import controller.RoomCategoryController;
 import db.DataAccessException;
+import model.Contract;
 import model.Room;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import static dal.RoomDB.Columns.*;
 
@@ -43,11 +46,29 @@ public class RoomDB extends DAO<Room> implements RoomDBIF {
     @Override
     public Room buildDomainObject(ResultSet rs) throws DataAccessException {
         try {
-            return new Room(
-                    rs.getInt(ID.fieldName()),
+            int roomID = rs.getInt(ID.fieldName());
+
+            Room room = new Room(
+                    roomID,
                     new RoomCategoryController().getRoomCategoryById(rs.getInt(ROOM_CATEGORY_ID.fieldName())),
-                    rs.getBoolean(IS_OUT_OF_SERVICE.fieldName())
+                    rs.getBoolean(IS_OUT_OF_SERVICE.fieldName()),
+                    new ArrayList<>()
             );
+
+            // put room in cache
+            Cache.put(Room.class, roomID, room);
+
+            // Add dependency: contracts
+            for (int contractID : new ContractController().getAllContractIDsByRoomID(roomID)) {
+                if (Cache.contains(Contract.class, contractID)) {
+                    room.addContract((Contract)Cache.get(Contract.class, contractID));
+                } else {
+                    room.addContract(new ContractController().getContractById(contractID));
+                }
+            }
+
+            return room;
+
             } catch (SQLException e) {
                 throw new DataAccessException("Error building Room object", e);
         }

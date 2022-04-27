@@ -2,9 +2,11 @@ package gui.panels.tablemodels;
 
 
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Contract;
 import model.Room;
 
 public class RoomTableModel extends MyAbstractTableModel<Room> {
@@ -12,7 +14,7 @@ public class RoomTableModel extends MyAbstractTableModel<Room> {
 	private static final long serialVersionUID = -2367962812947993282L;
 
 	protected static final String[] COLUMN_NAMES = {
-        "ID", "category", "is occupied", "out of service"
+        "ID", "category", "is occupied", "out of service", "Is available?"
     };
 
     private List<Room> rooms;
@@ -50,11 +52,22 @@ public class RoomTableModel extends MyAbstractTableModel<Room> {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
     	Room room = rooms.get(rowIndex);
+
+        boolean roomHasValidContract = false;
+        for (Contract contract: room.getContracts()) {
+            if (contract.getLeaveNotice() != null && contract.getLeaveNotice().getNoticeGivenDate().isAfter(
+                    LocalDate.now().plusDays(room.getRoomCategory().getLeaveNoticeDays()))) {
+                roomHasValidContract = true;
+            }
+        }
+        boolean roomIsAvailable = !room.isOutOfService() && !roomHasValidContract;
+
         switch (columnIndex) {
             case 0: return "#" + room.getID();
             case 1: return room.getRoomCategory().getName();
             case 2: return "NOT IMPLEMENTED";
             case 3: return room.isOutOfService();
+            case 4: return roomIsAvailable;
             default: return "ERROR";
         }
     }
