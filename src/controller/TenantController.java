@@ -41,7 +41,6 @@ public class TenantController {
 		return tenantDb.getAll();
 	}
 
-	// TODO: Improve this using a JOIN & exposed buildObjects() method for tenants
 	public List<Tenant> getTenantsByContractID(int contractID) throws DataAccessException {
 		return new TenantContractController().getTenantsByContractID(contractID);
 	}
