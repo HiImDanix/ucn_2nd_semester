@@ -32,7 +32,7 @@ public abstract class Notification {
         return fullObjectRetrieved;
     }
 
-    public int getId() {
+    public int getID() {
         return id;
     }
 

@@ -1,7 +1,5 @@
 package model;
 
-import java.util.List;
-
 public class Room {
     private int id;
     private boolean isOutOfService;
@@ -13,9 +11,7 @@ public class Room {
         this.isOutOfService = isOutOfService;
     }
 
-
-
-    public int getId() {
+    public int getID() {
         return id;
     }
 

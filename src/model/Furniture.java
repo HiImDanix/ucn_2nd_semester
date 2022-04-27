@@ -40,7 +40,7 @@ public class Furniture {
         this.quantity = quantity;
     }
 
-    public int getId() {
+    public int getID() {
         return id;
     }
 

@@ -29,7 +29,7 @@ public class RoomCondition {
         return fullObjectRetrieved;
     }
 
-    public int getId() {
+    public int getID() {
         return ID;
     }
 

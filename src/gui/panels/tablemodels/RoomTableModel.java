@@ -51,7 +51,7 @@ public class RoomTableModel extends MyAbstractTableModel<Room> {
     public Object getValueAt(int rowIndex, int columnIndex) {
     	Room room = rooms.get(rowIndex);
         switch (columnIndex) {
-            case 0: return "#" + room.getId();
+            case 0: return "#" + room.getID();
             case 1: return room.getRoomCategory().getName();
             case 2: return "NOT IMPLEMENTED";
             case 3: return room.isOutOfService();

@@ -43,7 +43,7 @@ public class TenantTableModel extends MyAbstractTableModel<Tenant> {
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		Tenant tenant = tenants.get(rowIndex);
         switch (columnIndex) {
-            case 0: return "#" + tenant.getId();
+            case 0: return "#" + tenant.getID();
             case 1: return tenant.getFirstName();
             case 2: return tenant.getLastName();
             case 3: return tenant.getEmail();

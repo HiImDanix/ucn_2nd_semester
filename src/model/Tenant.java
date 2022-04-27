@@ -22,7 +22,7 @@ public class Tenant {
 		this.contracts = contracts;
     }
 
-    public int getId() {
+    public int getID() {
         return id;
     }
 

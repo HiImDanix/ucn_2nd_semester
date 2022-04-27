@@ -1,7 +1,6 @@
 package model;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.List;
 
 public class RoomCategory {
@@ -49,7 +48,7 @@ public class RoomCategory {
         return fullObjectRetrieved;
     }
 
-    public int getId() {
+    public int getID() {
         return id;
     }
 

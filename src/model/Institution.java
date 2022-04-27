@@ -13,7 +13,7 @@ public class Institution {
         this.email = email;
     }
 
-    public int getId() {
+    public int getID() {
         return id;
     }
 

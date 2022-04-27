@@ -60,7 +60,7 @@ public class EmployeeDB extends DAO<Employee> implements EmployeeDBIF {
 
     @Override
     public int getId(Employee obj) {
-        return obj.getId();
+        return obj.getID();
     }
 
     public Employee getByEmail(String email) throws DataAccessException {

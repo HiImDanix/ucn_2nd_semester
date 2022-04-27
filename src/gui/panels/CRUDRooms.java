@@ -51,7 +51,7 @@ public class CRUDRooms extends AbstractCRUDPanel {
 	protected void btnDeleteAction() {
 		int row = getTable().convertRowIndexToModel(getTable().getSelectedRow());
 		Room room = (Room) getTableModel().getObj(row);
-		if (Messages.confirm(this, String.format("Are you sure you wish to delete the room with id %d'?", room.getId()))) {
+		if (Messages.confirm(this, String.format("Are you sure you wish to delete the room with id %d'?", room.getID()))) {
 			try {
 				new RoomController().deleteRoom(room);
 				getTableModel().remove(row);

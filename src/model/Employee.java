@@ -22,7 +22,7 @@ public class Employee {
         this.passwordHash = passwordHash;
     }
 
-    public int getId() {
+    public int getID() {
         return id;
     }
 

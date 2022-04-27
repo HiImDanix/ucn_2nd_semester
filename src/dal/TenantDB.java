@@ -6,13 +6,10 @@ package dal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import db.DataAccessException;
 import model.Contract;
-import model.StudyProof;
 import model.Tenant;
 
 public class TenantDB extends DAO<Tenant> implements TenantDBIF {
@@ -48,7 +45,7 @@ public class TenantDB extends DAO<Tenant> implements TenantDBIF {
 		stmt.setString(3, obj.getEmail());
 		stmt.setString(4, obj.getPhone());
 		if (obj.getStudyProof() != null) {
-			stmt.setInt(5, obj.getStudyProof().getId());
+			stmt.setInt(5, obj.getStudyProof().getID());
 		} else {
 			stmt.setNull(5, java.sql.Types.NULL);
 		}
@@ -56,7 +53,7 @@ public class TenantDB extends DAO<Tenant> implements TenantDBIF {
 
 	@Override
 	protected int getId(Tenant obj) {
-		return obj.getId();
+		return obj.getID();
 	}
 
 	@Override

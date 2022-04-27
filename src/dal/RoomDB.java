@@ -2,7 +2,6 @@ package dal;
 
 import controller.RoomCategoryController;
 import db.DataAccessException;
-import model.Employee;
 import model.Room;
 
 import java.sql.PreparedStatement;
@@ -33,12 +32,12 @@ public class RoomDB extends DAO<Room> implements RoomDBIF {
     @Override
     public void setValues(PreparedStatement stmt, Room obj) throws SQLException {
         stmt.setBoolean(1, obj.isOutOfService());
-        stmt.setInt(2, obj.getRoomCategory().getId());
+        stmt.setInt(2, obj.getRoomCategory().getID());
     }
 
     @Override
     public int getId(Room obj) {
-        return obj.getId();
+        return obj.getID();
     }
 
     @Override

@@ -1,7 +1,5 @@
 package gui.windows;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -13,26 +11,17 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import controller.RoomCategoryController;
-import controller.RoomController;
 import controller.TenantController;
 import db.DataAccessException;
 import gui.Common;
 import gui.JButtonPrimary;
 import gui.Messages;
-import gui.windows.WindowRoom.Mode;
 import model.Contract;
-import model.Room;
-import model.RoomCategory;
 import model.StudyProof;
 import model.Tenant;
-
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
 
 public class WindowTenant extends JDialog {
 
@@ -247,7 +236,7 @@ public class WindowTenant extends JDialog {
 		switch (mode) {
 			case VIEW:
 				// Set title
-				setTitle("View Tenant - " + tenant.getId());
+				setTitle("View Tenant - " + tenant.getID());
 				// Hide 'Update' button if in view mode
 				btnSubmit.setVisible(false);
 				// Disable 'choose' button if in view mode.
@@ -307,7 +296,7 @@ public class WindowTenant extends JDialog {
 		txtEmail.setText(tenant.getEmail());
 		txtLastName.setText(tenant.getLastName());
 		txtPhone.setText(tenant.getPhone());
-		txtID.setText(String.valueOf(tenant.getId()));
+		txtID.setText(String.valueOf(tenant.getID()));
 	}
 	
 	/**

@@ -4,19 +4,10 @@ import dal.TenantContractDB;
 import dal.TenantContractDBIF;
 import dal.TenantDB;
 import dal.TenantDBIF;
-import db.DBConnection;
 import db.DataAccessException;
-import gui.Messages;
 import model.Contract;
-import model.Room;
 import model.Tenant;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 public class TenantContractController {
@@ -35,6 +26,6 @@ public class TenantContractController {
     }
 
     public void add(Tenant tenant, Contract contract) throws DataAccessException {
-        tenantContractDB.add(tenant.getId(), contract.getID());
+        tenantContractDB.add(tenant.getID(), contract.getID());
     }
 }

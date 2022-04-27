@@ -13,7 +13,7 @@ public class LeaveNotice {
         this.leavingByChoice = leavingByChoice;
     }
 
-    public int getId() {
+    public int getID() {
         return id;
     }
 

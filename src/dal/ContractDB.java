@@ -8,7 +8,6 @@ import db.DataAccessException;
 import model.Contract;
 import model.Tenant;
 
-import javax.xml.crypto.Data;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -74,7 +73,7 @@ public class ContractDB extends DAO<Contract> implements ContractDBIF {
     public void setValues(PreparedStatement stmt, Contract obj) throws SQLException {
         stmt.setBoolean(1, obj.isIncludeInternet());
         stmt.setDate(2, java.sql.Date.valueOf(obj.getStartDate()));
-        stmt.setInt(3, obj.getRoom().getId());
+        stmt.setInt(3, obj.getRoom().getID());
     }
 
     @Override

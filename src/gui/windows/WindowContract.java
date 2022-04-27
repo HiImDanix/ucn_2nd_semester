@@ -240,7 +240,7 @@ public class WindowContract extends JDialog {
 		switch (mode) {
 			case VIEW:
 				// Set title
-				setTitle("View Contract - " + room.getId());
+				setTitle("View Contract - " + room.getID());
 				// Hide 'Update' button if in view mode
 				btnSubmit.setVisible(false);
 				// Disable 'choose' button if in view mode.
@@ -306,7 +306,7 @@ public class WindowContract extends JDialog {
 		for (Tenant tenant : tenants) {
 			tenantRepr.append(
 					String.format("(%d) %s %s\n",
-							tenant.getId(),
+							tenant.getID(),
 							tenant.getFirstName(),
 							tenant.getLastName()
 					)
@@ -317,7 +317,7 @@ public class WindowContract extends JDialog {
 
 	private String getRoomRepresentation(Room room) {
 		return String.format("Room %d category %s",
-				room.getId(), room.getRoomCategory().getName());
+				room.getID(), room.getRoomCategory().getName());
 	}
 
 	/*

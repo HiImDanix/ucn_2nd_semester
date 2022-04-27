@@ -31,7 +31,7 @@ public class PhoneNotification extends Notification {
 
     @Override
     public String toString() {
-        return "PhoneNotification{" + "id=" + getId() + ", phone="
+        return "PhoneNotification{" + "id=" + getID() + ", phone="
                 + phone + ", title=" + getTitle() + ", content=" + getContent() + ", createdAt=" + getCreatedAt() + '}';
     }
 

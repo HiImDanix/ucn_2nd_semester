@@ -50,7 +50,7 @@ public class ContractTableModel extends MyAbstractTableModel<Contract> {
         for (Tenant tenant: contract.getTenants()){
             tenantRepresentation.append(
                     String.format(
-                            "(%d) %s %s, ", tenant.getId(), tenant.getFirstName(), tenant.getLastName())
+                            "(%d) %s %s, ", tenant.getID(), tenant.getFirstName(), tenant.getLastName())
             );
         }
         if (tenantRepresentation.length() > 0) {
@@ -69,7 +69,7 @@ public class ContractTableModel extends MyAbstractTableModel<Contract> {
         switch (columnIndex) {
             case 0: return "#" + contract.getID();
             case 1: return tenantRepresentation.toString();
-            case 2: return contract.getRoom().getId();
+            case 2: return contract.getRoom().getID();
             case 3: return contract.getRoom().getRoomCategory().getName();
             case 4: return Common.dateToString(contract.getStartDate());
             case 5: return endDateRepresentation;

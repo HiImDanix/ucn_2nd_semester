@@ -186,7 +186,7 @@ public class WindowRoom extends JDialog {
 		switch (mode) {
 			case VIEW:
 				// Set title
-				setTitle("View Room - " + room.getId());
+				setTitle("View Room - " + room.getID());
 				// Hide 'Update' button if in view mode
 				btnSubmit.setVisible(false);
 				// Disable 'choose' button if in view mode.
@@ -239,7 +239,7 @@ public class WindowRoom extends JDialog {
 
 	// FIll in the fields
 	private void fillFields(Room room) {
-		txtID.setText(String.valueOf(room.getId()));
+		txtID.setText(String.valueOf(room.getID()));
 		txtCategory.setText(room.getRoomCategory().getName());
 		rdbtnOutOfServiceYes.setSelected(room.isOutOfService());
 		rdbtnOutOfServiceNo.setSelected(!room.isOutOfService());

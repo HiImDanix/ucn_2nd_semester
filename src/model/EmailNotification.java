@@ -31,7 +31,7 @@ public class EmailNotification extends Notification {
 
     @Override
     public String toString() {
-        return "EmailNotification{" + "id=" + getId() + ", email="
+        return "EmailNotification{" + "id=" + getID() + ", email="
                 + email + ", title=" + getTitle() + ", content=" + getContent() + ", createdAt=" + getCreatedAt() + '}';
     }
 

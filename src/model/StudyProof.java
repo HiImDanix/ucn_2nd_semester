@@ -1,7 +1,6 @@
 package model;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class StudyProof {
     private int id;
@@ -24,7 +23,7 @@ public class StudyProof {
         this.studentUntilDate = studentUntilDate;
     }
 
-    public int getId() {
+    public int getID() {
         return id;
     }
 
