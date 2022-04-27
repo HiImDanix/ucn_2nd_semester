@@ -6,13 +6,11 @@ import controller.TenantController;
 import db.DBConnection;
 import db.DataAccessException;
 import model.Contract;
-import model.Room;
 import model.Tenant;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Collections;
 
 import static dal.ContractDB.Columns.*;
@@ -86,46 +84,17 @@ public class ContractDB extends DAO<Contract> implements ContractDBIF {
     @Override
     public Contract buildDomainObject(ResultSet rs) throws DataAccessException {
         try {
-            int roomID = rs.getInt(ROOM_ID.fieldName());
-
-            Contract contract = new Contract(
+            return new Contract(
                     rs.getInt(ID.fieldName()),
                     rs.getBoolean(INCLUDE_INTERNET.fieldName()),
                     rs.getDate(START_DATE.fieldName()).toLocalDate(),
-                    null,
-                    new ArrayList<>(),
+                    new RoomController().getRoomById(rs.getInt(ROOM_ID.fieldName())),
+                    new TenantController().getTenantsByContractID(rs.getInt(ID.fieldName())),
                     // TODO: STUBS
                     Collections.emptyList(),
                     Collections.emptyList(),
                     null
             );
-
-            // Put into cache
-            Cache.put(Contract.class, contract.getID(), contract);
-
-            // Room
-            if (Cache.contains(Room.class, rs.getInt(ROOM_ID.fieldName()))) {
-                contract.setRoom((Room) Cache.get(Room.class, roomID));
-            } else {
-                contract.setRoom(new RoomController().getRoomById(roomID));
-            }
-
-            // Tenants
-            TenantContractController tenantContractController = new TenantContractController();
-            for (int tenantID : tenantContractController.getTenantIDsByContractID(contract.getID())) {
-                if (Cache.contains(Tenant.class, tenantID)) {
-                    contract.addTenant((Tenant) Cache.get(Tenant.class, tenantID));
-                } else {
-                    Tenant tenant = new TenantController().getTenantById(tenantID);
-                    contract.addTenant(tenant);
-                    Cache.put(Tenant.class, tenant.getID(), tenant);
-                }
-            }
-
-
-
-            return contract;
-
         } catch (SQLException e) {
             throw new DataAccessException("Error building Contract object from ResultSet", e);
         }

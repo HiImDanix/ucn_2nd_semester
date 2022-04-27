@@ -7,10 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
 
-import controller.ContractController;
-import controller.TenantContractController;
 import db.DataAccessException;
 import model.Contract;
 import model.Tenant;
@@ -62,8 +59,7 @@ public class TenantDB extends DAO<Tenant> implements TenantDBIF {
 	@Override
 	public Tenant buildDomainObject(ResultSet resultSet) throws DataAccessException {
 		try {
-			System.out.println("Building Tenant");
-			Tenant tenant = new Tenant(
+			return new Tenant(
 					resultSet.getInt(Columns.ID.fieldName()),
 					resultSet.getString(Columns.first_name.fieldName()),
 					resultSet.getString(Columns.last_name.fieldName()),
@@ -71,23 +67,8 @@ public class TenantDB extends DAO<Tenant> implements TenantDBIF {
 					resultSet.getString(Columns.phone.fieldName()),
 					// TODO: stubbed for now
 					null,
-					new ArrayList<>()
+					new ArrayList<Contract>()
 			);
-			// put into cache
-			Cache.put(Tenant.class, tenant.getID(), tenant);
-
-			// retrieve contracts for tenant
-			for (int contractID: new TenantContractController().getContractIDsByTenantID(tenant.getID())) {
-				if (Cache.contains(Contract.class, contractID)) {
-					tenant.addContract((Contract) Cache.get(Contract.class, contractID));
-				} else {
-					Contract contract = new ContractController().getContractById(contractID);
-					tenant.addContract(contract);
-					Cache.put(Contract.class, contract.getID(), contract);
-				}
-			}
-
-			return tenant;
 		} catch (SQLException e) {
 			throw new DataAccessException("Error building Tenant object from ResultSet", e);
 		}

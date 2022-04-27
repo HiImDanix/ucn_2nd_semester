@@ -62,42 +62,6 @@ public class TenantContractDB implements TenantContractDBIF {
     }
 
     @Override
-    public List<Integer> getTenantIDsByContractID(int contractID) throws DataAccessException {
-        Connection connection = DBConnection.getInstance().getConnection();
-        List<Integer> tenantIds = new ArrayList<>();
-        try {
-            PreparedStatement stmt = connection.prepareStatement(getTenantIdsByContractIdQuery);
-            stmt.setInt(1, contractID);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                int tenantID = rs.getInt(Columns.TENANT_ID.fieldName());
-                tenantIds.add(tenantID);
-            }
-        } catch (SQLException e) {
-            throw new DataAccessException("Could not get tenants by contract ID", e);
-        }
-        return tenantIds;
-    }
-
-    @Override
-    public List<Integer> getContractIDsByTenantID(int tenantID) throws DataAccessException {
-        Connection connection = DBConnection.getInstance().getConnection();
-        List<Integer> contractIds = new ArrayList<>();
-        try {
-            PreparedStatement stmt = connection.prepareStatement(getContractIdsByTenantIdQuery);
-            stmt.setInt(1, tenantID);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                int contractID = rs.getInt(Columns.CONTRACT_ID.fieldName());
-                contractIds.add(contractID);
-            }
-        } catch (SQLException e) {
-            throw new DataAccessException("Could not get contracts by tenant ID", e);
-        }
-        return contractIds;
-    }
-
-    @Override
     public List<Contract> getContractsByTenantID(int tenantID) throws DataAccessException {
         Connection connection = DBConnection.getInstance().getConnection();
         List<Contract> contracts = new ArrayList<>();
