@@ -3,7 +3,10 @@ package gui.panels.tablemodels;
 import java.util.ArrayList;
 import java.util.List;
 
+import controller.TenantContractController;
+import db.DataAccessException;
 import gui.Common;
+import model.Contract;
 import model.Tenant;
 
 public class TenantTableModel extends MyAbstractTableModel<Tenant> {
@@ -42,6 +45,17 @@ public class TenantTableModel extends MyAbstractTableModel<Tenant> {
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		Tenant tenant = tenants.get(rowIndex);
+
+        TenantContractController tenantContractCtrl = new TenantContractController();
+        StringBuilder contractRepr = new StringBuilder("");
+        for (Contract contract: tenant.getContracts()) {
+            contractRepr.append(String.format("(%d) Room %s, ",
+                    contract.getRoom().getID(), contract.getRoom().getRoomCategory().getName()));
+        }
+        if (contractRepr.length() > 0) {
+            contractRepr.delete(contractRepr.length() - 2, contractRepr.length()); // remove last comma
+        }
+
         switch (columnIndex) {
             case 0: return "#" + tenant.getID();
             case 1: return tenant.getFirstName();
@@ -51,8 +65,7 @@ public class TenantTableModel extends MyAbstractTableModel<Tenant> {
             case 5: return tenant.getStudyProof() != null
                     ? "Until: " + Common.dateToString(tenant.getStudyProof().getStudentUntilDate())
                     : "Not provided";
-            // TODO: Stubbed out for now
-            case 6: return "(2) Room A, Room B";
+            case 6: return contractRepr.toString();
             default: return "ERROR";
         }
 	}
