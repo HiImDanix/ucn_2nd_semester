@@ -2,7 +2,7 @@ package model;
 
 import java.time.LocalDateTime;
 
-public class PhoneNotification extends Notification {
+public class PhoneNotification extends Notification implements modelIF {
     private String phone;
 
     public PhoneNotification(int id, String phone, String title, String content, LocalDateTime createdAt, Contract contract) {

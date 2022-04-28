@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class Contract {
+public class Contract implements modelIF {
     private int ID;
     private boolean includeInternet;
     private LocalDate startDate;

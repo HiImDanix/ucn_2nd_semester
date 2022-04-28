@@ -2,7 +2,7 @@ package model;
 
 import java.time.LocalDateTime;
 
-public abstract class Notification {
+public abstract class Notification implements modelIF {
     private int id;
     private String title;
     private String content;

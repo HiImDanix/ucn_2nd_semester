@@ -3,7 +3,7 @@ package model;
 import java.math.BigDecimal;
 import java.util.List;
 
-public class RoomCategory {
+public class RoomCategory implements modelIF {
     private int id;
     private String name;
     private String description;

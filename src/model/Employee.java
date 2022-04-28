@@ -1,6 +1,6 @@
 package model;
 
-public class Employee {
+public class Employee implements modelIF {
     private int id;
     private String firstName;
     private String lastName;

@@ -1,6 +1,6 @@
 package model;
 
-public class Institution {
+public class Institution implements modelIF {
     private int id;
     private String name;
     private String phone;

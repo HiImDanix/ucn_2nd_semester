@@ -2,7 +2,7 @@ package model;
 
 import java.util.List;
 
-public class Room {
+public class Room implements modelIF {
     private int id;
     private boolean isOutOfService;
     private RoomCategory roomCategory;

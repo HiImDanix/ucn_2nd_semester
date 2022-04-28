@@ -1,6 +1,6 @@
 package model;
 
-public class Furniture {
+public class Furniture implements modelIF {
     private int id;
     private String name;
     private String description;

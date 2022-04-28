@@ -2,7 +2,7 @@ package model;
 
 import java.time.LocalDateTime;
 
-public class EmailNotification extends Notification {
+public class EmailNotification extends Notification implements modelIF {
     private String email;
 
     public EmailNotification(int id, String email, String title, String content, LocalDateTime createdAt, Contract contract) {

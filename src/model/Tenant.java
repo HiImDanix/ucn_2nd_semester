@@ -2,7 +2,7 @@ package model;
 
 import java.util.List;
 
-public class Tenant {
+public class Tenant implements modelIF {
     private int id;
     private String firstName;
     private String lastName;

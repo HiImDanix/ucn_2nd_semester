@@ -2,7 +2,7 @@ package model;
 
 import java.time.LocalDate;
 
-public class StudyProof {
+public class StudyProof implements modelIF {
     private int id;
     private String documentPath;
     private LocalDate studentUntilDate;

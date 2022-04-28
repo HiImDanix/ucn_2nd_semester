@@ -2,7 +2,7 @@ package model;
 
 import java.time.LocalDate;
 
-public class LeaveNotice {
+public class LeaveNotice implements modelIF {
     private int id;
     private LocalDate noticeGivenDate;
     private boolean leavingByChoice;

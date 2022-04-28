@@ -2,7 +2,7 @@ package model;
 
 import java.time.LocalDateTime;
 
-public class RoomCondition {
+public class RoomCondition implements modelIF {
     private int ID;
     private String description;
     private LocalDateTime datetimeTaken;
