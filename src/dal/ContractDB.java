@@ -122,7 +122,7 @@ public class ContractDB extends DAO<Contract> implements ContractDBIF {
             );
 
             // Put into cache
-            Cache.put(Contract.class, contract.getID(), contract);
+            Cache.put(contract);
 
             // Room
             if (Cache.contains(Room.class, rs.getInt(ROOM_ID.fieldName()))) {
@@ -139,7 +139,7 @@ public class ContractDB extends DAO<Contract> implements ContractDBIF {
                 } else {
                     Tenant tenant = new TenantController().getTenantById(tenantID);
                     contract.addTenant(tenant);
-                    Cache.put(Tenant.class, tenant.getID(), tenant);
+                    Cache.put(tenant);
                 }
             }
 

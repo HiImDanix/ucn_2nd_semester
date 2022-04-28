@@ -73,7 +73,7 @@ public class TenantDB extends DAO<Tenant> implements TenantDBIF {
 					new ArrayList<>()
 			);
 			// put into cache
-			Cache.put(Tenant.class, tenant.getID(), tenant);
+			Cache.put(tenant);
 
 			// retrieve contracts for tenant
 			for (int contractID: new TenantContractController().getContractIDsByTenantID(tenant.getID())) {
@@ -82,7 +82,7 @@ public class TenantDB extends DAO<Tenant> implements TenantDBIF {
 				} else {
 					Contract contract = new ContractController().getContractById(contractID);
 					tenant.addContract(contract);
-					Cache.put(Contract.class, contract.getID(), contract);
+					Cache.put(contract);
 				}
 			}
 

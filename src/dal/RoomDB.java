@@ -56,7 +56,7 @@ public class RoomDB extends DAO<Room> implements RoomDBIF {
             );
 
             // put room in cache
-            Cache.put(Room.class, roomID, room);
+            Cache.put(room);
 
             // Add dependency: contracts
             for (int contractID : new ContractController().getAllContractIDsByRoomID(roomID)) {
