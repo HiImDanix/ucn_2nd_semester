@@ -39,11 +39,6 @@ public class RoomDB extends DAO<Room> implements RoomDBIF {
     }
 
     @Override
-    public int getId(Room obj) {
-        return obj.getID();
-    }
-
-    @Override
     public Room buildDomainObject(ResultSet rs) throws DataAccessException {
         try {
             int roomID = rs.getInt(ID.fieldName());

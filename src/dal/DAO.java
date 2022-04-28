@@ -2,6 +2,7 @@ package dal;
 
 import db.DBConnection;
 import db.DataAccessException;
+import model.modelIF;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class DAO<T> {
+public abstract class DAO<T extends modelIF> {
 
     // Store table name and fields
     private String tableName;
@@ -77,7 +78,6 @@ public abstract class DAO<T> {
 
     // Methods for setting values in prepared statements
     protected abstract void setValues(PreparedStatement stmt, T obj) throws SQLException;
-    protected abstract int getId(T obj);
 
     // Methods for building objects from ResultSet
     protected abstract T buildDomainObject(ResultSet resultSet) throws DataAccessException;
@@ -114,7 +114,7 @@ public abstract class DAO<T> {
         try {
             PreparedStatement stmt = conn.prepareStatement(getQueryUpdate());
             setValues(stmt, obj);
-            stmt.setInt(getFields().length + 1, getId(obj));
+            stmt.setInt(getFields().length + 1, obj.getID());
             stmt.executeUpdate();
         } catch (SQLException e) {
             throw new DataAccessException("Could not update " + getTableName(), e);
@@ -125,7 +125,7 @@ public abstract class DAO<T> {
         Connection conn = DBConnection.getInstance().getConnection();
         try {
             PreparedStatement stmt = conn.prepareStatement(getQueryDelete());
-            stmt.setInt(1, getId(obj));
+            stmt.setInt(1, obj.getID());
             stmt.executeUpdate();
         } catch (SQLException e) {
             throw new DataAccessException("Could not delete " + getTableName(), e);

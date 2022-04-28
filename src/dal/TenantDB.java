@@ -55,11 +55,6 @@ public class TenantDB extends DAO<Tenant> implements TenantDBIF {
 	}
 
 	@Override
-	protected int getId(Tenant obj) {
-		return obj.getID();
-	}
-
-	@Override
 	public Tenant buildDomainObject(ResultSet resultSet) throws DataAccessException {
 		try {
 			Tenant tenant = new Tenant(

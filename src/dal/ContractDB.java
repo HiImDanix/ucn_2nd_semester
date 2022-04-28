@@ -100,11 +100,6 @@ public class ContractDB extends DAO<Contract> implements ContractDBIF {
     }
 
     @Override
-    public int getId(Contract obj) {
-        return obj.getID();
-    }
-
-    @Override
     public Contract buildDomainObject(ResultSet rs) throws DataAccessException {
         try {
             int roomID = rs.getInt(ROOM_ID.fieldName());
@@ -142,8 +137,6 @@ public class ContractDB extends DAO<Contract> implements ContractDBIF {
                     Cache.put(tenant);
                 }
             }
-
-
 
             return contract;
 
