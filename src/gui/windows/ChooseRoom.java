@@ -3,6 +3,7 @@ package gui.windows;
 
 import db.DataAccessException;
 import gui.JButtonPrimary;
+import gui.Messages;
 import gui.panels.CRUDRooms;
 import gui.panels.tablemodels.MyAbstractTableModel;
 import gui.panels.tablemodels.RoomTableModel;
@@ -91,8 +92,13 @@ public class ChooseRoom extends JDialog {
             if (!table.getSelectionModel().isSelectionEmpty()) {
                 MyAbstractTableModel tableModel = CRUDPanel.getTableModel();
                 Room object = (Room) tableModel.getObj(table.getSelectedRow());
-                selectedObject = object;
-                this.dispose();
+                if (object.isOutOfService() == false) {
+                	selectedObject = object;
+                    this.dispose();
+                }
+                else {
+                	Messages.error(table, "The selected room is out of service!","Error");
+                }
             }
         });
     }
