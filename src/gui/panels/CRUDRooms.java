@@ -13,7 +13,7 @@ import model.Room;
 public class CRUDRooms extends AbstractCRUDPanel {
 
 	public CRUDRooms() throws DataAccessException {
-		super("Tenants");
+		super("Rooms");
 	}
 
 	@Override
