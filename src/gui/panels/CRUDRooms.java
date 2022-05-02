@@ -40,11 +40,13 @@ public class CRUDRooms extends AbstractCRUDPanel {
 
 	@Override
 	protected void btnEditAction() {
-		int row = getTable().convertRowIndexToModel(getTable().getSelectedRow());
-		Room room = (Room) getTableModel().getObj(row);
-		WindowRoom frame = new WindowRoom(room, WindowRoom.Mode.EDIT);
-		frame.setVisible(true);
-		getTableModel().fireTableRowsUpdated(row, row);
+		Messages.error(this, "disabled");
+		return;
+//		int row = getTable().convertRowIndexToModel(getTable().getSelectedRow());
+//		Room room = (Room) getTableModel().getObj(row);
+//		WindowRoom frame = new WindowRoom(room, WindowRoom.Mode.EDIT);
+//		frame.setVisible(true);
+//		getTableModel().fireTableRowsUpdated(row, row);
 	}
 
 	@Override
