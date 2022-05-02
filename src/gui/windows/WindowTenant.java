@@ -93,7 +93,7 @@ public class WindowTenant extends JDialog {
 		gbl_contentPanel.rowWeights = new double[]{1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPanel);
 		
-		lblID = new JLabel("First name *");
+		lblID = new JLabel("ID");
 		GridBagConstraints gbc_lblID = new GridBagConstraints();
 		gbc_lblID.anchor = GridBagConstraints.SOUTHWEST;
 		gbc_lblID.insets = new Insets(0, 0, 5, 5);
