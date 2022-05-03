@@ -25,7 +25,6 @@ public class RoomTableModel extends MyAbstractTableModel<Room> {
         this.rooms = new ArrayList<>(rooms);
     }
     
-
     @Override
     public int getRowCount() {
         return rooms.size();
@@ -44,6 +43,7 @@ public class RoomTableModel extends MyAbstractTableModel<Room> {
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         switch (columnIndex) {
+        	case 2: return Boolean.class;
             case 3: return Boolean.class;
             default: return String.class;
         }
@@ -71,11 +71,22 @@ public class RoomTableModel extends MyAbstractTableModel<Room> {
         }
     }
     
-    // Make cells uneditable
+    // Make cells uneditable except checkbox (outOfService)
     @Override
-    public boolean isCellEditable(int row, int column) {       
-        return false;
-    }
+    public boolean isCellEditable(int row, int column) {
+         switch (column) {
+            case 0:
+                return false;
+            case 1:
+                return false;
+            case 2:
+                return true;
+            case 3:
+                return false;
+            default:
+                return false;
+            }
+       }
     
     /**
      * Gets the Room object by row
