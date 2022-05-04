@@ -363,7 +363,7 @@ public class WindowTenant extends JDialog {
 					// if mode == Create, create a new room
 					try {
 						this.tenant = tenantCtrl.addTenant(firstName, lastName, email, phone,
-								studyProof, Collections.emptyList());
+								studyProof);
 					} catch (DataAccessException ex) {
 						Messages.error("Error creating tenant", "error");
 					}

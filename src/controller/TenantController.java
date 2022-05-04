@@ -26,8 +26,8 @@ public class TenantController {
 		return tenantDb.getById(id);
 	}
 	
-	public Tenant addTenant(String fname, String lname, String email, String phone, StudyProof studyProof, List<Contract> contracts) throws DataAccessException{
-		Tenant tenant = new Tenant(-1, fname, lname, email, phone, studyProof, contracts);
+	public Tenant addTenant(String fname, String lname, String email, String phone, StudyProof studyProof) throws DataAccessException{
+		Tenant tenant = new Tenant(-1, fname, lname, email, phone, studyProof, new ArrayList<>());
 		tenant.setId(tenantDb.add(tenant));
 		return tenant;
 	}
