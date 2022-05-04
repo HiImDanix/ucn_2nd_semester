@@ -28,8 +28,6 @@ import db.DataAccessException;
  *
  */
 public class App {
-
-	private static final Boolean resetDB = false;
 	private static final String DEFAULT_EMAIL = "email@example.com";
 	private static final String DEFAULT_PASSWORD = "password";
 
@@ -38,7 +36,9 @@ public class App {
 	 */
 	public static void main(String[] args) {
 
-		if (resetDB) {
+		// if arg 'resetDB' is passed, reset the database & add demo data
+		if (args.length > 0 && Arrays.stream(args).anyMatch("resetDB"::equals)) {
+			System.out.println("Resetting database...");
 			DataController dataCtrl = new DataController();
 
 			// Clear data
