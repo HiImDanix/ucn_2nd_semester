@@ -44,6 +44,7 @@ public class RoomTableModel extends MyAbstractTableModel<Room> {
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         switch (columnIndex) {
+            case 2:
             case 3: return Boolean.class;
             default: return String.class;
         }
