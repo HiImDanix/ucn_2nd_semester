@@ -57,7 +57,7 @@ public class DBConnection {
         String url = String.format("%s%s:%s;databaseName=%s;encrypt=true;trustServerCertificate=true", URL_PREFIX,
                         properties.getProperty("HOST"), properties.getProperty("PORT"),
                         properties.getProperty("DBNAME"));
-        
+
 
         // Try connecting to the database
         try {
