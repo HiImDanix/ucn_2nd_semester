@@ -6,12 +6,14 @@ import controller.TenantController;
 import db.DBConnection;
 import db.DataAccessException;
 import model.Contract;
+import model.LeaveNotice;
 import model.Room;
 import model.Tenant;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

@@ -3,9 +3,11 @@ package controller;
 import dal.RoomDB;
 import dal.RoomDBIF;
 import db.DataAccessException;
+import model.Contract;
 import model.Room;
 import model.RoomCategory;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,5 +63,21 @@ public class RoomController {
      */
     public List<Room> getAllRooms() throws DataAccessException {
         return roomDB.getAll();
+    }
+
+    /*
+     * Is room occupied
+     */
+    public boolean isRoomOccupied(Room room){
+        boolean roomHasValidContract = false;
+        for (Contract contract: room.getContracts()) {
+            if (contract.getLeaveNotice() == null ||
+                    contract.getLeaveNotice() != null
+                    && contract.getLeaveNotice().getNoticeGivenDate().isAfter(
+                    LocalDate.now().plusDays(room.getRoomCategory().getLeaveNoticeDays()))) {
+                roomHasValidContract = true;
+            }
+        }
+        return roomHasValidContract;
     }
 }

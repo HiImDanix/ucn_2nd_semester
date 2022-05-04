@@ -1,6 +1,8 @@
 package gui.windows;
 
 import controller.ContractController;
+import controller.RoomController;
+import controller.TenantController;
 import db.DataAccessException;
 import gui.Common;
 import gui.JButtonPrimary;
@@ -15,6 +17,7 @@ import java.awt.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class WindowContract extends JDialog {
 
@@ -417,7 +420,9 @@ public class WindowContract extends JDialog {
 			// Open 'choose room' window
 			ChooseRoom frame = null;
 			try {
-				frame = new ChooseRoom();
+				// Check if the room is out of service or occupied
+				Predicate<Room> filter = room -> room.isOutOfService() || new RoomController().isRoomOccupied(room);
+				frame = new ChooseRoom(filter, "Cannot choose this room as it is out of service or occupied.");
 			} catch (DataAccessException ex) {
 				Messages.error("Error opening choose room window", "error");
 			}

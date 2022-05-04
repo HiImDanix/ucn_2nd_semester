@@ -12,6 +12,7 @@ import model.Room;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.util.function.Predicate;
 
 public class ChooseRoom extends JDialog {
 
@@ -22,6 +23,15 @@ public class ChooseRoom extends JDialog {
     private final JPanel contentPane;
     private JButtonPrimary btnChoose;
 
+    private Predicate<Room> filter = null;
+    private String excludeMessage = "Cannot choose this room";
+
+
+    public ChooseRoom(Predicate<Room> exclude, String excludeMessage) throws DataAccessException {
+        this();
+        this.filter = exclude;
+        this.excludeMessage = excludeMessage;
+    }
 
     /**
      * Create the dialog.
@@ -92,13 +102,20 @@ public class ChooseRoom extends JDialog {
             if (!table.getSelectionModel().isSelectionEmpty()) {
                 MyAbstractTableModel tableModel = CRUDPanel.getTableModel();
                 Room object = (Room) tableModel.getObj(table.getSelectedRow());
-                if (object.isOutOfService() == false) {
-                	selectedObject = object;
+                if (filter == null || !filter.test(object)) {
+                    selectedObject = object;
                     this.dispose();
+                } else {
+                    Messages.error(excludeMessage);
                 }
-                else {
-                	Messages.error(table, "The selected room is out of service!","Error");
-                }
+//
+//                if (object.isOutOfService() == false) {
+//                	selectedObject = object;
+//                    this.dispose();
+//                }
+//                else {
+//                	Messages.error(table, "The selected room is out of service!","Error");
+//                }
             }
         });
     }

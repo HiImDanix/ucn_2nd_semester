@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import controller.RoomController;
 import model.Contract;
 import model.Room;
 
@@ -54,14 +55,7 @@ public class RoomTableModel extends MyAbstractTableModel<Room> {
     public Object getValueAt(int rowIndex, int columnIndex) {
     	Room room = rooms.get(rowIndex);
 
-        boolean roomHasValidContract = false;
-        for (Contract contract: room.getContracts()) {
-            if (contract.getLeaveNotice() != null && contract.getLeaveNotice().getNoticeGivenDate().isAfter(
-                    LocalDate.now().plusDays(room.getRoomCategory().getLeaveNoticeDays()))) {
-                roomHasValidContract = true;
-            }
-        }
-        boolean roomIsAvailable = !room.isOutOfService() && !roomHasValidContract;
+        boolean roomIsAvailable = !room.isOutOfService() && new RoomController().isRoomOccupied(room);
 
         switch (columnIndex) {
             case 0: return "#" + room.getID();
