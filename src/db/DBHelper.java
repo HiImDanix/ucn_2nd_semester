@@ -5,9 +5,7 @@ import model.Room;
 import model.RoomCategory;
 import model.Tenant;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.sql.Connection;
@@ -19,7 +17,7 @@ import java.util.List;
 
 public class DBHelper {
     // The SQL file to create tables. Statements are separated by semi-colons.
-    File file = new File("sql/table_setup.sql");
+    private static final String TABLE_SETUP_SQL_FILENAME = "sql/table_setup.sql";
 
     public void clear() throws DataAccessException, IOException {
         Connection conn = DBConnection.getInstance().getConnection();
@@ -45,10 +43,21 @@ public class DBHelper {
     }
 
     private String[] getTableSetupStatements() throws DataAccessException, IOException {
-        // Read statements from file where each statement ends with ;
-        System.out.println("Reading SQL statements from file: " + file.getAbsolutePath());
-        String fileContent = Files.readString(file.toPath());
-        return fileContent.split(";");
+        // Read file from resources
+        InputStream is = getClass().getClassLoader().getResourceAsStream(TABLE_SETUP_SQL_FILENAME);
+        if (is == null) {
+            throw new DataAccessException("Could not find SQL file: " + TABLE_SETUP_SQL_FILENAME);
+        }
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            sb.append(line);
+            sb.append("\n");
+        }
+        System.out.println(sb.toString());
+        return sb.toString().split(";");
+
     }
 
     public void addDemoData() throws DataAccessException {

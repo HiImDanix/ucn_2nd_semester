@@ -1,6 +1,6 @@
 package db;
 
-import gui.Messages;
+import gui.App;
 
 import java.sql.*;
 import java.util.*;
@@ -8,10 +8,10 @@ import java.io.*;
 
 public class DBConnection {
     private static final Set<String> POSSIBLE_PROPERTIES = new HashSet<>(Arrays.asList(
-            "USERNAME", "PASSWORD", "HOST", "PORT", "DBNAME"));
+            "DB_USERNAME", "DB_PASSWORD", "DB_HOST", "DB_PORT", "DB_NAME"));
     private static final String DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     private static final String URL_PREFIX = "jdbc:sqlserver://";
-    private static String CONFIG_FILE = "config.properties";
+    private static String CONFIG_FILENAME = "config.properties";
 
 
     private static DBConnection instance = null;
@@ -19,30 +19,17 @@ public class DBConnection {
     private static final Properties properties = new Properties();
 
     private DBConnection() throws DataAccessException {
-        // TODO: Fix this dirty hack
-        // A dirty hack to make sure that root path is same when ran as app and as a unit test
-        // if user dir ends in /src, remove it
-        String userDir = System.getProperty("user.dir");
-        if (userDir.endsWith("src")) {
-            userDir = userDir.substring(0, userDir.length() - 4);
-        }
-        // add to config file path
-        CONFIG_FILE = userDir + "/" + CONFIG_FILE;
 
-
+        InputStream configFileStream = this.getClass().getClassLoader().getResourceAsStream(CONFIG_FILENAME);
         // If properties already have been read, don't read them again
         if (properties.isEmpty()) {
-            if (!new File(CONFIG_FILE).exists()) {
-                // If config file does not exist, create it with needed properties but no values
-                createProperties();
-                Messages.error("A new database config file has been created." +
-                        " Please fill in the needed properties.", "Database config file");
-                // Exit the app
-                System.exit(0);
-
+            if (configFileStream == null) {
+                    if (App.DEBUG) {
+                        System.out.println("DEBUG: Config file not found. Please create a  + " + CONFIG_FILENAME + " file in the resources folder that contains the following properties: " + POSSIBLE_PROPERTIES);
+                    }
+                    throw new DataAccessException("Config file " + CONFIG_FILENAME + " not found");
             } else {
-                // Read properties from config file
-                readProperties();
+                readProperties(configFileStream);
             }
         }
 
@@ -55,14 +42,14 @@ public class DBConnection {
 
         // set up url
         String url = String.format("%s%s:%s;databaseName=%s;encrypt=true;trustServerCertificate=true", URL_PREFIX,
-                        properties.getProperty("HOST"), properties.getProperty("PORT"),
-                        properties.getProperty("DBNAME"));
+                        properties.getProperty("DB_HOST"), properties.getProperty("DB_PORT"),
+                        properties.getProperty("DB_NAME"));
 
 
         // Try connecting to the database
         try {
             con = java.sql.DriverManager.getConnection(url,
-                    properties.getProperty("USERNAME"), properties.getProperty("PASSWORD"));
+                    properties.getProperty("DB_USERNAME"), properties.getProperty("DB_PASSWORD"));
             // Turn on autocommit
             con.setAutoCommit(true);
         }  catch (SQLException e) {
@@ -73,39 +60,26 @@ public class DBConnection {
     /*
      * Read properties from config file
      */
-    private static void readProperties() throws DataAccessException {
+    private static void readProperties(InputStream configFileStream) throws DataAccessException {
         // Read properties from config file
         try {
-            properties.load(new FileInputStream(CONFIG_FILE));
+            properties.load(configFileStream);
         } catch (IOException e) {
             throw new DataAccessException("Error reading config.properties", e);
         }
         // Check that all needed properties are set
+        List<String> missingProperties = new ArrayList<>();
         for (String property : POSSIBLE_PROPERTIES) {
+
             if (!properties.containsKey(property)) {
-                throw new DataAccessException("Property " + property + " not set in config.properties");
+                missingProperties.add(property);
             }
         }
-    }
-
-    /*
-     * Create a new config file with default properties but no values
-     */
-    private static void createProperties() throws DataAccessException {
-        try {
-            properties.store(new FileOutputStream(CONFIG_FILE), null);
-        } catch (IOException e) {
-            throw new DataAccessException("Error creating config.properties", e);
-        }
-        // Fill in the properties without values
-        for (String property : POSSIBLE_PROPERTIES) {
-            properties.setProperty(property, "");
-        }
-        // Save the properties to the file
-        try {
-            properties.store(new FileOutputStream(CONFIG_FILE), null);
-        } catch (IOException e) {
-            throw new DataAccessException("Error saving config.properties", e);
+        if (!missingProperties.isEmpty()) {
+            if (App.DEBUG) {
+                System.out.println("DEBUG: Please set the following properties in " + CONFIG_FILENAME + ": " + missingProperties);
+            }
+            throw new DataAccessException("Missing properties: " + String.join(", ", missingProperties));
         }
     }
 

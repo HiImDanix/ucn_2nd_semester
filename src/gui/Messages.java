@@ -47,6 +47,15 @@ public class Messages {
 	public static void error(String message, String title) {
 		Messages.error(null, message, title);
 	}
+
+	/**
+	 * Show an error message window.
+	 *
+	 * @param message the message
+	 */
+	public static void error(String message) {
+		Messages.error(message, "Error");
+	}
 	
 	/**
 	 * Shows a confirmation window
