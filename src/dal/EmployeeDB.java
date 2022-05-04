@@ -26,7 +26,6 @@ public class EmployeeDB extends DAO<Employee> implements EmployeeDBIF {
     public EmployeeDB() {
         // Passing table name and settable column names
         super(tableName, new String[] {
-                ID.fieldName(),
                 FIRST_NAME.fieldName(),
                 LAST_NAME.fieldName(),
                 EMAIL.fieldName(),
