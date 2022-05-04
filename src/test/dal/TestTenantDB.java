@@ -12,6 +12,7 @@ import model.Tenant;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -30,9 +31,10 @@ public class TestTenantDB {
 
     @BeforeEach
     void reset() throws DataAccessException, IOException {
-        dataCtrl.clear();
+//        dataCtrl.clear();
     }
 
+    @Test()
     void testAddGetTenant() throws DataAccessException {
         String firstName = "Daniels";
         String lastName = "Kanepe";
@@ -45,7 +47,7 @@ public class TestTenantDB {
         int tenantID = tenantDB.add(tenant);
 
         Tenant dbTenant = tenantDB.getById(tenantID);
-        assert dbTenant.getID() == 1;
+        assert dbTenant.getID() == tenantID;
         assert dbTenant.getFirstName().equals(firstName);
         assert dbTenant.getLastName().equals(lastName);
         assert dbTenant.getEmail().equals(email);
@@ -54,22 +56,24 @@ public class TestTenantDB {
         assert dbTenant.getContracts().isEmpty();
     }
 
+    @Test()
     void testUpdateTenant() throws DataAccessException {
         // TODO: Implement this test
     }
 
+    @Test()
     void testDeleteTenant() throws DataAccessException {
-        // TODO: Implement this test
     }
 
+    @Test()
     void testGetAllTenants() throws DataAccessException {
         // TODO: Implement this test
     }
 
     @AfterAll
     static void tearDown() throws DataAccessException, IOException {
-        dataCtrl.clear();
-        dataCtrl.addDemoData();
+//        dataCtrl.clear();
+//        dataCtrl.addDemoData();
         dbConnection.closeConnection();
     }
 

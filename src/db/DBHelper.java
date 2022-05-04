@@ -46,6 +46,7 @@ public class DBHelper {
 
     private String[] getTableSetupStatements() throws DataAccessException, IOException {
         // Read statements from file where each statement ends with ;
+        System.out.println("Reading SQL statements from file: " + file.getAbsolutePath());
         String fileContent = Files.readString(file.toPath());
         return fileContent.split(";");
     }
