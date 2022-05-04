@@ -11,7 +11,7 @@ public class DBConnection {
             "USERNAME", "PASSWORD", "HOST", "PORT", "DBNAME"));
     private static final String DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     private static final String URL_PREFIX = "jdbc:sqlserver://";
-    private static final String CONFIG_FILE = "config.properties";
+    private static String CONFIG_FILE = "config.properties";
 
 
     private static DBConnection instance = null;
@@ -19,6 +19,16 @@ public class DBConnection {
     private static final Properties properties = new Properties();
 
     private DBConnection() throws DataAccessException {
+        // TODO: Fix this dirty hack
+        // A dirty hack to make sure that root path is same when ran as app and as a unit test
+        // if user dir ends in /src, remove it
+        String userDir = System.getProperty("user.dir");
+        if (userDir.endsWith("src")) {
+            userDir = userDir.substring(0, userDir.length() - 4);
+        }
+        // add to config file path
+        CONFIG_FILE = userDir + "/" + CONFIG_FILE;
+
 
         // If properties already have been read, don't read them again
         if (properties.isEmpty()) {
@@ -47,12 +57,7 @@ public class DBConnection {
         String url = String.format("%s%s:%s;databaseName=%s;encrypt=true;trustServerCertificate=true", URL_PREFIX,
                         properties.getProperty("HOST"), properties.getProperty("PORT"),
                         properties.getProperty("DBNAME"));
-
-
-        // print all properties
-        for (String property : properties.stringPropertyNames()) {
-            System.out.println(property + ": " + properties.getProperty(property));
-        }
+        
 
         // Try connecting to the database
         try {
