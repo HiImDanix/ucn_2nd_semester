@@ -1,6 +1,7 @@
 package db;
 
 import controller.*;
+import gui.App;
 import model.Room;
 import model.RoomCategory;
 import model.Tenant;
@@ -55,13 +56,15 @@ public class DBHelper {
             sb.append(line);
             sb.append("\n");
         }
-        System.out.println(sb.toString());
         return sb.toString().split(";");
 
     }
 
     public void addDemoData() throws DataAccessException {
         // NOTE: SOME DATA IS STUBBED FOR NOW as there is no need to implement it yet due to current use case
+
+        // Add default login
+        new EmployeeController().addEmployee("Admin", "Admin", App.DEFAULT_EMAIL, App.DEFAULT_PASSWORD);
 
         // Add room categories
         RoomCategoryController roomCategoryCtrl = new RoomCategoryController();

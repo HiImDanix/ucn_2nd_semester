@@ -23,7 +23,7 @@ public class TestDBConnection {
 
 
     @Test()
-    public void wasConnected() throws SQLException, DataAccessException {
+    public void connectAndReconnect() throws SQLException, DataAccessException {
         // Get the connection
         assertNotNull(dbCon.getConnection(), "Connection is null");
 
@@ -45,11 +45,9 @@ public class TestDBConnection {
         dbCon.getConnection().createStatement().executeQuery("SELECT 1");
     }
 
-
-    /** Fixture for pay station testing. */
     @AfterAll
     static void cleanUp() throws DataAccessException, SQLException {
-//        DBConnection.getInstance().getConnection().close();
+        DBConnection.getInstance().closeConnection();
     }
 
 }

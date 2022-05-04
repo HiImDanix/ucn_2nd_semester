@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.EventQueue;
 import java.io.IOException;
+import java.util.Arrays;
 
 import javax.swing.*;
 
@@ -12,8 +13,8 @@ import db.DataAccessException;
 
 public class App {
 	public static boolean DEBUG = false;
-	private static final String DEFAULT_EMAIL = "email@example.com";
-	private static final String DEFAULT_PASSWORD = "password";
+	public static final String DEFAULT_EMAIL = "email@example.com";
+	public static final String DEFAULT_PASSWORD = "password";
 
 	/**
 	 * Launch the application.
@@ -21,10 +22,10 @@ public class App {
 	public static void main(String[] args) {
 		// parse args
 		if (args.length > 0) {
-			if (args[0].equals("-debug")) {
+			if (Arrays.stream(args).anyMatch(arg -> arg.toLowerCase().equals("-debug"))) {
 				DEBUG = true;
 			}
-			if (args[0].equals("-reset")) {
+			if (Arrays.stream(args).anyMatch(arg -> arg.toLowerCase().equals("-reset"))) {
 				resetDatabase();
 			}
 		}
@@ -69,15 +70,6 @@ public class App {
 			dataCtrl.addDemoData();
 		} catch (DataAccessException e) {
 			System.out.println("Error adding demo data.");
-			System.exit(1);
-		}
-
-		// Add default employee to log in
-		try {
-			new EmployeeController().addEmployee("Admin", "Admin", DEFAULT_EMAIL, DEFAULT_PASSWORD);
-		} catch (DataAccessException e) {
-			e.printStackTrace();
-			System.out.println("Could not create default employee. Quitting...");
 			System.exit(1);
 		}
 	}

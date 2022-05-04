@@ -31,7 +31,7 @@ public class TestTenantDB {
 
     @BeforeEach
     void reset() throws DataAccessException, IOException {
-//        dataCtrl.clear();
+        dataCtrl.clear();
     }
 
     @Test()
@@ -72,8 +72,8 @@ public class TestTenantDB {
 
     @AfterAll
     static void tearDown() throws DataAccessException, IOException {
-//        dataCtrl.clear();
-//        dataCtrl.addDemoData();
+        dataCtrl.clear();
+        dataCtrl.addDemoData();
         dbConnection.closeConnection();
     }
 
