@@ -13,7 +13,7 @@ import java.util.List;
 public class EmployeeController {
     private EmployeeDBIF employeeDB;
 
-    public EmployeeController() throws DataAccessException {
+    public EmployeeController() {
         employeeDB = new EmployeeDB();
     }
 

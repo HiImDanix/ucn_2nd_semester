@@ -2,9 +2,7 @@ package db;
 
 import gui.Messages;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.*;
 import java.io.*;
 
@@ -168,21 +166,65 @@ public class DBConnection {
 
     // Execute prepared statement and return the generated primary key
 
-    /**
-     * Execute a prepared statement and return the generated primary key
-     * @param ps Prepared statement that has been prepared with RETURN_GENERATED_KEYS enabled.
-     *
-     * @return The generated primary key
-     *
-     * @throws DataAccessException If an error occurs during the execution of the statement
-     */
-    public int executeStatementReturnID(PreparedStatement ps) throws DataAccessException {
+//    /**
+//     * Execute a prepared statement and return the generated primary key
+//     * @param ps Prepared statement that has been prepared with RETURN_GENERATED_KEYS enabled.
+//     *
+//     * @return The generated primary key
+//     *
+//     * @throws DataAccessException If an error occurs during the execution of the statement
+//     */
+//    public int executeStatementReturnID(PreparedStatement ps) throws DataAccessException {
+//        try {
+//            ps.executeUpdate();
+//            return ps.getGeneratedKeys().getInt(1);
+//        }
+//        catch (SQLException e) {
+//            throw new DataAccessException("Error executing statement", e);
+//        }
+//    }
+
+    // Get tables names for current database except system tables
+    public List<String> getTables(Connection conn) throws DataAccessException {
+        List<String> tables = new ArrayList<>();
         try {
-            ps.executeUpdate();
-            return ps.getGeneratedKeys().getInt(1);
+            DatabaseMetaData meta = conn.getMetaData();
+            String[] types = {"TABLE"};
+            ResultSet rs = meta.getTables(null, null, "%", types);
+            while (rs.next()) {
+                // add if not a system table
+                if (!rs.getString("TABLE_NAME").startsWith("trace_")) {
+                    tables.add(rs.getString("TABLE_NAME"));
+                }
+            }
+        } catch (SQLException e) {
+            throw new DataAccessException("Error getting tables", e);
         }
-        catch (SQLException e) {
-            throw new DataAccessException("Error executing statement", e);
+        return tables;
+    }
+
+    // Drop foreign keys
+    public void dropForeignKeys(Connection conn, String tableName) throws DataAccessException {
+        try {
+            DatabaseMetaData meta = conn.getMetaData();
+            ResultSet rs = meta.getImportedKeys(null, null, tableName);
+            while (rs.next()) {
+                String constraintName = rs.getString("FK_NAME");
+                Statement stmt = conn.createStatement();
+                stmt.executeUpdate("ALTER TABLE " + tableName + " DROP CONSTRAINT " + constraintName);
+            }
+        } catch (SQLException e) {
+            throw new DataAccessException("Error dropping foreign keys", e);
+        }
+    }
+
+    // Drop table
+    public void dropTable(Connection conn, String tableName) throws DataAccessException {
+        try {
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate("DROP TABLE " + tableName);
+        } catch (SQLException e) {
+            throw new DataAccessException("Error dropping table", e);
         }
     }
 
