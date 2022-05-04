@@ -49,6 +49,11 @@ public class DBConnection {
                         properties.getProperty("DBNAME"));
 
 
+        // print all properties
+        for (String property : properties.stringPropertyNames()) {
+            System.out.println(property + ": " + properties.getProperty(property));
+        }
+
         // Try connecting to the database
         try {
             con = java.sql.DriverManager.getConnection(url,
@@ -122,7 +127,7 @@ public class DBConnection {
      * Singleton pattern
      */
     public static synchronized DBConnection getInstance() throws DataAccessException {
-        if (instance == null) {
+        if (instance == null || instance.getConnection() == null) {
             instance = new DBConnection();
         }
         return instance;
