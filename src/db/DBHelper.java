@@ -1,8 +1,6 @@
 package db;
 
-import controller.FurnitureController;
-import controller.RoomCategoryController;
-import controller.RoomController;
+import controller.*;
 import model.RoomCategory;
 
 import java.io.File;
@@ -48,15 +46,25 @@ public class DBHelper {
     }
 
     public void addDemoData() throws DataAccessException {
-//        // SOME DATA IS STUBBED FOR NOW (no controllers are used)
-//
-//        RoomCategoryController roomCategoryCtrl = new RoomCategoryController();
-//        RoomCategory roomCategory1 = new RoomCategory(1, "A", "Category A. Single room.",
-//                BigDecimal.valueOf(100), BigDecimal.valueOf(100), BigDecimal.valueOf(100), 2, 1, null);
-//
-//
-//        RoomController roomCtrl = new RoomController();
+        // SOME DATA IS STUBBED FOR NOW (no controllers are used)
+
+        // Add room categories
+        RoomCategoryController roomCategoryCtrl = new RoomCategoryController();
+
+        // Add rooms
+        RoomController roomCtrl = new RoomController();
 //        roomCtrl.addRoom(roomCategory1, false);
 //        roomCtrl.addRoom(roomCategory1, true);
+
+        // Add tenants
+        TenantController tenantCtrl = new TenantController();
+        tenantCtrl.addTenant("Daniels", "Kanepe", "danielskanepe@email.com", "0712665347", null);
+        tenantCtrl.addTenant("Andras", "Varsanyi", "danielskanepe@email.com", "0542365211", null);
+        tenantCtrl.addTenant("Ondrej", "Dobis", "danielskanepe@email.com", "+45573962625", null);
+
+        // Add contracts
+        ContractController contractCtrl = new ContractController();
+
+
     }
 }
