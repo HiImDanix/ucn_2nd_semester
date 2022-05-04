@@ -1,7 +1,9 @@
 package db;
 
 import controller.*;
+import model.Room;
 import model.RoomCategory;
+import model.Tenant;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,6 +12,9 @@ import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class DBHelper {
@@ -46,24 +51,26 @@ public class DBHelper {
     }
 
     public void addDemoData() throws DataAccessException {
-        // SOME DATA IS STUBBED FOR NOW (no controllers are used)
+        // NOTE: SOME DATA IS STUBBED FOR NOW as there is no need to implement it yet due to current use case
 
         // Add room categories
         RoomCategoryController roomCategoryCtrl = new RoomCategoryController();
+        RoomCategory roomCategory1 = new RoomCategory(-1, "A", "Single room", BigDecimal.valueOf(100), BigDecimal.valueOf(100), BigDecimal.valueOf(100), 2, 1, null);
 
         // Add rooms
         RoomController roomCtrl = new RoomController();
-//        roomCtrl.addRoom(roomCategory1, false);
-//        roomCtrl.addRoom(roomCategory1, true);
+        Room room1 = roomCtrl.addRoom(roomCategory1, false);
+        Room room2 = roomCtrl.addRoom(roomCategory1, true);
 
         // Add tenants
         TenantController tenantCtrl = new TenantController();
-        tenantCtrl.addTenant("Daniels", "Kanepe", "danielskanepe@email.com", "0712665347", null);
-        tenantCtrl.addTenant("Andras", "Varsanyi", "danielskanepe@email.com", "0542365211", null);
-        tenantCtrl.addTenant("Ondrej", "Dobis", "danielskanepe@email.com", "+45573962625", null);
+        Tenant tenant1 = tenantCtrl.addTenant("Daniels", "Kanepe", "danielskanepe@email.com", "0712665347", null);
+        Tenant tenant2 = tenantCtrl.addTenant("Andras", "Varsanyi", "danielskanepe@email.com", "0542365211", null);
+        Tenant tenant3 = tenantCtrl.addTenant("Ondrej", "Dobis", "danielskanepe@email.com", "+45573962625", null);
 
         // Add contracts
         ContractController contractCtrl = new ContractController();
+        contractCtrl.addContract(LocalDate.now(), Arrays.asList(tenant1), room1, false);
 
 
     }

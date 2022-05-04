@@ -32,7 +32,7 @@ CREATE TABLE room (
 	is_out_of_service bit NOT NULL,
 	room_category_id int NOT NULL,
 	CONSTRAINT PK__room__3213E83F7C875DF9 PRIMARY KEY (id),
-	CONSTRAINT FK__room__room_categ__43D61337 FOREIGN KEY (room_category_id) REFERENCES room_category(id)
+	-- CONSTRAINT FK__room__room_categ__43D61337 FOREIGN KEY (room_category_id) REFERENCES room_category(id)
 );
 
 
