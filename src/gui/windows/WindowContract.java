@@ -375,7 +375,7 @@ public class WindowContract extends JDialog {
 					newStartDate = Common.stringToDate(txtStartDate.getText().strip());
 				} catch (DateTimeParseException e1) {
 					Messages.error(this, "Please enter a valid contract start date in the format of: "
-							+ Common.getDateTimeFormat());
+							+ Common.getDateFormat());
 					return;
 				}
 
