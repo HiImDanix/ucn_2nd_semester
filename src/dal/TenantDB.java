@@ -57,28 +57,29 @@ public class TenantDB extends DAO<Tenant> implements TenantDBIF {
 	@Override
 	public Tenant buildDomainObject(ResultSet resultSet) throws DataAccessException {
 		try {
+			int tenantID = resultSet.getInt(Columns.ID.fieldName());
+
+			if (Cache.contains(Tenant.class, tenantID)) {
+				return (Tenant) Cache.get(Tenant.class, tenantID);
+			}
+
 			Tenant tenant = new Tenant(
-					resultSet.getInt(Columns.ID.fieldName()),
+					tenantID,
 					resultSet.getString(Columns.first_name.fieldName()),
 					resultSet.getString(Columns.last_name.fieldName()),
 					resultSet.getString(Columns.email.fieldName()),
 					resultSet.getString(Columns.phone.fieldName()),
-					// TODO: stubbed for now
-					null,
+					null, 	// TODO: stubbed for now
 					new ArrayList<>()
 			);
+
 			// put into cache
 			Cache.put(tenant);
 
 			// retrieve contracts for tenant
 			for (int contractID: new TenantContractController().getContractIDsByTenantID(tenant.getID())) {
-				if (Cache.contains(Contract.class, contractID)) {
-					tenant.addContract((Contract) Cache.get(Contract.class, contractID));
-				} else {
-					Contract contract = new ContractController().getContractById(contractID);
-					tenant.addContract(contract);
-					Cache.put(contract);
-				}
+				Contract contract = new ContractController().getContractById(contractID);
+				tenant.addContract(contract);
 			}
 
 			return tenant;

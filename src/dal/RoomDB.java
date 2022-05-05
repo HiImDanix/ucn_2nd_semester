@@ -43,6 +43,10 @@ public class RoomDB extends DAO<Room> implements RoomDBIF {
         try {
             int roomID = rs.getInt(ID.fieldName());
 
+            if (Cache.contains(Room.class, roomID)) {
+                return (Room) Cache.get(Room.class, roomID);
+            }
+
             Room room = new Room(
                     roomID,
                     new RoomCategoryController().getRoomCategoryById(rs.getInt(ROOM_CATEGORY_ID.fieldName())),
@@ -55,11 +59,7 @@ public class RoomDB extends DAO<Room> implements RoomDBIF {
 
             // Add dependency: contracts
             for (int contractID : new ContractController().getAllContractIDsByRoomID(roomID)) {
-                if (Cache.contains(Contract.class, contractID)) {
-                    room.addContract((Contract)Cache.get(Contract.class, contractID));
-                } else {
-                    room.addContract(new ContractController().getContractById(contractID));
-                }
+                room.addContract(new ContractController().getContractById(contractID));
             }
 
             return room;

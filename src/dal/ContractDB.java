@@ -106,6 +106,10 @@ public class ContractDB extends DAO<Contract> implements ContractDBIF {
         try {
             int roomID = rs.getInt(ROOM_ID.fieldName());
 
+            if (Cache.contains(Contract.class, roomID)) {
+                return (Contract) Cache.get(Contract.class, roomID);
+            }
+
             Contract contract = new Contract(
                     rs.getInt(ID.fieldName()),
                     rs.getBoolean(INCLUDE_INTERNET.fieldName()),
@@ -121,23 +125,13 @@ public class ContractDB extends DAO<Contract> implements ContractDBIF {
             // Put into cache
             Cache.put(contract);
 
-            // Room
-            if (Cache.contains(Room.class, rs.getInt(ROOM_ID.fieldName()))) {
-                contract.setRoom((Room) Cache.get(Room.class, roomID));
-            } else {
-                contract.setRoom(new RoomController().getRoomById(roomID));
-            }
+            contract.setRoom(new RoomController().getRoomById(roomID));
 
             // Tenants
             TenantContractController tenantContractController = new TenantContractController();
             for (int tenantID : tenantContractController.getTenantIDsByContractID(contract.getID())) {
-                if (Cache.contains(Tenant.class, tenantID)) {
-                    contract.addTenant((Tenant) Cache.get(Tenant.class, tenantID));
-                } else {
-                    Tenant tenant = new TenantController().getTenantById(tenantID);
-                    contract.addTenant(tenant);
-                    Cache.put(tenant);
-                }
+                Tenant tenant = new TenantController().getTenantById(tenantID);
+                contract.addTenant(tenant);
             }
 
             return contract;
