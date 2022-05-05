@@ -68,7 +68,18 @@ public class TestTenantDB {
 
     @Test()
     void testDeleteTenant() throws DataAccessException {
-        // TODO: Implement this test when CRUD is implemented
+        // Arrange
+        Tenant tenant = new Tenant(-1, "Daniels", "Kanepe", "danixkanepe@gmail.com",
+                "1234567890", null, Collections.emptyList());
+        int tenantID = tenantDB.add(tenant);
+        tenant.setId(tenantID);
+
+        // Act
+        tenantDB.delete(tenant);
+        Tenant dbTenant = tenantDB.getById(tenantID);
+
+        // Assert
+        Assertions.assertNull(dbTenant);
     }
 
     @Test()
