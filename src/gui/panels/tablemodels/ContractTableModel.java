@@ -1,5 +1,6 @@
 package gui.panels.tablemodels;
 
+import controller.ContractController;
 import gui.Common;
 import model.Contract;
 import model.Tenant;
@@ -9,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ContractTableModel extends MyAbstractTableModel<Contract> {
+
+    ContractController contractCtrl = new ContractController();
 
 	private static final String[] COLUMN_NAMES = {"Contract ID", "Tenants", "Room ID", "Room category", "start date", "end date"};
 
@@ -57,13 +60,7 @@ public class ContractTableModel extends MyAbstractTableModel<Contract> {
             tenantRepresentation.deleteCharAt(tenantRepresentation.length() - 2); // remove last space & comma
         }
 
-        // Contract end date representation
-        String endDateRepresentation = "-";
-        if (contract.getLeaveNotice() != null) {
-            LocalDate noticeStart = contract.getLeaveNotice().getNoticeGivenDate();
-            LocalDate noticeEnd = noticeStart.plusDays(contract.getRoom().getRoomCategory().getLeaveNoticeDays());
-            endDateRepresentation = Common.dateToString(noticeEnd);
-        }
+        LocalDate contractEndDate = contractCtrl.getEndDate(contract);
 
 
         switch (columnIndex) {
@@ -72,7 +69,7 @@ public class ContractTableModel extends MyAbstractTableModel<Contract> {
             case 2: return contract.getRoom().getID();
             case 3: return contract.getRoom().getRoomCategory().getName();
             case 4: return Common.dateToString(contract.getStartDate());
-            case 5: return endDateRepresentation;
+            case 5: return contractEndDate != null ? Common.dateToString(contractEndDate) : "-";
             default: return "ERROR";
         }
 	}

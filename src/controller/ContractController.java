@@ -89,4 +89,15 @@ public class ContractController {
     public List<Integer> getAllContractIDsByRoomID(int roomID) throws DataAccessException {
         return contractDB.getAllContractIDsByRoomID(roomID);
     }
+
+    /*
+    Returns contract end date, or null
+     */
+    public LocalDate getEndDate(Contract contract) {
+        if (contract.getLeaveNotice() != null) {
+            return contract.getLeaveNotice().getNoticeGivenDate()
+                    .plusDays(contract.getRoom().getRoomCategory().getLeaveNoticeDays());
+        }
+        return null;
+    }
 }
