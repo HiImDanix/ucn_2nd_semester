@@ -106,8 +106,12 @@ public class DBConnection {
      * Singleton pattern
      */
     public static synchronized DBConnection getInstance() throws DataAccessException {
-        if (instance == null || instance.getConnection() == null) {
-            instance = new DBConnection();
+        try {
+            if (instance == null || instance.getConnection() == null || instance.getConnection().isClosed()) {
+                instance = new DBConnection();
+            }
+        } catch (SQLException e) {
+            throw new DataAccessException("Error getting instance of DBConnection", e);
         }
         return instance;
     }
