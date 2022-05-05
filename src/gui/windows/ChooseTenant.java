@@ -15,7 +15,10 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class ChooseTenant extends JDialog {
 
@@ -26,13 +29,17 @@ public class ChooseTenant extends JDialog {
     private static final long serialVersionUID = 2968937672159813565L;
     private final JPanel contentPane;
     private JButtonPrimary btnChoose;
+    Predicate<Tenant> invalidPredicate = null;
+    String invalidMessage = null;
 
     /*
      * Choose multiple tenants window
      */
-    public ChooseTenant(int maxTenants) throws DataAccessException  {
+    public ChooseTenant(int maxTenants, Predicate<Tenant> invalidTenantsPredicate, String invalidMessage) throws DataAccessException  {
         this();
         this.maxTenants = maxTenants;
+        this.invalidPredicate = invalidTenantsPredicate;
+        this.invalidMessage = invalidMessage;
         this.setTitle("Choose up to " + maxTenants + " tenants...");
         this.CRUDPanel.getTable().setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
     }
@@ -117,8 +124,27 @@ public class ChooseTenant extends JDialog {
                 if (table.getSelectedRows().length > maxTenants) {
                     Messages.error("You can only choose up to " + maxTenants + " tenants.", "Error");
                 } else {
+                    // Check filter
+                    if (invalidPredicate != null) {
+                        List<Tenant> invalidTenants = new ArrayList<>();
+                        for (int i : table.getSelectedRows()) {
+                            Tenant tenant = (Tenant) tableModel.getObj(i);
+                            if (invalidPredicate.test(tenant)) {
+                                invalidTenants.add(tenant);
+                            }
+                        }
+                        if (invalidTenants.size() > 0) {
+                            Messages.error("You cannot choose the following tenants: \n"
+                                    + invalidTenants.stream()
+                                    .map(t -> t.getFirstName() + " " + t.getLastName())
+                                    .collect(Collectors.joining("\n"))
+                                    + "\n because " + invalidMessage, "Error");
+                            return;
+                        }
+                    }
+
+
                     for (int index: table.getSelectedRows()) {
-                        // TODO: fix this casting
                         this.selectedObjects.add((Tenant) tableModel.getObj(index));
                     }
                     this.dispose();

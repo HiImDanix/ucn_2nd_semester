@@ -3,6 +3,7 @@ package controller;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,6 +71,19 @@ public class TenantController {
 			tenant.setPhone(oldPhone);
 			throw e;
 		}
+	}
+
+	public boolean tenantHasValidContract(Tenant tenant) {
+		List<Contract> contracts = tenant.getContracts();
+		for (Contract contract : contracts) {
+			if (contract.getLeaveNotice() == null
+					||  contract.getLeaveNotice().getNoticeGivenDate()
+					.plusDays(contract.getRoom().getRoomCategory().getLeaveNoticeDays())
+					.isAfter(LocalDate.now())) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

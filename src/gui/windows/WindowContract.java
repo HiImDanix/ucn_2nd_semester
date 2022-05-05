@@ -448,13 +448,9 @@ public class WindowContract extends JDialog {
 			// Open 'choose tenants' window, specifying max amount of tenants
 			ChooseTenant frame = null;
 			try {
-				if (this.room != null && this.room.getRoomCategory() != null
-						&& this.room.getRoomCategory().getMaxTenants() > 1) {
-					frame = new ChooseTenant(this.room.getRoomCategory().getMaxTenants());
-				} else {
-					System.out.println(room);
-					frame = new ChooseTenant();
-				}
+				Predicate<Tenant> invalidTenantFilter = tenant -> new TenantController().tenantHasValidContract(tenant);
+				frame = new ChooseTenant(this.room.getRoomCategory().getMaxTenants(),
+							invalidTenantFilter, "the tenant(s) are already assigned to another contract.");
 			} catch (DataAccessException ex) {
 				Messages.error("Error opening choose tenant window", "error");
 			}
