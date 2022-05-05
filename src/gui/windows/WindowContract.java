@@ -433,9 +433,17 @@ public class WindowContract extends JDialog {
 			if (frame.getSelectedObject() != null) {
 				this.room = frame.getSelectedObject();
 				txtDisplayRoom.setText(getRoomRepresentation(room));
+				// Reset tenants if previously chosen
+				tenants = null;
+				txtDisplayTenants.setText("");
+				// Enable choose tenant button
 				btnChooseTenants.setEnabled(true);
 			} else {
-				btnChooseTenants.setEnabled(false);
+				// Disable choose tenant button if no room was chosen in the window, and before that.
+				if (this.room == null) {
+					btnChooseTenants.setEnabled(false);
+				}
+
 			}
 		});
 
