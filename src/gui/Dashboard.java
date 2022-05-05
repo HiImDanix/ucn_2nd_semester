@@ -71,8 +71,7 @@ public class Dashboard extends JFrame {
 	JLabel noOrdersLabel;
 	JLabel label;
 	private JButton btnDarkLight;
-	
-	private boolean darkMode = false;
+
 	private JButton btnChooseCustomerLoans;
 	private JTextField txtCustomerLoans;
 	private JButton btnChooseCustomerSell;
@@ -113,7 +112,7 @@ public class Dashboard extends JFrame {
 				gbc_lblGreeting.gridy = 0;
 				topPanel.add(lblGreeting, gbc_lblGreeting);
 				
-				btnDarkLight = new JButton(this.darkMode ? Images.SUN.getImageIcon(16, 16) : Images.MOON.getImageIcon(16, 16));
+				btnDarkLight = new JButton(App.darkMode ? Images.SUN.getImageIcon(16, 16) : Images.MOON.getImageIcon(16, 16));
 				btnDarkLight.setBorderPainted(false);
 				btnDarkLight.setFocusPainted(false);
 				btnDarkLight.setContentAreaFilled(false);
@@ -217,14 +216,14 @@ public class Dashboard extends JFrame {
 		// Toggle dark/light mode
 		btnDarkLight.addActionListener(e -> {
     		try {
-				UIManager.setLookAndFeel(this.darkMode ? new FlatLightLaf() : new FlatDarkLaf());
+				UIManager.setLookAndFeel(App.darkMode ? new FlatLightLaf() : new FlatDarkLaf());
 			} catch (UnsupportedLookAndFeelException e1) {
 				e1.printStackTrace();
 			}
-    		this.darkMode = !this.darkMode;
+    		App.darkMode = !App.darkMode;
     		SwingUtilities.updateComponentTreeUI(this);
 			// Change icon
-			btnDarkLight.setIcon(this.darkMode ? Images.SUN.getImageIcon(16, 16) : Images.MOON.getImageIcon(16, 16));
+			btnDarkLight.setIcon(App.darkMode ? Images.SUN.getImageIcon(16, 16) : Images.MOON.getImageIcon(16, 16));
 		});
 		
 		// ***** Log out button *****

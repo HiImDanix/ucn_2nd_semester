@@ -2,24 +2,54 @@ package gui;
 
 import java.awt.EventQueue;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Arrays;
 
 import javax.swing.*;
+import javax.xml.crypto.Data;
 
 import com.formdev.flatlaf.FlatLightLaf;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 import controller.DataController;
 import controller.EmployeeController;
+import db.DBConnection;
 import db.DataAccessException;
 
 public class App {
-	public static boolean DEBUG = false;
 	public static final String DEFAULT_EMAIL = "email@example.com";
 	public static final String DEFAULT_PASSWORD = "password";
+
+	// State and default values
+	public static boolean DEBUG = false;
+	public static boolean darkMode = false;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+
+		// Create thread that checks connection to database every 5 seconds
+		Thread checkConnection = new Thread(() -> {
+			boolean showMsgOnNextFail = true;
+			while (true) {
+				try {
+					DBConnection.getInstance().getConnection().createStatement().executeQuery("SELECT 1");
+					showMsgOnNextFail = true;
+				} catch (SQLException | DataAccessException e) {
+					if (showMsgOnNextFail) {
+						Messages.error("You have lost connection to the database! Please check your internet connection.");
+						showMsgOnNextFail = false;
+					}
+				}
+				try {
+					Thread.sleep(3000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		} );
+		checkConnection.start();
+
 		// parse args
 		if (args.length > 0) {
 			if (Arrays.stream(args).anyMatch(arg -> arg.toLowerCase().equals("-debug"))) {
