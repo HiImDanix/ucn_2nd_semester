@@ -2,6 +2,7 @@ package gui.windows;
 
 import controller.ContractController;
 import controller.RoomController;
+import controller.TenantContractController;
 import controller.TenantController;
 import db.DataAccessException;
 import gui.Common;
@@ -448,7 +449,7 @@ public class WindowContract extends JDialog {
 			// Open 'choose tenants' window, specifying max amount of tenants
 			ChooseTenant frame = null;
 			try {
-				Predicate<Tenant> invalidTenantFilter = tenant -> new TenantController().tenantHasValidContract(tenant);
+				Predicate<Tenant> invalidTenantFilter = tenant -> new TenantContractController().tenantHasValidContract(tenant);
 				frame = new ChooseTenant(this.room.getRoomCategory().getMaxTenants(),
 							invalidTenantFilter, "the tenant(s) are already assigned to another contract.");
 			} catch (DataAccessException ex) {

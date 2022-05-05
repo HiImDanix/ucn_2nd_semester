@@ -11,7 +11,9 @@ import model.Tenant;
 
 public class TenantTableModel extends MyAbstractTableModel<Tenant> {
 
-	private static final String[] COLUMN_NAMES = {"ID", "First name", "Last name", "Email", "Phone", "Study proof?", "Contracts"};
+    TenantContractController tenantContractCtrl = new TenantContractController();
+
+	private static final String[] COLUMN_NAMES = {"ID", "First name", "Last name", "Email", "Phone", "Study proof?", "Contract"};
 
 	private List<Tenant> tenants;
 	
@@ -46,15 +48,7 @@ public class TenantTableModel extends MyAbstractTableModel<Tenant> {
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		Tenant tenant = tenants.get(rowIndex);
 
-        TenantContractController tenantContractCtrl = new TenantContractController();
-        StringBuilder contractRepr = new StringBuilder("");
-        for (Contract contract: tenant.getContracts()) {
-            contractRepr.append(String.format("(%d) Room %s, ",
-                    contract.getRoom().getID(), contract.getRoom().getRoomCategory().getName()));
-        }
-        if (contractRepr.length() > 0) {
-            contractRepr.delete(contractRepr.length() - 2, contractRepr.length()); // remove last comma
-        }
+        Contract tenantValidContract = tenantContractCtrl.getValidContract(tenant);
 
         switch (columnIndex) {
             case 0: return "#" + tenant.getID();
@@ -65,7 +59,7 @@ public class TenantTableModel extends MyAbstractTableModel<Tenant> {
             case 5: return tenant.getStudyProof() != null
                     ? "Until: " + Common.dateToString(tenant.getStudyProof().getStudentUntilDate())
                     : "Not provided";
-            case 6: return contractRepr.toString();
+            case 6: return tenantValidContract != null ? "Room #" + tenantValidContract.getRoom().getID() : "-";
             default: return "ERROR";
         }
 	}

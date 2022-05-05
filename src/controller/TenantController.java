@@ -72,18 +72,4 @@ public class TenantController {
 			throw e;
 		}
 	}
-
-	public boolean tenantHasValidContract(Tenant tenant) {
-		List<Contract> contracts = tenant.getContracts();
-		for (Contract contract : contracts) {
-			if (contract.getLeaveNotice() == null
-					||  contract.getLeaveNotice().getNoticeGivenDate()
-					.plusDays(contract.getRoom().getRoomCategory().getLeaveNoticeDays())
-					.isAfter(LocalDate.now())) {
-				return true;
-			}
-		}
-		return false;
-	}
-
 }
