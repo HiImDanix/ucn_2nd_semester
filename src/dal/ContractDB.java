@@ -104,14 +104,14 @@ public class ContractDB extends DAO<Contract> implements ContractDBIF {
     @Override
     public Contract buildDomainObject(ResultSet rs) throws DataAccessException {
         try {
-            int roomID = rs.getInt(ROOM_ID.fieldName());
+            int contractID = rs.getInt(ID.fieldName());
 
-            if (Cache.contains(Contract.class, roomID)) {
-                return (Contract) Cache.get(Contract.class, roomID);
+            if (Cache.contains(Contract.class, contractID)) {
+                return (Contract) Cache.get(Contract.class, contractID);
             }
 
             Contract contract = new Contract(
-                    rs.getInt(ID.fieldName()),
+                    contractID,
                     rs.getBoolean(INCLUDE_INTERNET.fieldName()),
                     rs.getDate(START_DATE.fieldName()).toLocalDate(),
                     null,
@@ -125,7 +125,7 @@ public class ContractDB extends DAO<Contract> implements ContractDBIF {
             // Put into cache
             Cache.put(contract);
 
-            contract.setRoom(new RoomController().getRoomById(roomID));
+            contract.setRoom(new RoomController().getRoomById(rs.getInt(ROOM_ID.fieldName())));
 
             // Tenants
             TenantContractController tenantContractController = new TenantContractController();

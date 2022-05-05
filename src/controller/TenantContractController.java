@@ -8,6 +8,7 @@ import db.DataAccessException;
 import model.Contract;
 import model.Tenant;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class TenantContractController {
@@ -38,5 +39,22 @@ public class TenantContractController {
 
     public void add(Tenant tenant, Contract contract) throws DataAccessException {
         tenantContractDB.add(tenant.getID(), contract.getID());
+    }
+
+    public Contract getValidContract(Tenant tenant) {
+        List<Contract> contracts = tenant.getContracts();
+        for (Contract contract : contracts) {
+            if (contract.getLeaveNotice() == null
+                    ||  contract.getLeaveNotice().getNoticeGivenDate()
+                    .plusDays(contract.getRoom().getRoomCategory().getLeaveNoticeDays())
+                    .isAfter(LocalDate.now())) {
+                return contract;
+            }
+        }
+        return null;
+    }
+
+    public boolean tenantHasValidContract(Tenant tenant) {
+        return getValidContract(tenant) != null;
     }
 }
