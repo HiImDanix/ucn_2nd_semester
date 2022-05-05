@@ -1,10 +1,9 @@
 package test.dal;
 
-import controller.DataController;
+import controller.DBController;
 import dal.TenantDB;
 import dal.TenantDBIF;
 import db.DBConnection;
-import db.DBHelper;
 import db.DataAccessException;
 import model.Contract;
 import model.StudyProof;
@@ -18,12 +17,12 @@ import java.util.List;
 public class TestTenantDB {
     static DBConnection dbConnection;
     static TenantDBIF tenantDB = new TenantDB();
-    static DataController dataCtrl;
+    static DBController dataCtrl;
 
     @BeforeAll
     static void setUp() throws DataAccessException {
         dbConnection = DBConnection.getInstance();
-        dataCtrl = new DataController();
+        dataCtrl = new DBController();
     }
 
     @BeforeEach

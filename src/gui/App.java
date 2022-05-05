@@ -6,12 +6,9 @@ import java.sql.SQLException;
 import java.util.Arrays;
 
 import javax.swing.*;
-import javax.xml.crypto.Data;
 
 import com.formdev.flatlaf.FlatLightLaf;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
-import controller.DataController;
-import controller.EmployeeController;
+import controller.DBController;
 import db.DBConnection;
 import db.DataAccessException;
 
@@ -32,10 +29,9 @@ public class App {
 		Thread checkConnection = new Thread(() -> {
 			boolean showMsgOnNextFail = true;
 			while (true) {
-				try {
-					DBConnection.getInstance().getConnection().createStatement().executeQuery("SELECT 1");
+				if (new DBController().checkConnection()) {
 					showMsgOnNextFail = true;
-				} catch (SQLException | DataAccessException e) {
+				} else {
 					if (showMsgOnNextFail) {
 						Messages.error("You have lost connection to the database! Please check your internet connection.");
 						showMsgOnNextFail = false;
@@ -85,7 +81,7 @@ public class App {
 
 	public static void resetDatabase() {
 		System.out.println("Resetting database...");
-		DataController dataCtrl = new DataController();
+		DBController dataCtrl = new DBController();
 
 		// Clear data
 		try {

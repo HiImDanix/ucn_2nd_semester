@@ -5,10 +5,9 @@ import db.DBHelper;
 import db.DataAccessException;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.util.List;
+import java.sql.SQLException;
 
-public class DataController {
+public class DBController {
 
     public void clear() throws DataAccessException, IOException {
         new DBHelper().clear();
@@ -16,5 +15,14 @@ public class DataController {
 
     public void addDemoData() throws DataAccessException {
         new DBHelper().addDemoData();
+    }
+
+    public boolean checkConnection() {
+        try {
+            DBConnection.getInstance().getConnection().createStatement().executeQuery("SELECT 1");
+        } catch (SQLException | DataAccessException e) {
+            return false;
+        }
+        return true;
     }
 }
