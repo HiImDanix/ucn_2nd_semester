@@ -33,7 +33,7 @@ public class App {
 					showMsgOnNextFail = true;
 				} else {
 					if (showMsgOnNextFail) {
-						Messages.error("You have lost connection to the database! Please check your internet connection.");
+						Messages.error("You do not have a connection to the database.");
 						showMsgOnNextFail = false;
 					}
 				}
