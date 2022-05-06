@@ -20,7 +20,7 @@ import model.Employee;
  * @author Andriis
  *
  */
-class LoginTest {
+class TestSessionController {
 	
 	private EmployeeController employeeCtrl;
 	private SessionController sessionCtrl;
