@@ -10,6 +10,8 @@ import model.StudyProof;
 import model.Tenant;
 import org.junit.jupiter.api.*;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
@@ -30,6 +32,7 @@ public class TestTenantDB {
         dataCtrl.clear();
     }
 
+    // use     assertEquals(t1, t2); or assertSame(t1, t2); instead of the method?
     private boolean tenantsAreEqual(Tenant t1, Tenant t2) {
         return t1.getID() == t2.getID() &&
                 t1.getFirstName().equals(t2.getFirstName()) &&
@@ -43,15 +46,10 @@ public class TestTenantDB {
     @Test()
     void testAddGetTenant() throws DataAccessException {
         // Arrange
-        String firstName = "Daniels";
-        String lastName = "Kanepe";
-        String email = "danixkanepe@gmail.com";
-        String phone = "1234567890";
-        StudyProof studyProof = null;
-        List<Contract> contracts = Collections.emptyList();
+        Tenant tenant = new Tenant(-1, "Daniels", "Kanepe", "danixkanepe@gmail.com", 
+        		"1234567890", null, Collections.emptyList());
 
         // Act
-        Tenant tenant = new Tenant(-1, firstName, lastName, email, phone, studyProof, contracts);
         int tenantID = tenantDB.add(tenant);
         tenant.setId(tenantID);
         Tenant dbTenant = tenantDB.getById(tenantID);
