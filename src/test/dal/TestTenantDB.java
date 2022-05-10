@@ -32,7 +32,6 @@ public class TestTenantDB {
         dataCtrl.clear();
     }
 
-    // use     assertEquals(t1, t2); or assertSame(t1, t2); instead of the method?
     private boolean tenantsAreEqual(Tenant t1, Tenant t2) {
         return t1.getID() == t2.getID() &&
                 t1.getFirstName().equals(t2.getFirstName()) &&
@@ -46,7 +45,7 @@ public class TestTenantDB {
     @Test()
     void testAddGetTenant() throws DataAccessException {
         // Arrange
-        Tenant tenant = new Tenant(-1, "Daniels", "Kanepe", "danixkanepe@gmail.com", 
+        Tenant tenant = new Tenant(-1, "Daniels", "Kanepe", "email@gmail.com",
         		"1234567890", null, Collections.emptyList());
 
         // Act
@@ -59,23 +58,19 @@ public class TestTenantDB {
     }
 
     @Test()
-    void testUpdateTenant() throws DataAccessException {
-        // TODO: Implement this test when CRUD is implemented
-    }
-
-    @Test()
     void testDeleteTenant() throws DataAccessException {
         // Arrange
-        Tenant tenant = new Tenant(-1, "Daniels", "Kanepe", "danixkanepe@gmail.com",
+        Tenant tenant = new Tenant(-1, "Daniels", "Kanepe", "emaile@gmail.com",
                 "1234567890", null, Collections.emptyList());
         int tenantID = tenantDB.add(tenant);
         tenant.setId(tenantID);
 
         // Act
         tenantDB.delete(tenant);
-        Tenant dbTenant = tenantDB.getById(tenantID);
 
         // Assert
+        Tenant dbTenant = tenantDB.getById(tenantID);
+
         Assertions.assertNull(dbTenant);
     }
 
@@ -95,7 +90,7 @@ public class TestTenantDB {
     void testGetAllTenantsOneTenant() throws DataAccessException {
 
         // Arrange
-        Tenant tenant = new Tenant(-1, "Daniels", "Kanepe", "danixkanepe@gmail.com",
+        Tenant tenant = new Tenant(-1, "Daniels", "Kanepe", "email@gmail.com",
                 "1234567890", null, Collections.emptyList());
         int tenantID = tenantDB.add(tenant);
         tenant.setId(tenantID);
@@ -106,6 +101,7 @@ public class TestTenantDB {
 
         // Assert
         Tenant dbTenant = tenants.get(tenants.size() - 1);
+
         Assertions.assertTrue(tenantsAreEqual(tenant, dbTenant));
     }
 
@@ -113,9 +109,9 @@ public class TestTenantDB {
     void testGetAllTenantsTwoTenants() throws DataAccessException {
 
         // Arrange
-        Tenant tenant1 = new Tenant(-1, "Daniels", "Kanepe", "danixkanepe@gmail.com",
+        Tenant tenant1 = new Tenant(-1, "Daniels", "Kanepe", "email@gmail.com",
                 "1234567890", null, Collections.emptyList());
-        Tenant tenant2 = new Tenant(-1, "Daniels", "Kanepe", "danixkanepe@gmail.com",
+        Tenant tenant2 = new Tenant(-1, "Daniels", "Kanepe", "email@gmail.com",
                 "1234567890", null, Collections.emptyList());
         int tenantID1 = tenantDB.add(tenant1);
         int tenantID2 = tenantDB.add(tenant2);
@@ -126,11 +122,7 @@ public class TestTenantDB {
         List<Tenant> tenants = tenantDB.getAll();
 
         // Assert
-        Tenant dbTenant1 = tenants.get(tenants.size() - 2);
-        Tenant dbTenant2 = tenants.get(tenants.size() - 1);
         Assertions.assertTrue(tenants.size() == 2);
-        Assertions.assertTrue(tenantsAreEqual(tenant1, dbTenant1));
-        Assertions.assertTrue(tenantsAreEqual(tenant2, dbTenant2));
     }
 
     @AfterAll
