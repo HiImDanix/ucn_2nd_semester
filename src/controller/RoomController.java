@@ -36,19 +36,25 @@ public class RoomController {
     }
 
     /*
-     * Update rooms's out of service
+     * Update room
      */
-    public void updateRoomIsOutOfService(Room room, boolean isOutOfService) throws DataAccessException {
-        room.setOutOfService(isOutOfService);
-        roomDB.update(room);
-    }
+    public void updateRoom(Room room, RoomCategory roomCategory, boolean isOutOfService) throws DataAccessException {
+        // Capture old values
+        RoomCategory oldRoomCategory = room.getRoomCategory();
+        boolean oldIsOutOfService = room.isOutOfService();
 
-    /*
-     * Update room's category
-     */
-    public void updateRoomCategory(Room room, RoomCategory category) throws DataAccessException {
-        room.setRoomCategory(category);
-        roomDB.update(room);
+        // Set values
+        room.setRoomCategory(roomCategory);
+        room.setOutOfService(isOutOfService);
+
+        try {
+            roomDB.update(room);
+        } catch (DataAccessException e) {
+            // Set values back to old values
+            room.setRoomCategory(oldRoomCategory);
+            room.setOutOfService(oldIsOutOfService);
+            throw e;
+        }
     }
 
     /*
