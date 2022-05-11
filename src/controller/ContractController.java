@@ -73,6 +73,22 @@ public class ContractController {
             contract.setIncludeInternet(oldIncludeInternet);
             throw e;
         }
+
+        // *** Set reverse associations ***
+        // Room
+        if (oldRoom != room) {
+            oldRoom.removeContract(contract);
+            room.addContract(contract);
+        }
+        // Tenants
+        if (oldTenants != tenants) {
+            for (Tenant tenant : oldTenants) {
+                tenant.removeContract(contract);
+            }
+            for (Tenant tenant : tenants) {
+                tenant.addContract(contract);
+            }
+        }
     }
 
     public List<Integer> getAllContractIDsByRoomID(int roomID) throws DataAccessException {
