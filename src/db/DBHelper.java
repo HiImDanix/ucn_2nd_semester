@@ -68,18 +68,21 @@ public class DBHelper {
 
         // Add room categories
         RoomCategoryController roomCategoryCtrl = new RoomCategoryController();
-        RoomCategory roomCategory1 = new RoomCategory(-1, "A", "Single room", BigDecimal.valueOf(100), BigDecimal.valueOf(100), BigDecimal.valueOf(100), 2, 1, null);
+        RoomCategory roomCategory1 = new RoomCategory(-1, "A", "Single room", BigDecimal.valueOf(100), BigDecimal.valueOf(100), BigDecimal.valueOf(100), 1, 30, null);
+        RoomCategory roomCategory2 = new RoomCategory(-1, "B", "Double room", BigDecimal.valueOf(100), BigDecimal.valueOf(100), BigDecimal.valueOf(100), 2, 30, null);
 
         // Add rooms
         RoomController roomCtrl = new RoomController();
         Room room1 = roomCtrl.addRoom(roomCategory1, false);
         Room room2 = roomCtrl.addRoom(roomCategory1, true);
+        Room room3 = roomCtrl.addRoom(roomCategory2, false);
+        Room room4 = roomCtrl.addRoom(roomCategory1, false);
 
         // Add tenants
         TenantController tenantCtrl = new TenantController();
         Tenant tenant1 = tenantCtrl.addTenant("Daniels", "Kanepe", "danielskanepe@email.com", "0712665347", null);
-        Tenant tenant2 = tenantCtrl.addTenant("Andras", "Varsanyi", "danielskanepe@email.com", "0542365211", null);
-        Tenant tenant3 = tenantCtrl.addTenant("Ondrej", "Dobis", "danielskanepe@email.com", "+45573962625", null);
+        Tenant tenant2 = tenantCtrl.addTenant("Andras", "Varsanyi", "andrasvarsanyi@yahoo.com", "0542365211", null);
+        Tenant tenant3 = tenantCtrl.addTenant("Ondrej", "Dobis", "ondrejdobis@aol.com", "+45573962625", null);
 
         // Add contracts
         ContractController contractCtrl = new ContractController();
