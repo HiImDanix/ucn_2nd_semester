@@ -57,4 +57,11 @@ public class TenantContractController {
     public boolean tenantHasValidContract(Tenant tenant) {
         return getValidContract(tenant) != null;
     }
+
+    public boolean tenantHasAnotherValidContract(Tenant tenant, Contract contract) {
+        Contract validContract = getValidContract(tenant);
+        // TODO: Override equals method?
+        return validContract != null && validContract.getID() != contract.getID();
+
+    }
 }
