@@ -66,7 +66,7 @@ public class ContractTableModel extends MyAbstractTableModel<Contract> {
         switch (columnIndex) {
             case 0: return "#" + contract.getID();
             case 1: return tenantRepresentation.toString();
-            case 2: return contract.getRoom().getID();
+            case 2: return "#" + contract.getRoom().getID();
             case 3: return contract.getRoom().getRoomCategory().getName();
             case 4: return Common.dateToString(contract.getStartDate());
             case 5: return contractEndDate != null ? Common.dateToString(contractEndDate) : "-";
