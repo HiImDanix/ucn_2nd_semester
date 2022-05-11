@@ -2,10 +2,14 @@ package gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Locale;
 
 
 /**
@@ -19,6 +23,10 @@ public class Common {
 
     /** The Date-time format. */
     public static final String DATETIME_FORMAT = "dd/MM/yyyy HH:mm:ss";
+
+    /** Currency representation */
+    public static final String CURRENCY_FORMAT = "###,###.00";
+    public static final String CURRENCY = "DKK";
 
     /**
      * Convert string to date.
@@ -102,6 +110,15 @@ public class Common {
                 toggleUserComponents((Container) c, enabled);
             }
         }
+    }
+
+    /*
+     * Represent currency as a string
+     */
+    public static String toCurrency(BigDecimal amount) {
+        DecimalFormat df = new DecimalFormat(CURRENCY_FORMAT);
+        df.setCurrency(java.util.Currency.getInstance(CURRENCY));
+        return df.format(amount) + " " + CURRENCY;
     }
 
 }

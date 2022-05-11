@@ -45,8 +45,6 @@ public class RoomTableModel extends MyAbstractTableModel<Room> {
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         switch (columnIndex) {
-            case 2:
-            case 3: return Boolean.class;
             default: return String.class;
         }
     }
@@ -60,8 +58,8 @@ public class RoomTableModel extends MyAbstractTableModel<Room> {
         switch (columnIndex) {
             case 0: return "#" + room.getID();
             case 1: return room.getRoomCategory().getName();
-            case 2: return room.isOutOfService();
-            case 3: return roomIsAvailable;
+            case 2: return room.isOutOfService() ? "Yes" : "No";
+            case 3: return roomIsAvailable ? "Yes" : "No";
             default: return "ERROR";
         }
     }

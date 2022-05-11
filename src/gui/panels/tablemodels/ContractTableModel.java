@@ -13,7 +13,7 @@ public class ContractTableModel extends MyAbstractTableModel<Contract> {
 
     ContractController contractCtrl = new ContractController();
 
-	private static final String[] COLUMN_NAMES = {"Contract ID", "Tenants", "Room ID", "Room category", "start date", "end date"};
+	private static final String[] COLUMN_NAMES = {"Contract ID", "Tenants", "Room ID", "Room category", "start date", "end date", "Total price/m", "Internet included"};
 
 	private List<Contract> contracts;
 
@@ -70,6 +70,8 @@ public class ContractTableModel extends MyAbstractTableModel<Contract> {
             case 3: return contract.getRoom().getRoomCategory().getName();
             case 4: return Common.dateToString(contract.getStartDate());
             case 5: return contractEndDate != null ? Common.dateToString(contractEndDate) : "-";
+            case 6: return Common.toCurrency(contractCtrl.getTotalPricePerMonth(contract));
+            case 7: return contract.isIncludeInternet() ? "Yes" : "No";
             default: return "ERROR";
         }
 	}

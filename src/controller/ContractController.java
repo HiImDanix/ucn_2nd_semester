@@ -10,6 +10,7 @@ import model.Contract;
 import model.Room;
 import model.Tenant;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -23,6 +24,9 @@ public class ContractController {
         contractDB = new ContractDB();
     }
 
+    /*
+     * Creates a new contract.
+     */
     public Contract addContract(LocalDate newStartDate, List<Tenant> tenants, Room room, boolean includeInternet)
             throws DataAccessException {
         Contract contract = new Contract(-1, includeInternet, newStartDate, room, tenants,
@@ -41,21 +45,6 @@ public class ContractController {
 
     public Contract getContractById(int id) throws DataAccessException {
         return contractDB.getById(id);
-    }
-
-    public Contract updateIncludeInternet(boolean includeInternet, Contract contract) throws DataAccessException {
-        // capture old object's value
-        boolean oldIncludeInternet = contract.isIncludeInternet();
-        contract.setIncludeInternet(includeInternet);
-        try {
-            contractDB.update(contract);
-        } catch (DataAccessException e) {
-            // rollback
-            contract.setIncludeInternet(oldIncludeInternet);
-            throw e;
-
-        }
-        return contract;
     }
 
     public void updateContract(Contract contract, LocalDate newStartDate,
@@ -99,5 +88,18 @@ public class ContractController {
                     .plusDays(contract.getRoom().getRoomCategory().getLeaveNoticeDays());
         }
         return null;
+    }
+
+    /*
+     * Returns contract's total cost per month including internet & extra tenants.
+     */
+    public BigDecimal getTotalPricePerMonth(Contract contract) {
+        BigDecimal pricePerMonth = contract.getRoom().getRoomCategory().getPricePerMonth();
+        BigDecimal internetCost = contract.isIncludeInternet() ?
+                contract.getRoom().getRoomCategory().getPricePerMonthForInternet() : BigDecimal.ZERO;
+        BigDecimal extraTenantCost = contract.getRoom().getRoomCategory().getPricePerMonthForExtraTenant();
+        BigDecimal extraTenantCount = BigDecimal.valueOf(contract.getTenants().size() - 1);
+
+        return pricePerMonth.add(internetCost).add(extraTenantCost.multiply(extraTenantCount));
     }
 }
