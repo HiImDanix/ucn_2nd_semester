@@ -32,8 +32,6 @@ public abstract class AbstractCRUDPanel extends JPanel {
     private JTextField txtSearch;
     private TableRowSorter<TableModel> rowSorter;
 
-	private JPanel bottomPanel;
-
     /*
      * name: Name of the domain object (singular)
      */
@@ -89,7 +87,8 @@ public abstract class AbstractCRUDPanel extends JPanel {
         tableMain.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         scrollPanel.setViewportView(tableMain);
 
-        bottomPanel = new JPanel();
+        // ***** Bottom panel *****
+        JPanel bottomPanel = new JPanel();
         this.add(bottomPanel, BorderLayout.SOUTH);
         GridBagLayout gbl_bottomPanel = new GridBagLayout();
         gbl_bottomPanel.columnWidths = new int[]{271, 0, 0, 0, 0};
@@ -233,8 +232,5 @@ public abstract class AbstractCRUDPanel extends JPanel {
         return tableModel;
     }
 
-    public JPanel getBottomPanel() {
-    	return bottomPanel;
-    }
 
 }

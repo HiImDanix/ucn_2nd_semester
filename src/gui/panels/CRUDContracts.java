@@ -35,7 +35,7 @@ public class CRUDContracts extends AbstractCRUDPanel {
 	protected void btnViewAction() {
 		int row = getTable().convertRowIndexToModel(getTable().getSelectedRow());
 		Contract contract = (Contract) getTableModel().getObj(row);
-		WindowContract frame = new WindowContract(contract, WindowContract.Mode.VIEW, null);
+		WindowContract frame = new WindowContract(contract, WindowContract.Mode.VIEW);
 		frame.setVisible(true);
 	}
 
