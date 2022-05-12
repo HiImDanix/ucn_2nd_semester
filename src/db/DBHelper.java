@@ -57,7 +57,6 @@ public class DBHelper {
             sb.append("\n");
         }
         return sb.toString().split(";");
-
     }
 
     public void addDemoData() throws DataAccessException {
@@ -68,12 +67,14 @@ public class DBHelper {
 
         // Add room categories
         RoomCategoryController roomCategoryCtrl = new RoomCategoryController();
-        RoomCategory roomCategory1 = new RoomCategory(-1, "A", "Single room", BigDecimal.valueOf(100), BigDecimal.valueOf(100), BigDecimal.valueOf(100), 2, 1, null);
+        RoomCategory rc1 = roomCategoryCtrl.addRoomCategory( "S1", "Single room", BigDecimal.valueOf(4000), BigDecimal.valueOf(200), BigDecimal.valueOf(100), 2, 1);
+        RoomCategory rc2 = roomCategoryCtrl.addRoomCategory( "D1", "Double room", BigDecimal.valueOf(4000), BigDecimal.valueOf(200), BigDecimal.valueOf(100), 2, 1);
+        RoomCategory rc3 = roomCategoryCtrl.addRoomCategory( "P1", "Presidential suite ", BigDecimal.valueOf(12000), BigDecimal.valueOf(200), BigDecimal.valueOf(100), 2, 1);
 
         // Add rooms
         RoomController roomCtrl = new RoomController();
-        Room room1 = roomCtrl.addRoom(roomCategory1, false);
-        Room room2 = roomCtrl.addRoom(roomCategory1, true);
+        Room room1 = roomCtrl.addRoom(rc1, false);
+        Room room2 = roomCtrl.addRoom(rc2, true);
 
         // Add tenants
         TenantController tenantCtrl = new TenantController();

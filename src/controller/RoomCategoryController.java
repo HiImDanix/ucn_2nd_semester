@@ -4,6 +4,7 @@ import dal.RoomCategoryDB;
 import dal.RoomCategoryDBIF;
 import db.DataAccessException;
 import model.Furniture;
+import model.Room;
 import model.RoomCategory;
 
 import java.math.BigDecimal;
@@ -14,6 +15,7 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class RoomCategoryController {
     private RoomCategoryDBIF roomCategoryDB;
+    private List<Furniture> furniture;
 
     public RoomCategoryController() throws DataAccessException {
         roomCategoryDB = new RoomCategoryDB();
@@ -22,7 +24,7 @@ public class RoomCategoryController {
 	public RoomCategory addRoomCategory(String name, String description, BigDecimal pricePerMonth,
 			BigDecimal pricePerMonthForInternet, BigDecimal pricePerMonthForExtraTenant, int maxTenants, int leaveNoticeDays) throws DataAccessException {
 		RoomCategory roomCategory = new RoomCategory(-1, name, description, pricePerMonth, pricePerMonthForInternet,
-				pricePerMonthForExtraTenant, maxTenants, /*new ArrayList<>(),*/ leaveNoticeDays);
+				pricePerMonthForExtraTenant, maxTenants,  leaveNoticeDays, furniture);
 		roomCategory.setId(roomCategoryDB.add(roomCategory));
         return roomCategory;
 	}
@@ -72,5 +74,9 @@ public class RoomCategoryController {
         // return stubbed data for constructor (int id, String name, String description, BigDecimal pricePerMonth, BigDecimal PricePerMonthForInternet, BigDecimal pricePerMonthForExtraTenant, int maxTenants, int leaveNoticeDays, List<Furniture> furniture)
     	//return roomCategoryDB.getById(roomCategoryId);
         return new RoomCategory(1, "Single", "Single", BigDecimal.valueOf(100), BigDecimal.valueOf(100), BigDecimal.valueOf(100), 2, 1, new FurnitureController().getFurnitureByRoomCategoryId(1));
+    }
+    
+    public List<RoomCategory> getAllRoomCategories() throws DataAccessException {
+    	return roomCategoryDB.getAll();
     }
 }
