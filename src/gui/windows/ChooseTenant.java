@@ -127,8 +127,10 @@ public class ChooseTenant extends JDialog {
                     // Check filter
                     if (invalidPredicate != null) {
                         List<Tenant> invalidTenants = new ArrayList<>();
+
                         for (int i : table.getSelectedRows()) {
-                            Tenant tenant = (Tenant) tableModel.getObj(i);
+                            int modelIndex = table.convertRowIndexToModel(i);
+                            Tenant tenant = (Tenant) tableModel.getObj(modelIndex);
                             if (invalidPredicate.test(tenant)) {
                                 invalidTenants.add(tenant);
                             }
@@ -144,8 +146,9 @@ public class ChooseTenant extends JDialog {
                     }
 
 
-                    for (int index: table.getSelectedRows()) {
-                        this.selectedObjects.add((Tenant) tableModel.getObj(index));
+                    for (int i: table.getSelectedRows()) {
+                        int modelIndex = table.convertRowIndexToModel(i);
+                        this.selectedObjects.add((Tenant) tableModel.getObj(modelIndex));
                     }
                     this.dispose();
                 }

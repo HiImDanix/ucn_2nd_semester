@@ -33,10 +33,10 @@ public class CRUDTenants extends AbstractCRUDPanel {
 
 	@Override
 	protected void btnViewAction() {
-			int row = getTable().convertRowIndexToModel(getTable().getSelectedRow());
-			Tenant tenant = (Tenant) getTableModel().getObj(row);
-			WindowTenant frame = new WindowTenant(tenant, WindowTenant.Mode.VIEW);
-			frame.setVisible(true);
+		int row = getTable().convertRowIndexToModel(getTable().getSelectedRow());
+		Tenant tenant = (Tenant) getTableModel().getObj(row);
+		WindowTenant frame = new WindowTenant(tenant, WindowTenant.Mode.VIEW);
+		frame.setVisible(true);
 	}
 
 	@Override

@@ -101,7 +101,8 @@ public class ChooseRoom extends JDialog {
             JTable table = CRUDPanel.getTable();
             if (!table.getSelectionModel().isSelectionEmpty()) {
                 MyAbstractTableModel tableModel = CRUDPanel.getTableModel();
-                Room object = (Room) tableModel.getObj(table.getSelectedRow());
+                int modelIndex = table.convertRowIndexToModel(table.getSelectedRow());
+                Room object = (Room) tableModel.getObj(modelIndex);
                 if (filter == null || !filter.test(object)) {
                     selectedObject = object;
                     this.dispose();
