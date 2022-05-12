@@ -89,7 +89,7 @@ public class WindowContract extends JDialog {
 		txtDisplayTenants = new JTextArea();
 		
 		if (tenants == null) {
-			this.tenants = contract != null ? contract.getTenants() : null;
+		this.tenants = contract != null ? contract.getTenants() : null;
 		} else {
 			this.tenants = tenants;
 			txtDisplayTenants.setText(getTenantRepresentation(tenants));
@@ -451,6 +451,9 @@ public class WindowContract extends JDialog {
 			if (frame.getSelectedObject() != null) {
 				this.room = frame.getSelectedObject();
 				txtDisplayRoom.setText(getRoomRepresentation(room));
+				// Reset tenants if previously chosen
+				tenants = null;
+				txtDisplayTenants.setText("");
 				// Enable choose tenant button
 				btnChooseTenants.setEnabled(true);
 			} else {

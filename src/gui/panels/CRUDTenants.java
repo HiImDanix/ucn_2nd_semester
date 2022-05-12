@@ -25,10 +25,6 @@ public class CRUDTenants extends AbstractCRUDPanel {
 	
 	private JButton btnGotoContract;
 
-	public JButton getBtnGotoContract() {
-		return btnGotoContract;
-	}
-
 	public CRUDTenants() throws DataAccessException {
 		super("Tenants");
 		
