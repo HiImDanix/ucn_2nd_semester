@@ -41,13 +41,11 @@ public class CRUDContracts extends AbstractCRUDPanel {
 
 	@Override
 	protected void btnEditAction() {
-		Messages.error(this, "disabled");
-		return;
-//		int row = getTable().convertRowIndexToModel(getTable().getSelectedRow());
-//		Contract contract = (Contract) getTableModel().getObj(row);
-//		WindowContract frame = new WindowContract(contract, WindowContract.Mode.EDIT);
-//		frame.setVisible(true);
-//		getTableModel().fireTableRowsUpdated(row, row);
+		int row = getTable().convertRowIndexToModel(getTable().getSelectedRow());
+		Contract contract = (Contract) getTableModel().getObj(row);
+		WindowContract frame = new WindowContract(contract, WindowContract.Mode.EDIT);
+		frame.setVisible(true);
+		getTableModel().fireTableRowsUpdated(row, row);
 	}
 
 	@Override

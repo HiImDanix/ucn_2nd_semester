@@ -285,8 +285,8 @@ public class WindowRoom extends JDialog {
 
 				if (mode == Mode.EDIT) {
 					try {
-						roomCtrl.updateRoomIsOutOfService(room, rdbtnOutOfServiceYes.isSelected());
-						roomCtrl.updateRoomCategory(room, this.roomCategory);
+						// Update the room
+						roomCtrl.updateRoom(room, roomCategory, rdbtnOutOfServiceYes.isSelected());
 					} catch (DataAccessException ex) {
 						Messages.error("Error updating room", "error");
 					}

@@ -12,10 +12,12 @@ import model.Room;
 
 public class RoomTableModel extends MyAbstractTableModel<Room> {
 
+    RoomController roomController = new RoomController();
+
 	private static final long serialVersionUID = -2367962812947993282L;
 
 	protected static final String[] COLUMN_NAMES = {
-        "ID", "category", "out of service", "is occupied?"
+        "ID", "category", "Is available"
     };
 
     private List<Room> rooms;
@@ -53,13 +55,14 @@ public class RoomTableModel extends MyAbstractTableModel<Room> {
     public Object getValueAt(int rowIndex, int columnIndex) {
     	Room room = rooms.get(rowIndex);
 
-        boolean roomIsAvailable = !room.isOutOfService() && new RoomController().isRoomOccupied(room);
+        // is room available?
+        String roomIsAvailable = room.isOutOfService() ? "Out of service"
+                : new RoomController().isRoomOccupied(room) ? "Occupied" : "Yes";
 
         switch (columnIndex) {
             case 0: return "#" + room.getID();
             case 1: return room.getRoomCategory().getName();
-            case 2: return room.isOutOfService() ? "Yes" : "No";
-            case 3: return roomIsAvailable ? "Yes" : "No";
+            case 2: return roomIsAvailable;
             default: return "ERROR";
         }
     }

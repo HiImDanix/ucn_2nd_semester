@@ -355,7 +355,8 @@ public class WindowTenant extends JDialog {
 
 				if (mode == Mode.EDIT) {
 					try {
-						tenantCtrl.updateTenant(tenant, firstName, lastName, email, phone);
+						// TODO: StudyProof stub
+						tenantCtrl.updateTenant(tenant, firstName, lastName, email, phone, null);
 					} catch (DataAccessException ex) {
 						Messages.error(this, "Server error. Failed to update tenant.");
 					}

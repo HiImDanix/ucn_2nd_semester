@@ -46,19 +46,21 @@ public class TenantController {
 		return new TenantContractController().getTenantsByContractID(contractID);
 	}
 
-    public void updateTenant(Tenant tenant, String firstName, String lastName, String email, String phone)
-			throws DataAccessException {
+    public void updateTenant(Tenant tenant, String firstName, String lastName, String email, String phone,
+							 StudyProof studyProof) throws DataAccessException {
 		// capture old values
 		String oldFirstName = tenant.getFirstName();
 		String oldLastName = tenant.getLastName();
 		String oldEmail = tenant.getEmail();
 		String oldPhone = tenant.getPhone();
+		StudyProof oldStudyProof = tenant.getStudyProof();
 
 		// update new values
 		tenant.setFirstName(firstName);
 		tenant.setLastName(lastName);
 		tenant.setEmail(email);
 		tenant.setPhone(phone);
+		tenant.setStudyProof(studyProof);
 
 		// update database
 		try {
@@ -69,7 +71,9 @@ public class TenantController {
 			tenant.setLastName(oldLastName);
 			tenant.setEmail(oldEmail);
 			tenant.setPhone(oldPhone);
+			tenant.setStudyProof(oldStudyProof);
 			throw e;
 		}
+		
 	}
 }

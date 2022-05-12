@@ -82,13 +82,11 @@ public class CRUDTenants extends AbstractCRUDPanel {
 
 	@Override
 	protected void btnEditAction() {
-		Messages.error(this, "disabled");
-		return;
-//		int row = getTable().convertRowIndexToModel(getTable().getSelectedRow());
-//		Tenant tenant = (Tenant) getTableModel().getObj(row);
-//		WindowTenant frame = new WindowTenant(tenant, WindowTenant.Mode.EDIT);
-//		frame.setVisible(true);
-//		getTableModel().fireTableRowsUpdated(row, row);
+		int row = getTable().convertRowIndexToModel(getTable().getSelectedRow());
+		Tenant tenant = (Tenant) getTableModel().getObj(row);
+		WindowTenant frame = new WindowTenant(tenant, WindowTenant.Mode.EDIT);
+		frame.setVisible(true);
+		getTableModel().fireTableRowsUpdated(row, row);
 	}
 
 	@Override
