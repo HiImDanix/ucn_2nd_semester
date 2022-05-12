@@ -50,7 +50,7 @@ public class TestDBConnection {
     }
 
     @Test()
-    public void Reconnect() throws DataAccessException {
+    public void reconnect() throws DataAccessException {
         // Get the connection
         // Already done in init()
 
