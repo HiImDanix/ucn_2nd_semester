@@ -1,20 +1,61 @@
 package gui.panels;
 
 
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.JButton;
+
 import controller.TenantController;
 import db.DataAccessException;
 import gui.Messages;
 import gui.panels.tablemodels.MyAbstractTableModel;
 import gui.panels.tablemodels.TenantTableModel;
+import gui.windows.WindowContract;
 import gui.windows.WindowTenant;
 import model.Room;
 import model.Tenant;
 
 
 public class CRUDTenants extends AbstractCRUDPanel {
+	
+	private JButton btnGotoContract;
 
 	public CRUDTenants() throws DataAccessException {
 		super("Tenants");
+		
+		btnGotoContract = new JButton("Genarate contract");
+        btnGotoContract.setEnabled(false);
+        btnGotoContract.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
+        GridBagConstraints gbc_btnGotoContract = new GridBagConstraints();
+        gbc_btnGotoContract.insets = new Insets(0, 0, 0, 5);
+        gbc_btnGotoContract.gridx = 0;
+        gbc_btnGotoContract.gridy = 0;
+        getBottomPanel().add(btnGotoContract, gbc_btnGotoContract);
+        
+        getTable().getSelectionModel().addListSelectionListener(e -> {
+			if (getTable().getSelectionModel().isSelectionEmpty()) {
+				// Not selected
+				btnGotoContract.setEnabled(false);
+			} else {
+				// Selected
+				btnGotoContract.setEnabled(true);
+			}
+		});
+        
+        btnGotoContract.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                btnGotoContract();
+            }
+        });
 	}
 
 	@Override
@@ -67,5 +108,14 @@ public class CRUDTenants extends AbstractCRUDPanel {
 //			}
 //		}
 //	});
+	}
+
+	private void btnGotoContract() {
+		int row = getTable().convertRowIndexToModel(getTable().getSelectedRow());
+		Tenant tenant = (Tenant) getTableModel().getObj(row);
+		List<Tenant> tenants = new ArrayList<>();
+		tenants.add(tenant);
+		WindowContract frame = new WindowContract(tenants);
+		frame.setVisible(true);
 	}
 }

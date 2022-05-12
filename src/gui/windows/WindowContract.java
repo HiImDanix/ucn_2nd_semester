@@ -17,6 +17,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -57,10 +58,19 @@ public class WindowContract extends JDialog {
 	 * Constructor for create mode
 	 */
 	public WindowContract() {
-		this(null, Mode.CREATE);
+		this(null, Mode.CREATE, null);
 		this.contract = null;
 		this.room = null;
 		this.tenants = null;
+	}
+	
+	/**
+	 * Constructor for create mode with given tenant(s)
+	 */
+	public WindowContract(List<Tenant> tenants) {
+		this(null, Mode.CREATE, tenants);
+		this.contract = null;
+		this.room = null;
 	}
 
 	/**
@@ -69,14 +79,22 @@ public class WindowContract extends JDialog {
 	 * @param contract the contract
 	 * @param mode the mode
 	 */
-	public WindowContract(Contract contract, Mode mode) {
+	public WindowContract(Contract contract, Mode mode, List<Tenant> tenants) {
 		this.mode = mode;
 
 		contractCtrl = new ContractController();
 		this.contract = contract;
 		this.room = contract != null ? contract.getRoom() : null;
-		this.tenants = contract != null ? contract.getTenants() : null;
 
+		txtDisplayTenants = new JTextArea();
+		
+		if (tenants == null) {
+		this.tenants = contract != null ? contract.getTenants() : null;
+		} else {
+			this.tenants = tenants;
+			txtDisplayTenants.setText(getTenantRepresentation(tenants));
+		}
+		
 		setModal(true);
 		setBounds(100, 100, 600, 400);
 		contentPane = new JPanel();
@@ -223,7 +241,7 @@ public class WindowContract extends JDialog {
 		gbc_btnChooseTenants.gridy = 5;
 		contentPane.add(btnChooseTenants, gbc_btnChooseTenants);
 		
-		txtDisplayTenants = new JTextArea();
+		//initialized above
 		GridBagConstraints gbc_txtDisplayTenants = new GridBagConstraints();
 		gbc_txtDisplayTenants.gridwidth = 2;
 		gbc_txtDisplayTenants.insets = new Insets(0, 0, 5, 0);
