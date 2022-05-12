@@ -63,6 +63,7 @@ public class ChooseTenant extends JDialog {
         contentPane.setLayout(gbl_contentPane);
 
         CRUDPanel = new CRUDTenants();
+        CRUDPanel.getBtnGotoContract().setVisible(false);
         GridBagConstraints gbc_panel = new GridBagConstraints();
         gbc_panel.fill = GridBagConstraints.BOTH;
         gbc_panel.insets = new Insets(0, 0, 5, 0);
