@@ -15,6 +15,11 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class TestDBConnection {
 
+    // Notes for group members:
+    // Putting the connection in a static field & @BeforeAll is not done as it was leading to weird behaviour
+    // (tests not working together, but separately.)
+    // Also, we need to re-execute getInstance() if we want to reconnect.
+
     @AfterAll
     static void cleanUp() throws DataAccessException {
         DBConnection.getInstance().closeConnection();
