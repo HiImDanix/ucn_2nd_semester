@@ -128,32 +128,12 @@ public abstract class AbstractCRUDPanel extends JPanel {
 
         addSearchFunctionality();
 
-        btnAdd.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                btnAddAction();
-            }
-        });
-        btnView.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                btnViewAction();
-            }
-        });
-        btnEdit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                btnEditAction();
-            }
-        });
-        btnDelete.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                btnDeleteAction();
-            }
-        });
+        btnAdd.addActionListener(e -> btnAddAction());
+        btnView.addActionListener(e -> btnViewAction());
+        btnEdit.addActionListener(e -> btnEditAction());
+        btnDelete.addActionListener(e -> btnDeleteAction());
 
-        		tableMain.getSelectionModel().addListSelectionListener(e -> {
+        tableMain.getSelectionModel().addListSelectionListener(e -> {
 			if (tableMain.getSelectionModel().isSelectionEmpty()) {
 				// Not selected
 				btnView.setEnabled(false);
