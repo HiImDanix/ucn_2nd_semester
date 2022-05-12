@@ -2,10 +2,7 @@ package test.db;
 
 import db.DBConnection;
 import db.DataAccessException;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -15,10 +12,13 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class TestDBConnection {
 
-    // Notes for group members:
-    // Putting the connection in a static field & @BeforeAll is not done as it was leading to weird behaviour
-    // (tests not working together, but separately.)
-    // Also, we need to re-execute getInstance() if we want to reconnect.
+    private DBConnection dbCon;
+
+    @BeforeEach
+    public void init() throws DataAccessException {
+        dbCon = DBConnection.getInstance();
+
+    }
 
     @AfterAll
     static void cleanUp() throws DataAccessException {
@@ -28,7 +28,7 @@ public class TestDBConnection {
     @Test
     public void connect() throws DataAccessException {
         // Get connection
-        Connection con = DBConnection.getInstance().getConnection();
+        Connection con = dbCon.getConnection();
 
         // test that the connection is not null
         assertNotNull(con, "Connection is null");
@@ -40,10 +40,10 @@ public class TestDBConnection {
     @Test
     public void disconnect() throws DataAccessException {
         // Get the connection
-        Connection con = DBConnection.getInstance().getConnection();
+        Connection con = dbCon.getConnection();
 
         // Disconnect
-        DBConnection.getInstance().closeConnection();
+        dbCon.closeConnection();
 
         // Check that the connection is closed
         Assertions.assertThrows(SQLException.class, () -> con.createStatement().executeQuery("SELECT 1"));
@@ -52,15 +52,18 @@ public class TestDBConnection {
     @Test()
     public void Reconnect() throws DataAccessException {
         // Get the connection
-        DBConnection.getInstance().getConnection();
+        // Already done in init()
 
         // Disconnect
-        DBConnection.getInstance().closeConnection();
+        dbCon.closeConnection();
 
-        assertNotNull(DBConnection.getInstance().getConnection(), "Connection is null");
+        // use getInstance() to re-establish the connection
+        dbCon = DBConnection.getInstance();
+
+        assertNotNull(dbCon, "Connection is null");
 
         // Try retrieving data from the database
-        Assertions.assertDoesNotThrow(() -> DBConnection.getInstance().getConnection().createStatement().executeQuery("SELECT 1"));
+        Assertions.assertDoesNotThrow(() -> dbCon.getConnection().createStatement().executeQuery("SELECT 1"));
     }
 
 }
