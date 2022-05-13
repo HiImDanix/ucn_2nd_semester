@@ -43,7 +43,7 @@ public class RoomCategoryTableModel extends MyAbstractTableModel<RoomCategory> {
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         switch (columnIndex) {
-            default: return String.class;
+            default: return Integer.class;
         }
     }
 
