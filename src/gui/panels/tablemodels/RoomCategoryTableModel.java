@@ -20,7 +20,7 @@ public class RoomCategoryTableModel extends MyAbstractTableModel<RoomCategory> {
     private List<RoomCategory> roomCategories;
 
 
-    public RoomCategoryTableModel(List<RoomCategory> RoomCategory) {
+    public RoomCategoryTableModel(List<RoomCategory> roomCategories) {
         // Prevent possible mutation
         this.roomCategories = new ArrayList<>(roomCategories);
     }

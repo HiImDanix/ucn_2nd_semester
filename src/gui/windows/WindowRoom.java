@@ -312,8 +312,8 @@ public class WindowRoom extends JDialog {
 //				txtType.setText(customerType.getName());
 //			}
 			try {
-				this.roomCategory = new RoomCategoryController().getRoomCategoryById(0);
-				txtCategory.setText(roomCategory.getName());
+				ChooseRoomCategory frame = new ChooseRoomCategory();
+				frame.setVisible(true);
 			} catch (DataAccessException ex) {
 				ex.printStackTrace();
 			}
