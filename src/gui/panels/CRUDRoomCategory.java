@@ -8,6 +8,7 @@ import gui.panels.tablemodels.MyAbstractTableModel;
 import gui.panels.tablemodels.RoomCategoryTableModel;
 import gui.windows.WindowRoom;
 import gui.windows.WindowRoomCategory;
+import model.Room;
 import model.RoomCategory;
 
 
@@ -43,7 +44,12 @@ public class CRUDRoomCategory extends AbstractCRUDPanel {
 	}
 
 	@Override
-	protected void btnViewAction() {	}
+	protected void btnViewAction() {	
+		int row = getTable().convertRowIndexToModel(getTable().getSelectedRow());
+		RoomCategory roomCategory = (RoomCategory) getTableModel().getObj(row);
+		WindowRoomCategory frame = new WindowRoomCategory(roomCategory, WindowRoomCategory.Mode.VIEW);
+		frame.setVisible(true);
+	}
 
 	@Override
 	protected void btnEditAction() {}

@@ -314,6 +314,12 @@ public class WindowRoom extends JDialog {
 			try {
 				ChooseRoomCategory frame = new ChooseRoomCategory();
 				frame.setVisible(true);
+				try {
+					roomCategory = frame.getSelectedObject();
+					txtCategory.setText(roomCategory.getName());
+				} catch (NullPointerException npe) {
+					Messages.info(contentPane, "Category was not selected!");
+				}
 			} catch (DataAccessException ex) {
 				ex.printStackTrace();
 			}

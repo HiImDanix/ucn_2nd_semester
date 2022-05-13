@@ -17,7 +17,7 @@ public class RoomCategoryController {
     private RoomCategoryDBIF roomCategoryDB;
     private List<Furniture> furniture;
 
-    public RoomCategoryController() throws DataAccessException {
+    public RoomCategoryController() {
         roomCategoryDB = new RoomCategoryDB();
     }
 	
@@ -72,8 +72,7 @@ public class RoomCategoryController {
 	
     public RoomCategory getRoomCategoryById(int roomCategoryId) throws DataAccessException {
         // return stubbed data for constructor (int id, String name, String description, BigDecimal pricePerMonth, BigDecimal PricePerMonthForInternet, BigDecimal pricePerMonthForExtraTenant, int maxTenants, int leaveNoticeDays, List<Furniture> furniture)
-    	//return roomCategoryDB.getById(roomCategoryId);
-        return new RoomCategory(1, "Single", "Single", BigDecimal.valueOf(100), BigDecimal.valueOf(100), BigDecimal.valueOf(100), 2, 1, new FurnitureController().getFurnitureByRoomCategoryId(1));
+    	return roomCategoryDB.getById(roomCategoryId);
     }
     
     public List<RoomCategory> getAllRoomCategories() throws DataAccessException {

@@ -61,7 +61,7 @@ public class WindowRoomCategory extends JDialog {
 	 * @param mode the mode
 	 * @throws DataAccessException 
 	 */
-	public WindowRoomCategory(RoomCategory roomCategory, Mode mode) throws DataAccessException {
+	public WindowRoomCategory(RoomCategory roomCategory, Mode mode) {
 		this.mode = mode;
 		
 		roomCategoryCtrl = new RoomCategoryController();
@@ -239,7 +239,7 @@ public class WindowRoomCategory extends JDialog {
 		switch (mode) {
 			case VIEW:
 				// Set title
-				setTitle("View Room categories - " + roomCategory.getID());
+				setTitle("View Room category - " + roomCategory.getID());
 				// Hide 'Update' button if in view mode
 				btnSubmit.setVisible(false);
 				// Disable 'choose' button if in view mode.
@@ -293,9 +293,13 @@ public class WindowRoomCategory extends JDialog {
 	// FIll in the fields
 	private void fillFields(RoomCategory roomCategory) {
 		txtID.setText(String.valueOf(roomCategory.getID()));
-		//txtCategory.setText(room.getRoomCategory().getName());
-		//rdbtnOutOfServiceYes.setSelected(room.isOutOfService());
-		//rdbtnOutOfServiceNo.setSelected(!room.isOutOfService());
+		txtName.setText(roomCategory.getName());
+		txtDescription.setText(roomCategory.getDescription());
+		txtPrice.setText(String.valueOf(roomCategory.getPricePerMonth()));
+		txtPriceInternet.setText(String.valueOf(roomCategory.getPricePerMonthForInternet()));
+		txtPriceExtraTenant.setText(String.valueOf(roomCategory.getPricePerMonthForExtraTenant()));
+		txtNumberOfTenants.setText(String.valueOf(roomCategory.getMaxTenants()));
+		txtLeaveNoticeDays.setText(String.valueOf(roomCategory.getLeaveNoticeDays()));
 	} 
 
 
