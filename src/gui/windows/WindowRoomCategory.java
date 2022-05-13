@@ -33,17 +33,17 @@ public class WindowRoomCategory extends JDialog {
 	//private final ButtonGroup buttonGroup = new ButtonGroup();
 	private JTextField txtName;
 	private JLabel lblDescription;
-	private JTextField txtDescription;
 	private JLabel lblPrice;
 	private JTextField txtPrice;
 	private JLabel lblPriceInternet;
 	private JTextField txtPriceInternet;
 	private JLabel lblNumberOfTenants;
 	private JLabel lblPriceExtraTenant;
-	private JTextField txtNumberOfTenants;
 	private JTextField txtPriceExtraTenant;
 	private JTextField txtLeaveNoticeDays;
 	private JLabel lblLeaveNoticeDays;
+	private JTextArea txtDescription;
+	private JSpinner spinnerMaxNumberOfTenants;
 	
 	/**
 	 * Constructor for create mode
@@ -135,16 +135,14 @@ public class WindowRoomCategory extends JDialog {
 		gbc_lblPrice.gridy = 2;
 		contentPane.add(lblPrice, gbc_lblPrice);
 		
-		txtNumberOfTenants = new JTextField();
-		txtNumberOfTenants.setEnabled(true);
-		txtNumberOfTenants.setColumns(10);
-		GridBagConstraints gbc_txtNumberOfTenants = new GridBagConstraints();
-		gbc_txtNumberOfTenants.anchor = GridBagConstraints.NORTH;
-		gbc_txtNumberOfTenants.insets = new Insets(0, 0, 5, 5);
-		gbc_txtNumberOfTenants.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtNumberOfTenants.gridx = 0;
-		gbc_txtNumberOfTenants.gridy = 3;
-		contentPane.add(txtNumberOfTenants, gbc_txtNumberOfTenants);
+		spinnerMaxNumberOfTenants = new JSpinner();
+		spinnerMaxNumberOfTenants.setModel(new SpinnerNumberModel(1, 1, 5, 1));
+		GridBagConstraints gbc_spinnerMaxNumberOfTenants = new GridBagConstraints();
+		gbc_spinnerMaxNumberOfTenants.anchor = GridBagConstraints.WEST;
+		gbc_spinnerMaxNumberOfTenants.insets = new Insets(0, 0, 5, 5);
+		gbc_spinnerMaxNumberOfTenants.gridx = 0;
+		gbc_spinnerMaxNumberOfTenants.gridy = 3;
+		contentPane.add(spinnerMaxNumberOfTenants, gbc_spinnerMaxNumberOfTenants);
 		
 		txtPrice = new JTextField();
 		txtPrice.setEnabled(true);
@@ -173,11 +171,9 @@ public class WindowRoomCategory extends JDialog {
 		gbc_lblPriceInternet.gridy = 4;
 		contentPane.add(lblPriceInternet, gbc_lblPriceInternet);
 		
-		txtDescription = new JTextField();
-		txtDescription.setEnabled(true);
-		txtDescription.setColumns(10);
+		txtDescription = new JTextArea();
 		GridBagConstraints gbc_txtDescription = new GridBagConstraints();
-		gbc_txtDescription.gridheight = 3;
+		gbc_txtDescription.gridheight = 2;
 		gbc_txtDescription.insets = new Insets(0, 0, 5, 5);
 		gbc_txtDescription.fill = GridBagConstraints.BOTH;
 		gbc_txtDescription.gridx = 0;
@@ -298,7 +294,7 @@ public class WindowRoomCategory extends JDialog {
 		txtPrice.setText(String.valueOf(roomCategory.getPricePerMonth()));
 		txtPriceInternet.setText(String.valueOf(roomCategory.getPricePerMonthForInternet()));
 		txtPriceExtraTenant.setText(String.valueOf(roomCategory.getPricePerMonthForExtraTenant()));
-		txtNumberOfTenants.setText(String.valueOf(roomCategory.getMaxTenants()));
+		spinnerMaxNumberOfTenants.setValue(roomCategory.getMaxTenants());
 		txtLeaveNoticeDays.setText(String.valueOf(roomCategory.getLeaveNoticeDays()));
 	} 
 
@@ -336,7 +332,7 @@ public class WindowRoomCategory extends JDialog {
 				BigDecimal pricePerMonth = new BigDecimal(txtPrice.getText().trim());
 				BigDecimal priceForInternet = new BigDecimal(txtPriceInternet.getText().trim());
 				BigDecimal priceExtraTenant = new BigDecimal(txtPriceExtraTenant.getText().trim());
-				int maxTenants = Integer.parseInt(txtNumberOfTenants.getText().trim());
+				int maxTenants = Integer.parseInt(String.valueOf(spinnerMaxNumberOfTenants.getValue()));
 				int leaveNoticeDays = Integer.parseInt(txtLeaveNoticeDays.getText().trim());
 				
 				if (name.isEmpty()) {
