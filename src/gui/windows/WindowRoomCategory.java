@@ -330,23 +330,39 @@ public class WindowRoomCategory extends JDialog {
 			}
 			if (Messages.confirm(this, message)) {
 
-				// Validate that out of service is either true or false
+				// Validation here
+				String name = txtName.getText().trim();
+				String description = txtDescription.getText().trim();
+				BigDecimal pricePerMonth = new BigDecimal(txtPrice.getText().trim());
+				BigDecimal priceForInternet = new BigDecimal(txtPriceInternet.getText().trim());
+				BigDecimal priceExtraTenant = new BigDecimal(txtPriceExtraTenant.getText().trim());
+				int maxTenants = Integer.parseInt(txtNumberOfTenants.getText().trim());
+				int leaveNoticeDays = Integer.parseInt(txtLeaveNoticeDays.getText().trim());
 				
+				if (name.isEmpty()) {
+					Messages.error(this, "You must give a name to the category!");
+					return;
+				}
+				if (pricePerMonth.compareTo(BigDecimal.ZERO) < 0  || priceForInternet.compareTo(BigDecimal.ZERO) < 0 || priceExtraTenant.compareTo(BigDecimal.ZERO) < 0) {
+					Messages.error(this, "Prices are not allowed to be negative!");
+					return;
+				}
+				if (maxTenants  <= 0) {
+					Messages.error(this, "Maximum number of tenants cannot be 0 or negative!");
+					return;
+				}
+				if (leaveNoticeDays < 0) {
+					Messages.error(this, "Leave notice days are not allowed to be negative!");
+					return;
+				}
 
-				if (mode == Mode.EDIT) {/*
-					try {
-						roomCtrl.updateRoomIsOutOfService(room, rdbtnOutOfServiceYes.isSelected());
-						roomCtrl.updateRoomCategory(room, this.roomCategory);
-					} catch (DataAccessException ex) {
-						Messages.error("Error updating room", "error");
-					}
-				 */
+				if (mode == Mode.EDIT) {
+					
 				} else if (mode == Mode.CREATE) {
 					// if mode == Create, create a new room
 					try {
-						this.roomCategory = roomCategoryCtrl.addRoomCategory(txtName.getText().trim(), txtDescription.getText(), 
-								new BigDecimal(txtPrice.getText().trim()), new BigDecimal(txtPriceInternet.getText().trim()),
-								new BigDecimal(txtPriceExtraTenant.getText().trim()), Integer.parseInt(txtNumberOfTenants.getText().trim()), Integer.parseInt(txtLeaveNoticeDays.getText().trim()));
+						this.roomCategory = roomCategoryCtrl.addRoomCategory(name, description, pricePerMonth, priceForInternet, 
+								priceExtraTenant, maxTenants, leaveNoticeDays);
 					} catch (DataAccessException ex) {
 						Messages.error("Error creating room category", "error");
 					}
