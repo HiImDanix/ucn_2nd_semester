@@ -13,7 +13,7 @@ public class RoomCategoryTableModel extends MyAbstractTableModel<RoomCategory> {
 	private static final long serialVersionUID = -2367962812947993282L;
 
 	protected static final String[] COLUMN_NAMES = {
-        "ID", "Name", "Price / month", "Internet price / month",
+        "ID", "Name", "Description", "Price / month", "Internet price / month",
             "Extra tenant price / month", "Max tenants", "Notice period (days)"
     };
 
@@ -55,11 +55,12 @@ public class RoomCategoryTableModel extends MyAbstractTableModel<RoomCategory> {
         switch (columnIndex) {
             case 0: return "#" + roomCategory.getID();
             case 1: return roomCategory.getName();
-            case 2: return roomCategory.getPricePerMonth();
-            case 3: return roomCategory.getPricePerMonthForInternet();
-            case 4: return roomCategory.getPricePerMonthForExtraTenant();
-            case 5: return roomCategory.getMaxTenants();
-            case 6: return roomCategory.getLeaveNoticeDays();
+            case 2: return roomCategory.getDescription();
+            case 3: return roomCategory.getPricePerMonth()+ " kr";
+            case 4: return roomCategory.getPricePerMonthForInternet()+ " kr";
+            case 5: return roomCategory.getPricePerMonthForExtraTenant()+ " kr";
+            case 6: return roomCategory.getMaxTenants();
+            case 7: return roomCategory.getLeaveNoticeDays()+ " days";
             default: return "ERROR";
         }
     }

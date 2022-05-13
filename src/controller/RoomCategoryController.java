@@ -24,7 +24,7 @@ public class RoomCategoryController {
 	public RoomCategory addRoomCategory(String name, String description, BigDecimal pricePerMonth,
 			BigDecimal pricePerMonthForInternet, BigDecimal pricePerMonthForExtraTenant, int maxTenants, int leaveNoticeDays) throws DataAccessException {
 		RoomCategory roomCategory = new RoomCategory(-1, name, description, pricePerMonth, pricePerMonthForInternet,
-				pricePerMonthForExtraTenant, maxTenants,  leaveNoticeDays, furniture);
+				pricePerMonthForExtraTenant, maxTenants,  leaveNoticeDays);
 		roomCategory.setId(roomCategoryDB.add(roomCategory));
         return roomCategory;
 	}

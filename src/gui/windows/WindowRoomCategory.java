@@ -1,6 +1,7 @@
 package gui.windows;
 
 import java.awt.*;
+import java.math.BigDecimal;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -27,7 +28,7 @@ public class WindowRoomCategory extends JDialog {
 	private JButton btnSubmit;
 	
 	RoomCategory roomCategory;
-	RoomCategoryController roomCtrl;
+	RoomCategoryController roomCategoryCtrl;
 	Mode mode;
 	//private final ButtonGroup buttonGroup = new ButtonGroup();
 	private JTextField txtName;
@@ -41,6 +42,8 @@ public class WindowRoomCategory extends JDialog {
 	private JLabel lblPriceExtraTenant;
 	private JTextField txtNumberOfTenants;
 	private JTextField txtPriceExtraTenant;
+	private JTextField txtLeaveNoticeDays;
+	private JLabel lblLeaveNoticeDays;
 	
 	/**
 	 * Constructor for create mode
@@ -61,7 +64,7 @@ public class WindowRoomCategory extends JDialog {
 	public WindowRoomCategory(RoomCategory roomCategory, Mode mode) throws DataAccessException {
 		this.mode = mode;
 		
-		roomCtrl = new RoomCategoryController();
+		roomCategoryCtrl = new RoomCategoryController();
 		//this.room = room;
 		
 		setModal(true);
@@ -71,9 +74,9 @@ public class WindowRoomCategory extends JDialog {
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
 		gbl_contentPanel.columnWidths = new int[]{0, 0, 0};
-		gbl_contentPanel.rowHeights = new int[] {0, 0, 0, 0, 0, 0, 0};
+		gbl_contentPanel.rowHeights = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_contentPanel.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
-		gbl_contentPanel.rowWeights = new double[]{1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0};
+		gbl_contentPanel.rowWeights = new double[]{1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0, 0.0, 0.0, 0.0};
 		contentPane.setLayout(gbl_contentPanel);
 		
 		JLabel lblID = new JLabel("ID");
@@ -210,18 +213,33 @@ public class WindowRoomCategory extends JDialog {
 		gbc_txtPriceExtraTenant.gridy = 7;
 		contentPane.add(txtPriceExtraTenant, gbc_txtPriceExtraTenant);
 		
+		lblLeaveNoticeDays = new JLabel("Leave notice days");
+		GridBagConstraints gbc_lblLeaveNoticeDays = new GridBagConstraints();
+		gbc_lblLeaveNoticeDays.insets = new Insets(0, 0, 5, 5);
+		gbc_lblLeaveNoticeDays.gridx = 0;
+		gbc_lblLeaveNoticeDays.gridy = 8;
+		contentPane.add(lblLeaveNoticeDays, gbc_lblLeaveNoticeDays);
+		
+		txtLeaveNoticeDays = new JTextField();
+		GridBagConstraints gbc_txtLeaveNoticeDays = new GridBagConstraints();
+		gbc_txtLeaveNoticeDays.insets = new Insets(0, 0, 5, 5);
+		gbc_txtLeaveNoticeDays.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtLeaveNoticeDays.gridx = 0;
+		gbc_txtLeaveNoticeDays.gridy = 9;
+		contentPane.add(txtLeaveNoticeDays, gbc_txtLeaveNoticeDays);
+		txtLeaveNoticeDays.setColumns(10);
+		
 		btnSubmit = new JButtonPrimary("Create");
 		GridBagConstraints gbc_btnOk = new GridBagConstraints();
 		gbc_btnOk.anchor = GridBagConstraints.SOUTHEAST;
 		gbc_btnOk.gridx = 1;
-		gbc_btnOk.gridy = 8;
+		gbc_btnOk.gridy = 10;
 		contentPane.add(btnSubmit, gbc_btnOk);
-	}
-/*		
+		
 		switch (mode) {
 			case VIEW:
 				// Set title
-				setTitle("View Room - " + room.getID());
+				setTitle("View Room categories - " + roomCategory.getID());
 				// Hide 'Update' button if in view mode
 				btnSubmit.setVisible(false);
 				// Disable 'choose' button if in view mode.
@@ -229,7 +247,7 @@ public class WindowRoomCategory extends JDialog {
 				// Disable fields
 				this.disableFields();
 				// Fill fields with content
-				this.fillFields(room);
+				this.fillFields(roomCategory);
 				break;
 			case EDIT: 
 				// Set title
@@ -237,11 +255,11 @@ public class WindowRoomCategory extends JDialog {
 				// Enable fields for editing
 				this.enableFields();
 				// Fill fields with content
-				this.fillFields(room);
+				this.fillFields(roomCategory);
 				break;
 			case CREATE:
 				// Set title
-				setTitle("Add New Room");
+				setTitle("Add New Room category");
 				// Change submit button text to 'Create'
 				btnSubmit.setText("Create");
 				// Enable fields
@@ -249,9 +267,9 @@ public class WindowRoomCategory extends JDialog {
 				
 		}	
 
-		//addEventHandlers();
-	
+		addEventHandlers();
 	}
+	
 
 	/*
 	 * *******************************************************
@@ -273,30 +291,28 @@ public class WindowRoomCategory extends JDialog {
 	}
 
 	// FIll in the fields
-	private void fillFields(Room room) {
-		txtID.setText(String.valueOf(room.getID()));
+	private void fillFields(RoomCategory roomCategory) {
+		txtID.setText(String.valueOf(roomCategory.getID()));
 		//txtCategory.setText(room.getRoomCategory().getName());
 		//rdbtnOutOfServiceYes.setSelected(room.isOutOfService());
 		//rdbtnOutOfServiceNo.setSelected(!room.isOutOfService());
 	} 
-} ////////////
 
 
 
-
-	/**
+	/*
 	 * Gets the room used in view/edit, or one created in 'create' mode. Can be null!
 	 *
 	 * @return the room
-	 
-	public Room getRoom() {
-		return this.room;
+	 */
+	public RoomCategory getRoomCategory() {
+		return this.roomCategory;
 	}
  	
 		
-	 * *******************************************************
-	 * *******************  EVENT HANDLERS *******************
-	 * *******************************************************
+	 // *******************************************************
+	 //* *******************  EVENT HANDLERS *******************
+	 //* *******************************************************
 	 
 	private void addEventHandlers() {
 		
@@ -306,36 +322,29 @@ public class WindowRoomCategory extends JDialog {
 			if (mode == Mode.EDIT) {
 				message = "Are you sure you want to update the room's details?";
 			} else if (mode == Mode.CREATE) {
-				message = "Create room?";
+				message = "Create room category?";
 			}
 			if (Messages.confirm(this, message)) {
-				
-				// Validate Room Category
-				if (roomCategory == null) {
-					Messages.error(this, "You must choose a room category!");
-					return;
-				}
 
 				// Validate that out of service is either true or false
-				if (rdbtnOutOfServiceYes.isSelected() == false && rdbtnOutOfServiceNo.isSelected() == false) {
-					Messages.error(this, "You must choose whether the room is out of service!");
-					return;
-				}
+				
 
-				if (mode == Mode.EDIT) {
+				if (mode == Mode.EDIT) {/*
 					try {
 						roomCtrl.updateRoomIsOutOfService(room, rdbtnOutOfServiceYes.isSelected());
 						roomCtrl.updateRoomCategory(room, this.roomCategory);
 					} catch (DataAccessException ex) {
 						Messages.error("Error updating room", "error");
 					}
-
+				 */
 				} else if (mode == Mode.CREATE) {
 					// if mode == Create, create a new room
 					try {
-						this.room = roomCtrl.addRoom(roomCategory, rdbtnOutOfServiceYes.isSelected());
+						this.roomCategory = roomCategoryCtrl.addRoomCategory(txtName.getText().trim(), txtDescription.getText(), 
+								new BigDecimal(txtPrice.getText().trim()), new BigDecimal(txtPriceInternet.getText().trim()),
+								new BigDecimal(txtPriceExtraTenant.getText().trim()), Integer.parseInt(txtNumberOfTenants.getText().trim()), Integer.parseInt(txtLeaveNoticeDays.getText().trim()));
 					} catch (DataAccessException ex) {
-						Messages.error("Error creating room", "error");
+						Messages.error("Error creating room category", "error");
 					}
 				}
 				// Dispose of the window
@@ -344,5 +353,3 @@ public class WindowRoomCategory extends JDialog {
 		});
 	}
 }
-
-*/

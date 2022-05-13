@@ -7,6 +7,7 @@ import gui.Messages;
 import gui.panels.tablemodels.MyAbstractTableModel;
 import gui.panels.tablemodels.RoomCategoryTableModel;
 import gui.windows.WindowRoom;
+import gui.windows.WindowRoomCategory;
 import model.RoomCategory;
 
 
@@ -28,10 +29,16 @@ public class CRUDRoomCategory extends AbstractCRUDPanel {
 
 	@Override
 	protected void btnAddAction() {
-		WindowRoom frame = new WindowRoom();
+		WindowRoomCategory frame = null;
+		try {
+			frame = new WindowRoomCategory();
+		} catch (DataAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		frame.setVisible(true);
-		if (frame.getRoom() != null) {
-			getTableModel().add(frame.getRoom());
+		if (frame.getRoomCategory() != null) {
+			getTableModel().add(frame.getRoomCategory());
 		}
 	}
 

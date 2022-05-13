@@ -22,8 +22,7 @@ public class RoomCategoryDB extends DAO<RoomCategory> implements RoomCategoryDBI
         PRICEPERMONTH,
         PRICEPERMONTHFORINTERNET, 
         PRICEPERMONTHFOREXTRATENANT, 
-        MAXTENANTS, 
-        FURNITURE,
+        MAXTENANTS,
         LEAVENOTICEDAYS;
 
         public String fieldName() {
@@ -40,7 +39,6 @@ public class RoomCategoryDB extends DAO<RoomCategory> implements RoomCategoryDBI
         		Columns.PRICEPERMONTHFORINTERNET.fieldName(),
         		Columns.PRICEPERMONTHFOREXTRATENANT.fieldName(),
         		Columns.MAXTENANTS.fieldName(),
-        		Columns.FURNITURE.fieldName(),
         		Columns.LEAVENOTICEDAYS.fieldName()
         });
     }
@@ -63,7 +61,7 @@ public class RoomCategoryDB extends DAO<RoomCategory> implements RoomCategoryDBI
         } catch (DataAccessException e) {
             // Rollback transaction
             DBConnection.getInstance().rollbackTransaction();
-            throw new DataAccessException("Error adding Contract to DB", e);
+            throw new DataAccessException("Error adding RoomCategory to DB", e);
         }
         return id;
     }
@@ -76,8 +74,7 @@ public class RoomCategoryDB extends DAO<RoomCategory> implements RoomCategoryDBI
         stmt.setBigDecimal(4, obj.getPricePerMonthForInternet());
         stmt.setBigDecimal(5, obj.getPricePerMonthForExtraTenant());
         stmt.setInt(6, obj.getMaxTenants());
-        //stmt.set(7, obj.getFurniture());
-        stmt.setInt(8, obj.getLeaveNoticeDays());
+        stmt.setInt(7, obj.getLeaveNoticeDays());
     }
 
     @Override
@@ -91,7 +88,6 @@ public class RoomCategoryDB extends DAO<RoomCategory> implements RoomCategoryDBI
                     rs.getBigDecimal(PRICEPERMONTHFORINTERNET.fieldName()),
                     rs.getBigDecimal(PRICEPERMONTHFOREXTRATENANT.fieldName()),
                     rs.getInt(MAXTENANTS.fieldName()),
-                    //rs.get (FURNITURE.fieldName()),
                     rs.getInt(LEAVENOTICEDAYS.fieldName())
             );
         } catch (SQLException e) {
