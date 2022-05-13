@@ -56,11 +56,11 @@ public class RoomCategoryTableModel extends MyAbstractTableModel<RoomCategory> {
             case 0: return "#" + roomCategory.getID();
             case 1: return roomCategory.getName();
             case 2: return roomCategory.getDescription();
-            case 3: return roomCategory.getPricePerMonth()+ " kr";
-            case 4: return roomCategory.getPricePerMonthForInternet()+ " kr";
-            case 5: return roomCategory.getPricePerMonthForExtraTenant()+ " kr";
-            case 6: return roomCategory.getMaxTenants();
-            case 7: return roomCategory.getLeaveNoticeDays()+ " days";
+            case 3: return String.valueOf(roomCategory.getPricePerMonth()) + " kr";
+            case 4: return String.valueOf(roomCategory.getPricePerMonthForInternet()) + " kr";
+            case 5: return String.valueOf(roomCategory.getPricePerMonthForExtraTenant()) + " kr";
+            case 6: return String.valueOf(roomCategory.getMaxTenants());
+            case 7: return String.valueOf(roomCategory.getLeaveNoticeDays())+ " days";
             default: return "ERROR";
         }
     }

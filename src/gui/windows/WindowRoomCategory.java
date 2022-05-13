@@ -44,6 +44,13 @@ public class WindowRoomCategory extends JDialog {
 	private JLabel lblLeaveNoticeDays;
 	private JTextArea txtDescription;
 	private JSpinner spinnerMaxNumberOfTenants;
+	private BigDecimal priceExtraTenant;
+	private BigDecimal priceForInternet;
+	private BigDecimal pricePerMonth;
+	private String description;
+	private String name;
+	private int leaveNoticeDays;
+	private int maxTenants;
 	
 	/**
 	 * Constructor for create mode
@@ -327,13 +334,23 @@ public class WindowRoomCategory extends JDialog {
 			if (Messages.confirm(this, message)) {
 
 				// Validation here
-				String name = txtName.getText().trim();
-				String description = txtDescription.getText().trim();
-				BigDecimal pricePerMonth = new BigDecimal(txtPrice.getText().trim());
-				BigDecimal priceForInternet = new BigDecimal(txtPriceInternet.getText().trim());
-				BigDecimal priceExtraTenant = new BigDecimal(txtPriceExtraTenant.getText().trim());
-				int maxTenants = Integer.parseInt(String.valueOf(spinnerMaxNumberOfTenants.getValue()));
-				int leaveNoticeDays = Integer.parseInt(txtLeaveNoticeDays.getText().trim());
+				if (txtName.getText().isEmpty() || txtPrice.getText().isEmpty() || txtPriceInternet.getText().isEmpty() || txtPriceExtraTenant.getText().isEmpty() || txtLeaveNoticeDays.getText().isEmpty()) {
+					Messages.error(this, "Fill out all out the necessary fields!");
+					return;
+				}
+				else {
+				name = txtName.getText().trim();
+				description = txtDescription.getText();
+				try {
+					pricePerMonth = new BigDecimal(txtPrice.getText());
+					priceForInternet = new BigDecimal(txtPriceInternet.getText());
+					priceExtraTenant = new BigDecimal(txtPriceExtraTenant.getText());
+				} catch (NumberFormatException e1) {
+					Messages.error(this, "Prices must be in number format!");
+					return;
+				}
+				maxTenants = Integer.parseInt(String.valueOf(spinnerMaxNumberOfTenants.getValue()));
+				leaveNoticeDays = Integer.parseInt(txtLeaveNoticeDays.getText().trim());
 				
 				if (name.isEmpty()) {
 					Messages.error(this, "You must give a name to the category!");
@@ -351,7 +368,7 @@ public class WindowRoomCategory extends JDialog {
 					Messages.error(this, "Leave notice days are not allowed to be negative!");
 					return;
 				}
-
+				}
 				if (mode == Mode.EDIT) {
 					
 				} else if (mode == Mode.CREATE) {
