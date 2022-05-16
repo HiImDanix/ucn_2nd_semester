@@ -73,10 +73,10 @@ public class DBHelper {
 
         // Add rooms
         RoomController roomCtrl = new RoomController();
-        Room room1 = roomCtrl.addRoom(roomCategory1, false);
-        Room room2 = roomCtrl.addRoom(roomCategory1, true);
-        Room room3 = roomCtrl.addRoom(roomCategory2, false);
-        Room room4 = roomCtrl.addRoom(roomCategory1, false);
+        Room room1 = roomCtrl.addRoom(rc1, false);
+        Room room2 = roomCtrl.addRoom(rc1, true);
+        Room room3 = roomCtrl.addRoom(rc2, false);
+        Room room4 = roomCtrl.addRoom(rc3, false);
 
         // Add tenants
         TenantController tenantCtrl = new TenantController();
