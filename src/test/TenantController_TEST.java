@@ -89,7 +89,7 @@ class TenantController_TEST {
 	void testUpdateTenant() throws DataAccessException {
 		tCtr.addTenant("testName", "name1", "email@email.com", "+4552525252", studyP);
 		Tenant tenant = tCtr.getTenantById(1);
-		tCtr.updateTenant(tenant, "New2", "Name2", "mail2@mail2.com", "+2222222222");
+		tCtr.updateTenant(tenant, "New2", "Name2", "mail2@mail2.com", "+2222222222", studyP);
 		assertEquals("New2", tenant.getFirstName());
 		assertEquals("Name2", tenant.getLastName());
 		assertEquals("mail2@mail2.com", tenant.getEmail());
