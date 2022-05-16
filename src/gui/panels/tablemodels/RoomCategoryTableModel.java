@@ -13,14 +13,13 @@ public class RoomCategoryTableModel extends MyAbstractTableModel<RoomCategory> {
 	private static final long serialVersionUID = -2367962812947993282L;
 
 	protected static final String[] COLUMN_NAMES = {
-        "ID", "Name", "Price / month", "Internet price / month",
+        "ID", "Name", "Description", "Price / month", "Internet price / month",
             "Extra tenant price / month", "Max tenants", "Notice period (days)"
     };
 
     private List<RoomCategory> roomCategories;
 
-
-    public RoomCategoryTableModel(List<RoomCategory> RoomCategory) {
+    public RoomCategoryTableModel(List<RoomCategory> roomCategories) {
         // Prevent possible mutation
         this.roomCategories = new ArrayList<>(roomCategories);
     }
@@ -43,6 +42,7 @@ public class RoomCategoryTableModel extends MyAbstractTableModel<RoomCategory> {
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         switch (columnIndex) {
+            case 6: return Integer.class;
             default: return String.class;
         }
     }
@@ -55,11 +55,12 @@ public class RoomCategoryTableModel extends MyAbstractTableModel<RoomCategory> {
         switch (columnIndex) {
             case 0: return "#" + roomCategory.getID();
             case 1: return roomCategory.getName();
-            case 2: return roomCategory.getPricePerMonth();
-            case 3: return roomCategory.getPricePerMonthForInternet();
-            case 4: return roomCategory.getPricePerMonthForExtraTenant();
-            case 5: return roomCategory.getMaxTenants();
-            case 6: return roomCategory.getLeaveNoticeDays();
+            case 2: return roomCategory.getDescription();
+            case 3: return roomCategory.getPricePerMonth() + " DKK";
+            case 4: return roomCategory.getPricePerMonthForInternet() + " DKK";
+            case 5: return roomCategory.getPricePerMonthForExtraTenant() + " DKK";
+            case 6: return roomCategory.getMaxTenants();
+            case 7: return roomCategory.getLeaveNoticeDays() + " days";
             default: return "ERROR";
         }
     }

@@ -57,7 +57,6 @@ public class DBHelper {
             sb.append("\n");
         }
         return sb.toString().split(";");
-
     }
 
     public void addDemoData() throws DataAccessException {
@@ -68,8 +67,9 @@ public class DBHelper {
 
         // Add room categories
         RoomCategoryController roomCategoryCtrl = new RoomCategoryController();
-        RoomCategory roomCategory1 = new RoomCategory(-1, "A", "Single room", BigDecimal.valueOf(100), BigDecimal.valueOf(100), BigDecimal.valueOf(100), 1, 30, null);
-        RoomCategory roomCategory2 = new RoomCategory(-1, "B", "Double room", BigDecimal.valueOf(100), BigDecimal.valueOf(100), BigDecimal.valueOf(100), 2, 30, null);
+        RoomCategory rc1 = roomCategoryCtrl.addRoomCategory( "S1", "Single room", BigDecimal.valueOf(4000), BigDecimal.valueOf(200), BigDecimal.valueOf(100), 2, 1);
+        RoomCategory rc2 = roomCategoryCtrl.addRoomCategory( "D1", "Double room", BigDecimal.valueOf(4000), BigDecimal.valueOf(200), BigDecimal.valueOf(100), 2, 1);
+        RoomCategory rc3 = roomCategoryCtrl.addRoomCategory( "P1", "Presidential suite ", BigDecimal.valueOf(12000), BigDecimal.valueOf(200), BigDecimal.valueOf(100), 2, 1);
 
         // Add rooms
         RoomController roomCtrl = new RoomController();
