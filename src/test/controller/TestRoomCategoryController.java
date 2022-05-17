@@ -1,4 +1,4 @@
-package test;
+package test.controller;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -21,6 +21,7 @@ import db.DataAccessException;
 import model.Employee;
 import model.RoomCategory;
 import model.modelIF;
+import test.TestIF;
 
 public class TestRoomCategoryController implements TestIF<RoomCategory> {
 

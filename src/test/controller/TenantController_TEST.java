@@ -1,4 +1,4 @@
-package test;
+package test.controller;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -34,6 +34,7 @@ import model.RoomCategory;
 import model.StudyProof;
 import model.Tenant;
 import model.modelIF;
+import test.TestIF;
 
 class TenantController_TEST implements TestIF<Tenant> {
 	
@@ -129,11 +130,11 @@ class TenantController_TEST implements TestIF<Tenant> {
 		System.out.println(tCtr.getTenantsByContractID(0).get(0).getLastName());
 		assertTrue(compareObjects(addedTenant, tCtr.getTenantsByContractID(0).get(0)));
 	}
-/*
+	
+
 	@Test
 	void testUpdateTenant() throws DataAccessException {
-		tCtr.addTenant("testName", "name1", "email@email.com", "+4552525252", studyP);
-		Tenant tenant = tCtr.getTenantById(1);
+		Tenant tenant = tCtr.addTenant("testName", "name1", "email@email.com", "+4552525252", studyP);
 		tCtr.updateTenant(tenant, "New2", "Name2", "mail2@mail2.com", "+2222222222", studyP);
 		assertEquals("New2", tenant.getFirstName());
 		assertEquals("Name2", tenant.getLastName());
@@ -141,7 +142,7 @@ class TenantController_TEST implements TestIF<Tenant> {
 		assertEquals("+2222222222", tenant.getPhone());
 		// tCtr.removeTenant(tCtr.getTenantById(1)); // Clean up
     }
-*/
+
 	@Override
 	public boolean compareObjects(Tenant obj, Tenant obj2) {
 		return
