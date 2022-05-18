@@ -32,6 +32,7 @@ public class ContractController {
         } catch (DataAccessException e) {
             throw e;
         }
+
         return contract;
     }
 

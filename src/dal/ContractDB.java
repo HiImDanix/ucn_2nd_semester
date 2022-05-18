@@ -36,6 +36,7 @@ public class ContractDB extends DAO<Contract> implements ContractDBIF {
     public ContractDB() {
         // Passing table name and settable column names
         super(tableName, new String[] {
+                ID.fieldName(),
                 INCLUDE_INTERNET.fieldName(),
                 START_DATE.fieldName(),
                 ROOM_ID.fieldName()
@@ -99,43 +100,38 @@ public class ContractDB extends DAO<Contract> implements ContractDBIF {
     }
 
     @Override
-    public Contract buildDomainObject(ResultSet rs) throws DataAccessException {
-        try {
-            int contractID = rs.getInt(ID.fieldName());
+    protected Class<Contract> getDomainObjectClass() {
+        return Contract.class;
+    }
 
-            if (Cache.contains(Contract.class, contractID)) {
-                return (Contract) Cache.get(Contract.class, contractID);
-            }
+    @Override
+    protected Contract buildDomainObjectWithoutAssociations(ResultSet rs) throws SQLException {
+        return new Contract(
+                rs.getInt(ID.fieldName()),
+                rs.getBoolean(INCLUDE_INTERNET.fieldName()),
+                rs.getDate(START_DATE.fieldName()).toLocalDate(),
+                null,
+                new ArrayList<>(),
+                // TODO: STUBS
+                Collections.emptyList(),
+                Collections.emptyList(),
+                null
+        );
+    }
 
-            Contract contract = new Contract(
-                    contractID,
-                    rs.getBoolean(INCLUDE_INTERNET.fieldName()),
-                    rs.getDate(START_DATE.fieldName()).toLocalDate(),
-                    null,
-                    new ArrayList<>(),
-                    // TODO: STUBS
-                    Collections.emptyList(),
-                    Collections.emptyList(),
-                    null
-            );
+    @Override
+    protected void setAssociatedObjects(Contract contract, ResultSet rs) throws DataAccessException, SQLException {
+        // Set room
+        contract.setRoom(new RoomController().getRoomById(rs.getInt(ROOM_ID.fieldName())));
 
-            // Put into cache
-            Cache.put(contract);
-
-            contract.setRoom(new RoomController().getRoomById(rs.getInt(ROOM_ID.fieldName())));
-
-            // Tenants
-            TenantContractController tenantContractController = new TenantContractController();
-            for (int tenantID : tenantContractController.getTenantIDsByContractID(contract.getID())) {
-                Tenant tenant = new TenantController().getTenantById(tenantID);
-                contract.addTenant(tenant);
-            }
-
-            return contract;
-
-        } catch (SQLException e) {
-            throw new DataAccessException("Error building Contract object from ResultSet", e);
+        // Tenants
+        TenantContractController tenantContractController = new TenantContractController();
+        for (int tenantID : tenantContractController.getTenantIDsByContractID(contract.getID())) {
+            Tenant tenant = new TenantController().getTenantById(tenantID);
+            contract.addTenant(tenant);
+            tenant.addContract(contract);
         }
 
+        contract.getRoom().addContract(contract);
     }
 }

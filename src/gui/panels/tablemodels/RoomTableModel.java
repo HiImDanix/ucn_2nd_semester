@@ -53,6 +53,7 @@ public class RoomTableModel extends MyAbstractTableModel<Room> {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
+        System.out.println("getValueAt");
     	Room room = rooms.get(rowIndex);
 
         // is room available?

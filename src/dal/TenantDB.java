@@ -19,11 +19,11 @@ public class TenantDB extends DAO<Tenant> implements TenantDBIF {
 	private static final String tableName = "tenant";
 	public enum Columns {
 		ID,
-		first_name,
-		last_name,
-		email,
-		phone,
-		study_proof_id;
+		FIRST_NAME,
+		LAST_NAME,
+		EMAIL,
+		PHONE,
+		STUDY_PROOF_ID;
 
 		public String fieldName() {
 			return this.name().toLowerCase();
@@ -32,11 +32,12 @@ public class TenantDB extends DAO<Tenant> implements TenantDBIF {
 	
 	public TenantDB() {
 		super(tableName, new String[] {
-				Columns.first_name.fieldName(),
-				Columns.last_name.fieldName(),
-				Columns.email.fieldName(),
-				Columns.phone.fieldName(),
-				Columns.study_proof_id.fieldName()
+				Columns.ID.fieldName(),
+				Columns.FIRST_NAME.fieldName(),
+				Columns.LAST_NAME.fieldName(),
+				Columns.EMAIL.fieldName(),
+				Columns.PHONE.fieldName(),
+				Columns.STUDY_PROOF_ID.fieldName()
 		});
 	}
 
@@ -54,40 +55,29 @@ public class TenantDB extends DAO<Tenant> implements TenantDBIF {
 	}
 
 	@Override
-	public Tenant buildDomainObject(ResultSet resultSet) throws DataAccessException {
-		try {
-			int tenantID = resultSet.getInt(Columns.ID.fieldName());
-
-			if (Cache.contains(Tenant.class, tenantID)) {
-				return (Tenant) Cache.get(Tenant.class, tenantID);
-			}
-
-			Tenant tenant = new Tenant(
-					tenantID,
-					resultSet.getString(Columns.first_name.fieldName()),
-					resultSet.getString(Columns.last_name.fieldName()),
-					resultSet.getString(Columns.email.fieldName()),
-					resultSet.getString(Columns.phone.fieldName()),
-					null, 	// TODO: stubbed for now
-					new ArrayList<>()
-			);
-
-			// put into cache
-			Cache.put(tenant);
-
-			// retrieve contracts for tenant
-			for (int contractID: new TenantContractController().getContractIDsByTenantID(tenant.getID())) {
-				Contract contract = new ContractController().getContractById(contractID);
-				tenant.addContract(contract);
-			}
-
-			return tenant;
-		} catch (SQLException e) {
-			throw new DataAccessException("Error building Tenant object from ResultSet", e);
-		}
+	protected Class<Tenant> getDomainObjectClass() {
+		return Tenant.class;
 	}
 
+	@Override
+	protected Tenant buildDomainObjectWithoutAssociations(ResultSet rs) throws SQLException {
+		return new Tenant(
+				rs.getInt(Columns.ID.fieldName()),
+				rs.getString(Columns.FIRST_NAME.fieldName()),
+				rs.getString(Columns.LAST_NAME.fieldName()),
+				rs.getString(Columns.EMAIL.fieldName()),
+				rs.getString(Columns.PHONE.fieldName()),
+				null, 	// TODO: stubbed for now
+				new ArrayList<>()
+		);
+	}
 
-
-	
+	@Override
+	protected void setAssociatedObjects(Tenant tenant, ResultSet rs) throws DataAccessException {
+		// contracts
+		for (int contractID: new TenantContractController().getContractIDsByTenantID(tenant.getID())) {
+			Contract contract = new ContractController().getContractById(contractID);
+			tenant.addContract(contract);
+		}
+	}
 }
