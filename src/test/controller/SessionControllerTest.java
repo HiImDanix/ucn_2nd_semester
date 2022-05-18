@@ -16,6 +16,9 @@ import model.Employee;
 
 import java.io.IOException;
 
+/*
+ * Author: Andras Varsanyi, Daniels Kanepe
+ */
 class SessionControllerTest {
 	private static EmployeeController employeeCtrl;
 	private static SessionController sessionCtrl;

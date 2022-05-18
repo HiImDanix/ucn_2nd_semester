@@ -14,6 +14,9 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
+/*
+* Author: Daniels Kanepe
+ */
 public class tenantDBTest {
     static DBConnection dbConnection;
     static TenantDBIF tenantDB = new TenantDB();

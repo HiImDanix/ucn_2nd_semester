@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:src/test/controller/roomCategoryControllerTest.java
 package controller;
-========
-package test.controller;
->>>>>>>> fd46663c0ef2cf0d22f4e7e94df0fdd52e8889b2:src/test/controller/TestRoomCategoryController.java
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -17,13 +13,8 @@ import org.junit.jupiter.api.Test;
 import db.DBConnection;
 import db.DataAccessException;
 import model.RoomCategory;
-<<<<<<<< HEAD:src/test/controller/roomCategoryControllerTest.java
-========
-import model.modelIF;
-import test.TestIF;
->>>>>>>> fd46663c0ef2cf0d22f4e7e94df0fdd52e8889b2:src/test/controller/TestRoomCategoryController.java
 
-public class roomCategoryControllerTest {
+public class RoomCategoryControllerTest {
 
 	private RoomCategoryController roomCatCtrl;
 	private DBConnection dbCon;

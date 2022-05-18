@@ -9,7 +9,9 @@ import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-
+/*
+ * Author: Daniels Kanepe
+ */
 public class DBConnectionTest {
 
     private DBConnection dbCon;
