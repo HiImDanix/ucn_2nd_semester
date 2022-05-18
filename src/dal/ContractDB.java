@@ -18,7 +18,7 @@ import java.util.List;
 import static dal.ContractDB.Columns.*;
 
 public class ContractDB extends DAO<Contract> implements ContractDBIF {
-    public static final String tableName = "ōcontract";
+    public static final String tableName = "contract";
     public enum Columns {
         ID,
         INCLUDE_INTERNET,
