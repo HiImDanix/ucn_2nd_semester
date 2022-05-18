@@ -51,7 +51,7 @@ public class App {
 			if (Arrays.stream(args).anyMatch(arg -> arg.toLowerCase().equals("-debug"))) {
 				DEBUG = true;
 			}
-			if (Arrays.stream(args).anyMatch(arg -> arg.toLowerCase().equals("-reset"))) {
+			if (Arrays.stream(args).anyMatch(arg -> arg.toLowerCase().equals("-rebuildDB"))) {
 				resetDatabase();
 			}
 		}
