@@ -13,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /*
 * Author: Daniels Kanepe
@@ -39,8 +40,8 @@ public class tenantDBTest {
                 t1.getLastName().equals(t2.getLastName()) &&
                 t1.getEmail().equals(t2.getEmail()) &&
                 t1.getPhone().equals(t2.getPhone()) &&
-                t1.getStudyProof() == t2.getStudyProof() &&
-                t1.getContracts().equals(t2.getContracts());
+                Objects.equals(t1.getStudyProof(), t2.getStudyProof()) &&
+                Objects.equals(t1.getContracts(), t2.getContracts());
     }
 
     @Test()
@@ -48,10 +49,10 @@ public class tenantDBTest {
         // Arrange
         Tenant tenant = new Tenant(-1, "Daniels", "Kanepe", "email@gmail.com",
         		"1234567890", null, Collections.emptyList());
-
-        // Act
         int tenantID = tenantDB.add(tenant);
         tenant.setId(tenantID);
+
+        // Act
         Tenant dbTenant = tenantDB.getById(tenantID);
 
         // Assert
@@ -108,7 +109,6 @@ public class tenantDBTest {
 
     @Test()
     void testGetAllTenantsTwoTenants() throws DataAccessException {
-
         // Arrange
         Tenant tenant1 = new Tenant(-1, "Daniels", "Kanepe", "email@gmail.com",
                 "1234567890", null, Collections.emptyList());
@@ -132,5 +132,4 @@ public class tenantDBTest {
         dataCtrl.addDemoData();
         dbConnection.closeConnection();
     }
-
 }

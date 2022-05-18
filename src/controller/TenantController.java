@@ -33,11 +33,6 @@ public class TenantController {
 		return tenant;
 	}
 
-	public Tenant addTenant(Tenant tenant) throws DataAccessException {
-		tenant.setId(tenantDb.add(tenant));
-		return tenant;
-	}
-
 	public List<Tenant> getAllTenants() throws DataAccessException{
 		return tenantDb.getAll();
 	}
@@ -74,6 +69,5 @@ public class TenantController {
 			tenant.setStudyProof(oldStudyProof);
 			throw e;
 		}
-		
 	}
 }
