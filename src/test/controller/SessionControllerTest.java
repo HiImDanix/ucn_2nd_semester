@@ -1,7 +1,7 @@
 /**
  * 
  */
-package test.controller;
+package controller;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,7 +16,7 @@ import model.Employee;
 
 import java.io.IOException;
 
-class TestSessionController {
+class SessionControllerTest {
 	private static EmployeeController employeeCtrl;
 	private static SessionController sessionCtrl;
 	private static DBController dbCtrl;

@@ -1,4 +1,4 @@
-package test;
+package controller;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -9,27 +9,17 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInfo;
-import org.junit.jupiter.api.extension.TestWatcher;
-import org.junit.platform.engine.TestEngine;
 
-import controller.EmployeeController;
-import controller.RoomCategoryController;
-import controller.SessionController;
 import db.DBConnection;
 import db.DataAccessException;
-import model.Employee;
 import model.RoomCategory;
-import model.modelIF;
 
-public class TestRoomCategoryController implements TestIF<RoomCategory> {
+public class roomCategoryControllerTest {
 
 	private RoomCategoryController roomCatCtrl;
 	private DBConnection dbCon;
 	private RoomCategory testRoomCategory;
-	
 
-	@Override
 	public boolean compareObjects(RoomCategory obj, RoomCategory obj2) {
 		return obj.getID() == obj2.getID() &&
 				obj.getName().equals(obj2.getName()) &&

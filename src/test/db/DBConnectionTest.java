@@ -1,4 +1,4 @@
-package test.db;
+package db;
 
 import db.DBConnection;
 import db.DataAccessException;
@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
-public class TestDBConnection {
+public class DBConnectionTest {
 
     private DBConnection dbCon;
 

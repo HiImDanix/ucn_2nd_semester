@@ -1,4 +1,4 @@
-package test;
+package controller;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -21,7 +21,7 @@ import model.RoomCategory;
 import model.StudyProof;
 import model.Tenant;
 
-class TenantController_TEST {
+class TenantControllerTest {
 	
 	private TenantController tCtr;
 	private RoomCategoryController rcCtr;

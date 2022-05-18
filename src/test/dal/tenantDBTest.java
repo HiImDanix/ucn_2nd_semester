@@ -1,12 +1,10 @@
-package test.dal;
+package dal;
 
 import controller.DBController;
 import dal.TenantDB;
 import dal.TenantDBIF;
 import db.DBConnection;
 import db.DataAccessException;
-import model.Contract;
-import model.StudyProof;
 import model.Tenant;
 import org.junit.jupiter.api.*;
 
@@ -16,7 +14,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
-public class TestTenantDB {
+public class tenantDBTest {
     static DBConnection dbConnection;
     static TenantDBIF tenantDB = new TenantDB();
     static DBController dataCtrl;
