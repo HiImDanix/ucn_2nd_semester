@@ -21,6 +21,7 @@ public class DBHelper {
     // The SQL file to create tables. Statements are separated by semi-colons.
     private static final String TABLE_SETUP_SQL_FILENAME = "sql/table_setup.sql";
 
+    // Note for classmates: it rebuilds the database, because we have to drop foreign keys.
     public void clear() throws DataAccessException, IOException {
         Connection conn = DBConnection.getInstance().getConnection();
         // Get all tables
