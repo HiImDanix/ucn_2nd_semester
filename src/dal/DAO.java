@@ -39,21 +39,19 @@ public abstract class DAO<T extends modelIF> {
         for (String field : getFields()) {
             sb.append(field).append(", ");
         }
-        return sb.toString().substring(0, sb.length() - 2); // Remove last ", "
+        return sb.substring(0, sb.length() - 2); // Remove last ", "
     }
     protected String getInsertValues() {
         StringBuilder sb = new StringBuilder();
-        for (String field : getFields()) {
-            sb.append("?, ");
-        }
-        return sb.toString().substring(0, sb.length() - 2); // Remove last ", "
+        sb.append("?, ".repeat(getFields().length));
+        return sb.substring(0, sb.length() - 2); // Remove last ", "
     }
     protected String getUpdateFields() {
         StringBuilder sb = new StringBuilder();
         for (String field : getFields()) {
             sb.append(field).append(" = ?, ");
         }
-        return sb.toString().substring(0, sb.length() - 2); // Remove last ", "
+        return sb.substring(0, sb.length() - 2); // Remove last ", "
     }
 
     // SQL statements
@@ -104,7 +102,6 @@ public abstract class DAO<T extends modelIF> {
             rs.next();
             return rs.getInt(1);
         } catch (SQLException e) {
-            System.out.println(e);
             throw new DataAccessException("Could not add " + obj.getClass().getSimpleName() + " to database", e);
         }
     }
@@ -167,8 +164,7 @@ public abstract class DAO<T extends modelIF> {
         try {
             PreparedStatement stmt = conn.prepareStatement(getQuerySelectAll());
             ResultSet resultSet = stmt.executeQuery();
-            List<T> objects = buildDomainObjects(resultSet);
-            return objects;
+            return buildDomainObjects(resultSet);
         } catch (SQLException e) {
             throw new DataAccessException("Could not get all " + getTableName(), e);
         }

@@ -3,17 +3,16 @@
  */
 package dal;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collections;
-
 import controller.ContractController;
 import controller.TenantContractController;
 import db.DataAccessException;
 import model.Contract;
 import model.Tenant;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class TenantDB extends DAO<Tenant> implements TenantDBIF {
 	

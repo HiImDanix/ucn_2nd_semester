@@ -1,18 +1,18 @@
 package dal;
 
-import java.sql.ResultSet;
-import java.util.List;
-
 import db.DataAccessException;
 import model.Tenant;
 
+import java.util.List;
+
 public interface TenantDBIF {
+
 
 	/**
 	 * Get tenant by id
-	 * @param id
-	 * @return tenant found
-	 * @throws DataAccessException
+	 * @param id - id of tenant
+	 * @return Tenant
+	 * @throws DataAccessException - if there is an error getting tenant from db
 	 */
 	Tenant getById(int id) throws DataAccessException;
 	
@@ -20,25 +20,30 @@ public interface TenantDBIF {
 	
 	/**
 	 * Add a new tenant
-	 * @param t
+	 * @param t - Tenant object
 	 * @return tenant id
-	 * @throws DataAccessException
+	 * @throws DataAccessException - if there is an error adding tenant to db
 	 */
 	int add(Tenant t) throws DataAccessException;
 	
 	/**
 	 * Update tenant
-	 * @param t
-	 * @throws DataAccessException
+	 * @param t - Tenant object
+	 * @throws DataAccessException - if there is an error updating tenant in db
 	 */
 	void update(Tenant t) throws DataAccessException;
 	
 	/**
 	 * Delete tenant
-	 * @param t
-	 * @throws DataAccessException
+	 * @param t - Tenant object
+	 * @throws DataAccessException - if there is an error deleting tenant from db
 	 */
-	void delete(Tenant t) throws DataAccessException; 
-	
+	void delete(Tenant t) throws DataAccessException;
+
+	/**
+	 * Get all tenants
+	 * @return List of Tenant objects
+	 * @throws DataAccessException - if there is an error getting tenants from db
+	 */
 	List<Tenant> getAll() throws DataAccessException;
 }

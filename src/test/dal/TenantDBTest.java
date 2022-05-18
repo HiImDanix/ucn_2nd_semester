@@ -1,14 +1,10 @@
 package dal;
 
 import controller.DBController;
-import dal.TenantDB;
-import dal.TenantDBIF;
 import db.DBConnection;
 import db.DataAccessException;
 import model.Tenant;
 import org.junit.jupiter.api.*;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -18,7 +14,7 @@ import java.util.Objects;
 /*
 * Author: Daniels Kanepe
  */
-public class tenantDBTest {
+public class TenantDBTest {
     static DBConnection dbConnection;
     static TenantDBIF tenantDB = new TenantDB();
     static DBController dataCtrl;
@@ -123,7 +119,7 @@ public class tenantDBTest {
         List<Tenant> tenants = tenantDB.getAll();
 
         // Assert
-        Assertions.assertTrue(tenants.size() == 2);
+        Assertions.assertEquals(2, tenants.size());
     }
 
     @AfterAll

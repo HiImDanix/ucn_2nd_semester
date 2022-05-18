@@ -8,8 +8,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import controller.RoomCategoryController;
-
 import static dal.RoomCategoryDB.Columns.*;
 
 @SuppressWarnings("unused")
@@ -45,7 +43,7 @@ public class RoomCategoryDB extends DAO<RoomCategory> implements RoomCategoryDBI
     
     @Override
     public int add(RoomCategory roomCategory) throws DataAccessException {
-        int id = -1;
+        int id;
         try {
             // start transaction
             DBConnection.getInstance().startTransaction();

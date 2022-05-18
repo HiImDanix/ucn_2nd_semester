@@ -3,7 +3,6 @@ package controller;
 import db.DataAccessException;
 import model.Furniture;
 
-import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 

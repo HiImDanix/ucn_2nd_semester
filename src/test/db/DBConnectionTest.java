@@ -1,7 +1,4 @@
 package db;
-
-import db.DBConnection;
-import db.DataAccessException;
 import org.junit.jupiter.api.*;
 
 import java.sql.Connection;
@@ -28,7 +25,7 @@ public class DBConnectionTest {
     }
 
     @Test
-    public void connect() throws DataAccessException {
+    public void connect() {
         // Get connection
         Connection con = dbCon.getConnection();
 

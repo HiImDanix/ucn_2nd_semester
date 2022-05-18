@@ -2,17 +2,13 @@ package controller;
 
 import dal.ContractDB;
 import dal.ContractDBIF;
-import dal.TenantDB;
-import dal.TenantDBIF;
 import db.DataAccessException;
-import gui.Messages;
 import model.Contract;
 import model.Room;
 import model.Tenant;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 

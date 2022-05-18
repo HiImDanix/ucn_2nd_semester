@@ -6,14 +6,11 @@ import controller.TenantController;
 import db.DBConnection;
 import db.DataAccessException;
 import model.Contract;
-import model.LeaveNotice;
-import model.Room;
 import model.Tenant;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -21,7 +18,7 @@ import java.util.List;
 import static dal.ContractDB.Columns.*;
 
 public class ContractDB extends DAO<Contract> implements ContractDBIF {
-    public static final String tableName = "contract";
+    public static final String tableName = "ōcontract";
     public enum Columns {
         ID,
         INCLUDE_INTERNET,
@@ -47,7 +44,7 @@ public class ContractDB extends DAO<Contract> implements ContractDBIF {
 
     @Override
     public int add(Contract contract) throws DataAccessException {
-        int id = -1;
+        int id;
         try {
             // start transaction
             DBConnection.getInstance().startTransaction();
