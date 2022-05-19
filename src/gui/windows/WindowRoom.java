@@ -5,7 +5,6 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-import controller.RoomCategoryController;
 import controller.RoomController;
 import db.DataAccessException;
 import gui.Common;

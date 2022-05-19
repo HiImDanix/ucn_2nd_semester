@@ -42,7 +42,6 @@ public class WindowRoomCategory extends JDialog {
 	private JTextField txtPriceExtraTenant;
 	private JTextField txtLeaveNoticeDays;
 	private JLabel lblLeaveNoticeDays;
-	private JTextArea txtDescription;
 	private JSpinner spinnerMaxNumberOfTenants;
 	private BigDecimal priceExtraTenant;
 	private BigDecimal priceForInternet;
@@ -51,6 +50,8 @@ public class WindowRoomCategory extends JDialog {
 	private String name;
 	private int leaveNoticeDays;
 	private int maxTenants;
+	private JScrollPane scrollPane;
+	private JTextArea txtDescription;
 	
 	/**
 	 * Constructor for create mode
@@ -77,6 +78,7 @@ public class WindowRoomCategory extends JDialog {
 		setModal(true);
 		setBounds(100, 100, 600, 400);
 		contentPane = new JPanel();
+		contentPane.setVerifyInputWhenFocusTarget(false);
 		contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
@@ -178,14 +180,19 @@ public class WindowRoomCategory extends JDialog {
 		gbc_lblPriceInternet.gridy = 4;
 		contentPane.add(lblPriceInternet, gbc_lblPriceInternet);
 		
+		scrollPane = new JScrollPane();
+		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
+		gbc_scrollPane.gridheight = 3;
+		gbc_scrollPane.insets = new Insets(0, 0, 5, 5);
+		gbc_scrollPane.fill = GridBagConstraints.BOTH;
+		gbc_scrollPane.gridx = 0;
+		gbc_scrollPane.gridy = 5;
+		contentPane.add(scrollPane, gbc_scrollPane);
+		
 		txtDescription = new JTextArea();
-		GridBagConstraints gbc_txtDescription = new GridBagConstraints();
-		gbc_txtDescription.gridheight = 2;
-		gbc_txtDescription.insets = new Insets(0, 0, 5, 5);
-		gbc_txtDescription.fill = GridBagConstraints.BOTH;
-		gbc_txtDescription.gridx = 0;
-		gbc_txtDescription.gridy = 5;
-		contentPane.add(txtDescription, gbc_txtDescription);
+		txtDescription.setWrapStyleWord(true);
+		txtDescription.setLineWrap(true);
+		scrollPane.setViewportView(txtDescription);
 		
 		txtPriceInternet = new JTextField();
 		txtPriceInternet.setEnabled(true);

@@ -13,10 +13,12 @@ import controller.SessionController;
 import db.DBConnection;
 import db.DataAccessException;
 import model.Employee;
+import model.modelIF;
+import test.TestIF;
 
 import java.io.IOException;
 
-class TestSessionController {
+class TestSessionController implements TestIF<Employee> {
 	private static EmployeeController employeeCtrl;
 	private static SessionController sessionCtrl;
 	private static DBController dbCtrl;
@@ -59,7 +61,7 @@ class TestSessionController {
 		
 		//Assert
 		assertTrue(sessionCtrl.isLoggedIn()); //exp: true
-		assertEquals(employee.getID(), sessionCtrl.getLoggedInEmployee().getID()); // same employee
+		assertTrue(compareObjects(employee, sessionCtrl.getLoggedInEmployee())); // same employee
 	}
 
 	@Test
@@ -98,5 +100,15 @@ class TestSessionController {
 		//Assert
 		assertFalse(sessionCtrl.isLoggedIn());
 		assertNull(sessionCtrl.getLoggedInEmployee()); // logged in employee should be null
+	}
+
+
+	@Override
+	public boolean compareObjects(Employee obj, Employee obj2) {
+		return	obj.getID() == obj2.getID() &&
+				obj.getFirstName().equals(obj2.getFirstName()) &&
+				obj.getLastName().equals(obj2.getLastName()) &&
+				obj.getEmail().equals(obj2.getEmail()) &&
+				obj.getPasswordHash().equals(obj2.getPasswordHash());
 	}
 }
