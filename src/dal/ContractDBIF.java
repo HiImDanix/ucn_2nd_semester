@@ -1,10 +1,9 @@
 package dal;
 
-import java.util.List;
-
 import db.DataAccessException;
 import model.Contract;
-import model.Tenant;
+
+import java.util.List;
 
 public interface ContractDBIF {
 

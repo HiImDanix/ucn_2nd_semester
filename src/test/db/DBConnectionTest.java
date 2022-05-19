@@ -1,7 +1,4 @@
-package test.db;
-
-import db.DBConnection;
-import db.DataAccessException;
+package db;
 import org.junit.jupiter.api.*;
 
 import java.sql.Connection;
@@ -9,8 +6,10 @@ import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-
-public class TestDBConnection {
+/*
+ * Author: Daniels Kanepe
+ */
+public class DBConnectionTest {
 
     private DBConnection dbCon;
 
@@ -26,7 +25,7 @@ public class TestDBConnection {
     }
 
     @Test
-    public void connect() throws DataAccessException {
+    public void connect() {
         // Get connection
         Connection con = dbCon.getConnection();
 

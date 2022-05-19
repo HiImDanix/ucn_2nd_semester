@@ -1,7 +1,7 @@
 /**
  * 
  */
-package test.controller;
+package controller;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,7 +18,10 @@ import test.TestIF;
 
 import java.io.IOException;
 
-class TestSessionController implements TestIF<Employee> {
+/*
+ * Author: Andras Varsanyi, Daniels Kanepe
+ */
+class SessionControllerTest {
 	private static EmployeeController employeeCtrl;
 	private static SessionController sessionCtrl;
 	private static DBController dbCtrl;

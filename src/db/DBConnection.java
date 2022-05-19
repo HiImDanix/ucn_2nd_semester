@@ -11,7 +11,7 @@ public class DBConnection {
             "DB_USERNAME", "DB_PASSWORD", "DB_HOST", "DB_PORT", "DB_NAME"));
     private static final String DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     private static final String URL_PREFIX = "jdbc:sqlserver://";
-    private static String CONFIG_FILENAME = "config.properties";
+    private static final String CONFIG_FILENAME = "config.properties";
 
 
     private static DBConnection instance = null;

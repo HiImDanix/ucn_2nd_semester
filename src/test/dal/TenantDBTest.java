@@ -1,22 +1,20 @@
-package test.dal;
+package dal;
 
 import controller.DBController;
-import dal.TenantDB;
-import dal.TenantDBIF;
 import db.DBConnection;
 import db.DataAccessException;
-import model.Contract;
-import model.StudyProof;
 import model.Tenant;
 import org.junit.jupiter.api.*;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
-public class TestTenantDB {
+/*
+* Author: Daniels Kanepe
+ */
+public class TenantDBTest {
     static DBConnection dbConnection;
     static TenantDBIF tenantDB = new TenantDB();
     static DBController dataCtrl;
@@ -38,8 +36,8 @@ public class TestTenantDB {
                 t1.getLastName().equals(t2.getLastName()) &&
                 t1.getEmail().equals(t2.getEmail()) &&
                 t1.getPhone().equals(t2.getPhone()) &&
-                t1.getStudyProof() == t2.getStudyProof() &&
-                t1.getContracts().equals(t2.getContracts());
+                Objects.equals(t1.getStudyProof(), t2.getStudyProof()) &&
+                Objects.equals(t1.getContracts(), t2.getContracts());
     }
 
     @Test()
@@ -47,10 +45,10 @@ public class TestTenantDB {
         // Arrange
         Tenant tenant = new Tenant(-1, "Daniels", "Kanepe", "email@gmail.com",
         		"1234567890", null, Collections.emptyList());
-
-        // Act
         int tenantID = tenantDB.add(tenant);
         tenant.setId(tenantID);
+
+        // Act
         Tenant dbTenant = tenantDB.getById(tenantID);
 
         // Assert
@@ -107,7 +105,6 @@ public class TestTenantDB {
 
     @Test()
     void testGetAllTenantsTwoTenants() throws DataAccessException {
-
         // Arrange
         Tenant tenant1 = new Tenant(-1, "Daniels", "Kanepe", "email@gmail.com",
                 "1234567890", null, Collections.emptyList());
@@ -122,7 +119,7 @@ public class TestTenantDB {
         List<Tenant> tenants = tenantDB.getAll();
 
         // Assert
-        Assertions.assertTrue(tenants.size() == 2);
+        Assertions.assertEquals(2, tenants.size());
     }
 
     @AfterAll
@@ -131,5 +128,4 @@ public class TestTenantDB {
         dataCtrl.addDemoData();
         dbConnection.closeConnection();
     }
-
 }

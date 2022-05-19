@@ -6,13 +6,14 @@ import model.Room;
 import model.RoomCategory;
 import model.Tenant;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.math.BigDecimal;
-import java.nio.file.Files;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class DBHelper {
     // The SQL file to create tables. Statements are separated by semi-colons.
     private static final String TABLE_SETUP_SQL_FILENAME = "sql/table_setup.sql";
 
+    // Note for classmates: it rebuilds the database, because we have to drop foreign keys.
     public void clear() throws DataAccessException, IOException {
         Connection conn = DBConnection.getInstance().getConnection();
         // Get all tables

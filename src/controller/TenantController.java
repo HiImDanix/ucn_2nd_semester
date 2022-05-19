@@ -1,19 +1,13 @@
 package controller;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
 import dal.TenantDB;
 import dal.TenantDBIF;
-import db.DBConnection;
 import db.DataAccessException;
-import model.Contract;
 import model.StudyProof;
 import model.Tenant;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TenantController {
 
@@ -29,11 +23,6 @@ public class TenantController {
 	
 	public Tenant addTenant(String fname, String lname, String email, String phone, StudyProof studyProof) throws DataAccessException{
 		Tenant tenant = new Tenant(-1, fname, lname, email, phone, studyProof, new ArrayList<>());
-		tenant.setId(tenantDb.add(tenant));
-		return tenant;
-	}
-
-	public Tenant addTenant(Tenant tenant) throws DataAccessException {
 		tenant.setId(tenantDb.add(tenant));
 		return tenant;
 	}
@@ -56,24 +45,23 @@ public class TenantController {
 		StudyProof oldStudyProof = tenant.getStudyProof();
 
 		// update new values
-		tenant.setFirstName(firstName);
-		tenant.setLastName(lastName);
-		tenant.setEmail(email);
-		tenant.setPhone(phone);
-		tenant.setStudyProof(studyProof);
+		setValues(tenant, firstName, lastName, email, phone, studyProof);
 
 		// update database
 		try {
 			tenantDb.update(tenant);
 		} catch (DataAccessException e) {
 			// revert to old values
-			tenant.setFirstName(oldFirstName);
-			tenant.setLastName(oldLastName);
-			tenant.setEmail(oldEmail);
-			tenant.setPhone(oldPhone);
-			tenant.setStudyProof(oldStudyProof);
+			setValues(tenant, oldFirstName, oldLastName, oldEmail, oldPhone, oldStudyProof);
 			throw e;
 		}
-		
+	}
+
+	private void setValues(Tenant tenant, String firstName, String lastName, String email, String phone, StudyProof studyProof) {
+		tenant.setFirstName(firstName);
+		tenant.setLastName(lastName);
+		tenant.setEmail(email);
+		tenant.setPhone(phone);
+		tenant.setStudyProof(studyProof);
 	}
 }

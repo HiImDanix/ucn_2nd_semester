@@ -3,7 +3,6 @@ package dal;
 import controller.ContractController;
 import controller.RoomCategoryController;
 import db.DataAccessException;
-import model.Contract;
 import model.Room;
 
 import java.sql.PreparedStatement;

@@ -4,11 +4,9 @@ import dal.RoomCategoryDB;
 import dal.RoomCategoryDBIF;
 import db.DataAccessException;
 import model.Furniture;
-import model.Room;
 import model.RoomCategory;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -44,33 +42,30 @@ public class RoomCategoryController {
 		int oldLeaveNoticeDays = roomCategory.getLeaveNoticeDays();
 
 		// update new values
-		roomCategory.setName(name);
-		roomCategory.setDescription(description);
-		roomCategory.setPricePerMonth(pricePerMonth);
-		roomCategory.setPricePerMonthForInternet(pricePerMonthForInternet);
-		roomCategory.setPricePerMonthForExtraTenant(pricePerMonthForExtraTenant);
-		roomCategory.setMaxTenants(maxTenants);
-		roomCategory.setFurniture(furniture);
-		roomCategory.setLeaveNoticeDays(leaveNoticeDays);
+		updateValues(roomCategory, name, description, pricePerMonth, pricePerMonthForInternet, pricePerMonthForExtraTenant, maxTenants, furniture, leaveNoticeDays);
 
 		// update database
 		try {
 			roomCategoryDB.update(roomCategory);
 		} catch (DataAccessException e) {
 			// revert to old values
-			roomCategory.setName(oldName);
-			roomCategory.setDescription(oldDescription);
-			roomCategory.setPricePerMonth(oldPricePerMonth);
-			roomCategory.setPricePerMonthForInternet(oldPricePerMonthForInternet);
-			roomCategory.setPricePerMonthForExtraTenant(oldPricePerMonthForExtraTenant);
-			roomCategory.setMaxTenants(oldMaxTenants);
-			roomCategory.setFurniture(oldFurniture);
-			roomCategory.setLeaveNoticeDays(oldLeaveNoticeDays);
+			updateValues(roomCategory, oldName, oldDescription, oldPricePerMonth, oldPricePerMonthForInternet, oldPricePerMonthForExtraTenant, oldMaxTenants, oldFurniture, oldLeaveNoticeDays);
 			throw e;
 		}
 	}
-	
-    public RoomCategory getRoomCategoryById(int roomCategoryId) throws DataAccessException {
+
+	private void updateValues(RoomCategory roomCategory, String oldName, String oldDescription, BigDecimal oldPricePerMonth, BigDecimal oldPricePerMonthForInternet, BigDecimal oldPricePerMonthForExtraTenant, int oldMaxTenants, List<Furniture> oldFurniture, int oldLeaveNoticeDays) {
+		roomCategory.setName(oldName);
+		roomCategory.setDescription(oldDescription);
+		roomCategory.setPricePerMonth(oldPricePerMonth);
+		roomCategory.setPricePerMonthForInternet(oldPricePerMonthForInternet);
+		roomCategory.setPricePerMonthForExtraTenant(oldPricePerMonthForExtraTenant);
+		roomCategory.setMaxTenants(oldMaxTenants);
+		roomCategory.setFurniture(oldFurniture);
+		roomCategory.setLeaveNoticeDays(oldLeaveNoticeDays);
+	}
+
+	public RoomCategory getRoomCategoryById(int roomCategoryId) throws DataAccessException {
         // return stubbed data for constructor (int id, String name, String description, BigDecimal pricePerMonth, BigDecimal PricePerMonthForInternet, BigDecimal pricePerMonthForExtraTenant, int maxTenants, int leaveNoticeDays, List<Furniture> furniture)
     	return roomCategoryDB.getById(roomCategoryId);
     }
