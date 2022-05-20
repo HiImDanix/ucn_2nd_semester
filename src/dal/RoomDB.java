@@ -27,6 +27,7 @@ public class RoomDB extends DAO<Room> implements RoomDBIF {
     public RoomDB() {
         // Passing table name and settable column names
         super(tableName, new String[] {
+                ID.fieldName(),
                 IS_OUT_OF_SERVICE.fieldName(),
                 ROOM_CATEGORY_ID.fieldName()});
     }
@@ -38,33 +39,28 @@ public class RoomDB extends DAO<Room> implements RoomDBIF {
     }
 
     @Override
-    public Room buildDomainObject(ResultSet rs) throws DataAccessException {
-        try {
-            int roomID = rs.getInt(ID.fieldName());
+    public Class<Room> getDomainObjectClass() {
+        return Room.class;
+    }
 
-            if (Cache.contains(Room.class, roomID)) {
-                return (Room) Cache.get(Room.class, roomID);
-            }
+    @Override
+    protected Room buildDomainObjectWithoutAssociations(ResultSet rs) throws SQLException {
+        return new Room(
+                rs.getInt(ID.fieldName()),
+                null,
+                rs.getBoolean(IS_OUT_OF_SERVICE.fieldName()),
+                new ArrayList<>()
+        );
+    }
 
-            Room room = new Room(
-                    roomID,
-                    new RoomCategoryController().getRoomCategoryById(rs.getInt(ROOM_CATEGORY_ID.fieldName())),
-                    rs.getBoolean(IS_OUT_OF_SERVICE.fieldName()),
-                    new ArrayList<>()
-            );
-
-            // put room in cache
-            Cache.put(room);
-
-            // Add dependency: contracts
-            for (int contractID : new ContractController().getAllContractIDsByRoomID(roomID)) {
-                room.addContract(new ContractController().getContractById(contractID));
-            }
-
-            return room;
-
-            } catch (SQLException e) {
-                throw new DataAccessException("Error building Room object", e);
+    @Override
+    protected void setAssociatedObjects(Room room, ResultSet rs) throws DataAccessException, SQLException {
+        // set contracts
+        for (int contractID : new ContractController().getAllContractIDsByRoomID(room.getID())) {
+            room.addContract(new ContractController().getContractById(contractID));
+            
         }
+        // set room category
+        room.setRoomCategory(new RoomCategoryController().getRoomCategoryById(rs.getInt(ROOM_CATEGORY_ID.fieldName())));
     }
 }

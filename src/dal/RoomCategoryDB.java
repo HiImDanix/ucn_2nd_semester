@@ -31,6 +31,7 @@ public class RoomCategoryDB extends DAO<RoomCategory> implements RoomCategoryDBI
     public RoomCategoryDB() {
         // Passing table name and settable column names
         super(tableName, new String[] {
+                ID.fieldName(),
         		Columns.NAME.fieldName(),
         		Columns.DESCRIPTION.fieldName(),
         		Columns.PRICEPERMONTH.fieldName(),
@@ -76,21 +77,26 @@ public class RoomCategoryDB extends DAO<RoomCategory> implements RoomCategoryDBI
     }
 
     @Override
-    public RoomCategory buildDomainObject(ResultSet rs) throws DataAccessException {
-        try {
-            return new RoomCategory(
-                    rs.getInt(ID.fieldName()),
-                    rs.getString(NAME.fieldName()),
-                    rs.getString(DESCRIPTION.fieldName()),
-                    rs.getBigDecimal(PRICEPERMONTH.fieldName()),
-                    rs.getBigDecimal(PRICEPERMONTHFORINTERNET.fieldName()),
-                    rs.getBigDecimal(PRICEPERMONTHFOREXTRATENANT.fieldName()),
-                    rs.getInt(MAXTENANTS.fieldName()),
-                    rs.getInt(LEAVENOTICEDAYS.fieldName())
-            );
-        } catch (SQLException e) {
-            throw new DataAccessException("Error building RoomCategory object from ResultSet", e);
-        }
+    protected Class<RoomCategory> getDomainObjectClass() {
+        return RoomCategory.class;
+    }
+
+    @Override
+    protected RoomCategory buildDomainObjectWithoutAssociations(ResultSet rs) throws SQLException {
+        return new RoomCategory(
+                rs.getInt(ID.fieldName()),
+                rs.getString(NAME.fieldName()),
+                rs.getString(DESCRIPTION.fieldName()),
+                rs.getBigDecimal(PRICEPERMONTH.fieldName()),
+                rs.getBigDecimal(PRICEPERMONTHFORINTERNET.fieldName()),
+                rs.getBigDecimal(PRICEPERMONTHFOREXTRATENANT.fieldName()),
+                rs.getInt(MAXTENANTS.fieldName()),
+                rs.getInt(LEAVENOTICEDAYS.fieldName())
+        );
+    }
+
+    @Override
+    protected void setAssociatedObjects(RoomCategory obj, ResultSet rs) throws DataAccessException, SQLException {
 
     }
 

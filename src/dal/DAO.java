@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public abstract class DAO<T extends modelIF> {
@@ -16,11 +17,15 @@ public abstract class DAO<T extends modelIF> {
     // Store table name and fields
     private String tableName;
     private String[] fields;
+    private String IDFieldName;
 
-    // Constructor
+    /*
+    *The first field should be the primary key
+     */
     public DAO(String tableName, String[] fields) {
         this.tableName = tableName;
         this.fields = fields;
+        this.IDFieldName = fields[0];
     }
 
     // Get table name
@@ -28,9 +33,9 @@ public abstract class DAO<T extends modelIF> {
         return tableName;
     }
 
-    // Get fields
+    // Get fields excluding the primary key
     public String[] getFields() {
-        return fields;
+        return Arrays.copyOfRange(fields, 1, fields.length);
     }
 
     // Fields for building SQL statements
@@ -78,7 +83,32 @@ public abstract class DAO<T extends modelIF> {
     protected abstract void setValues(PreparedStatement stmt, T obj) throws SQLException;
 
     // Methods for building objects from ResultSet
-    protected abstract T buildDomainObject(ResultSet resultSet) throws DataAccessException;
+    protected abstract Class<T> getDomainObjectClass();
+    protected abstract T buildDomainObjectWithoutAssociations(ResultSet rs) throws SQLException;
+    protected abstract void setAssociatedObjects(T obj, ResultSet rs) throws DataAccessException, SQLException;
+
+    protected T buildDomainObject(ResultSet resultSet) throws DataAccessException {
+        try {
+            // return from container if exists
+            int id = resultSet.getInt(IDFieldName);
+            if (Container.contains(getDomainObjectClass(), id)) {
+                return (T) Container.get(getDomainObjectClass(), id);
+            }
+
+            // build object
+            T obj = buildDomainObjectWithoutAssociations(resultSet);
+
+            // put object in container
+            Container.put(obj);
+
+            // set associated objects
+            setAssociatedObjects(obj, resultSet);
+
+            return obj;
+        } catch (SQLException e) {
+            throw new DataAccessException("Error building object: " + getTableName(), e);
+        }
+    }
     public List<T> buildDomainObjects(ResultSet resultSet) throws DataAccessException {
         List<T> list = new ArrayList<>();
         try {

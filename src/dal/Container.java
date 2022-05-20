@@ -5,13 +5,11 @@ import model.modelIF;
 import java.util.Map;
 
 /*
- * This is a container for all the model objects.
- * It is needed to build objects that reference each other.
+ * This is a container for all the model objects..
  */
-public class Cache {
+public class Container {
 
     private static Map<Class<? extends modelIF>, Map<Integer, Object>> cache = new java.util.HashMap<>();
-    private static Cache instance;
 
     /*
      * This method is used to add a model object to the cache/container.
