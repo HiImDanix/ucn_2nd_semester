@@ -14,7 +14,6 @@ import db.DBConnection;
 import db.DataAccessException;
 import model.Employee;
 import model.modelIF;
-import test.TestIF;
 
 import java.io.IOException;
 
@@ -105,8 +104,6 @@ class SessionControllerTest {
 		assertNull(sessionCtrl.getLoggedInEmployee()); // logged in employee should be null
 	}
 
-
-	@Override
 	public boolean compareObjects(Employee obj, Employee obj2) {
 		return	obj.getID() == obj2.getID() &&
 				obj.getFirstName().equals(obj2.getFirstName()) &&
