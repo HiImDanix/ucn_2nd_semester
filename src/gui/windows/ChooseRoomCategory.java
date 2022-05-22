@@ -103,7 +103,8 @@ public class ChooseRoomCategory extends JDialog {
             JTable table = CRUDPanel.getTable();
             if (!table.getSelectionModel().isSelectionEmpty()) {
                 MyAbstractTableModel tableModel = CRUDPanel.getTableModel();
-                RoomCategory object = (RoomCategory) tableModel.getObj(table.getSelectedRow());
+                int modelIndex = table.convertRowIndexToModel(table.getSelectedRow());
+                RoomCategory object = (RoomCategory) tableModel.getObj(modelIndex);
                 if (filter == null || !filter.test(object)) {
                     selectedObject = object;
                     this.dispose();
