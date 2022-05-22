@@ -84,6 +84,10 @@ public class Tenant implements modelIF {
 
     // add contract
     public void addContract(Contract contract) {
+        // TODO; use a set instead of checking.
+        if (contracts.contains(contract)) {
+            return;
+        }
     	this.contracts.add(contract);
     }
 
