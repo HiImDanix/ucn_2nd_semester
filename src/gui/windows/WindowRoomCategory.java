@@ -91,7 +91,6 @@ public class WindowRoomCategory extends JDialog {
 		JLabel lblID = new JLabel("ID");
 		GridBagConstraints gbc_lblID = new GridBagConstraints();
 		gbc_lblID.anchor = GridBagConstraints.SOUTH;
-		gbc_lblID.fill = GridBagConstraints.HORIZONTAL;
 		gbc_lblID.insets = new Insets(0, 0, 5, 5);
 		gbc_lblID.gridx = 0;
 		gbc_lblID.gridy = 0;
@@ -100,7 +99,6 @@ public class WindowRoomCategory extends JDialog {
 		JLabel lblName = new JLabel("Name*");
 		GridBagConstraints gbc_lblName = new GridBagConstraints();
 		gbc_lblName.anchor = GridBagConstraints.SOUTH;
-		gbc_lblName.fill = GridBagConstraints.HORIZONTAL;
 		gbc_lblName.insets = new Insets(0, 0, 5, 0);
 		gbc_lblName.gridx = 1;
 		gbc_lblName.gridy = 0;
@@ -130,7 +128,7 @@ public class WindowRoomCategory extends JDialog {
 		
 		lblNumberOfTenants = new JLabel("Maximum number of tenants");
 		GridBagConstraints gbc_lblNumberOfTenants = new GridBagConstraints();
-		gbc_lblNumberOfTenants.anchor = GridBagConstraints.SOUTHWEST;
+		gbc_lblNumberOfTenants.anchor = GridBagConstraints.SOUTH;
 		gbc_lblNumberOfTenants.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNumberOfTenants.gridx = 0;
 		gbc_lblNumberOfTenants.gridy = 2;
@@ -138,7 +136,7 @@ public class WindowRoomCategory extends JDialog {
 		
 		lblPrice = new JLabel("Price / Month");
 		GridBagConstraints gbc_lblPrice = new GridBagConstraints();
-		gbc_lblPrice.anchor = GridBagConstraints.SOUTHWEST;
+		gbc_lblPrice.anchor = GridBagConstraints.SOUTH;
 		gbc_lblPrice.insets = new Insets(0, 0, 5, 0);
 		gbc_lblPrice.gridx = 1;
 		gbc_lblPrice.gridy = 2;
@@ -147,7 +145,6 @@ public class WindowRoomCategory extends JDialog {
 		spinnerMaxNumberOfTenants = new JSpinner();
 		spinnerMaxNumberOfTenants.setModel(new SpinnerNumberModel(1, 1, 5, 1));
 		GridBagConstraints gbc_spinnerMaxNumberOfTenants = new GridBagConstraints();
-		gbc_spinnerMaxNumberOfTenants.anchor = GridBagConstraints.WEST;
 		gbc_spinnerMaxNumberOfTenants.insets = new Insets(0, 0, 5, 5);
 		gbc_spinnerMaxNumberOfTenants.gridx = 0;
 		gbc_spinnerMaxNumberOfTenants.gridy = 3;
@@ -166,7 +163,7 @@ public class WindowRoomCategory extends JDialog {
 		
 		lblDescription = new JLabel("Description");
 		GridBagConstraints gbc_lblDescription = new GridBagConstraints();
-		gbc_lblDescription.anchor = GridBagConstraints.SOUTHWEST;
+		gbc_lblDescription.anchor = GridBagConstraints.SOUTH;
 		gbc_lblDescription.insets = new Insets(0, 0, 5, 5);
 		gbc_lblDescription.gridx = 0;
 		gbc_lblDescription.gridy = 4;
@@ -174,7 +171,7 @@ public class WindowRoomCategory extends JDialog {
 		
 		lblPriceInternet = new JLabel("Price for internet / Month");
 		GridBagConstraints gbc_lblPriceInternet = new GridBagConstraints();
-		gbc_lblPriceInternet.anchor = GridBagConstraints.SOUTHWEST;
+		gbc_lblPriceInternet.anchor = GridBagConstraints.SOUTH;
 		gbc_lblPriceInternet.insets = new Insets(0, 0, 5, 0);
 		gbc_lblPriceInternet.gridx = 1;
 		gbc_lblPriceInternet.gridy = 4;
@@ -209,7 +206,6 @@ public class WindowRoomCategory extends JDialog {
 		
 		lblPriceExtraTenant = new JLabel("Price for extra tenant / Month");
 		GridBagConstraints gbc_lblPriceExtraTenant = new GridBagConstraints();
-		gbc_lblPriceExtraTenant.anchor = GridBagConstraints.WEST;
 		gbc_lblPriceExtraTenant.insets = new Insets(0, 0, 5, 0);
 		gbc_lblPriceExtraTenant.gridx = 1;
 		gbc_lblPriceExtraTenant.gridy = 6;

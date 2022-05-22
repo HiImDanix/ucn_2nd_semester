@@ -95,7 +95,7 @@ public class WindowTenant extends JDialog {
 		
 		lblID = new JLabel("ID");
 		GridBagConstraints gbc_lblID = new GridBagConstraints();
-		gbc_lblID.anchor = GridBagConstraints.SOUTHWEST;
+		gbc_lblID.anchor = GridBagConstraints.SOUTH;
 		gbc_lblID.insets = new Insets(0, 0, 5, 5);
 		gbc_lblID.gridx = 0;
 		gbc_lblID.gridy = 0;
@@ -103,7 +103,7 @@ public class WindowTenant extends JDialog {
 		
 		lblFirstName = new JLabel("First name *");
 		GridBagConstraints gbc_lblFirstName = new GridBagConstraints();
-		gbc_lblFirstName.anchor = GridBagConstraints.SOUTHWEST;
+		gbc_lblFirstName.anchor = GridBagConstraints.SOUTH;
 		gbc_lblFirstName.insets = new Insets(0, 0, 5, 0);
 		gbc_lblFirstName.gridx = 1;
 		gbc_lblFirstName.gridy = 0;
@@ -132,7 +132,7 @@ public class WindowTenant extends JDialog {
 		
 		lblLastName = new JLabel("Last name *");
 		GridBagConstraints gbc_lblLastName = new GridBagConstraints();
-		gbc_lblLastName.anchor = GridBagConstraints.SOUTHWEST;
+		gbc_lblLastName.anchor = GridBagConstraints.SOUTH;
 		gbc_lblLastName.insets = new Insets(0, 0, 5, 5);
 		gbc_lblLastName.gridx = 0;
 		gbc_lblLastName.gridy = 2;
@@ -140,7 +140,7 @@ public class WindowTenant extends JDialog {
 		
 		lblEmailAddress = new JLabel("Email address *");
 		GridBagConstraints gbc_lblEmailAddress = new GridBagConstraints();
-		gbc_lblEmailAddress.anchor = GridBagConstraints.SOUTHWEST;
+		gbc_lblEmailAddress.anchor = GridBagConstraints.SOUTH;
 		gbc_lblEmailAddress.insets = new Insets(0, 0, 5, 0);
 		gbc_lblEmailAddress.gridx = 1;
 		gbc_lblEmailAddress.gridy = 2;
@@ -168,7 +168,7 @@ public class WindowTenant extends JDialog {
 		
 		lblPhone = new JLabel("Phone number *");
 		GridBagConstraints gbc_lblPhone = new GridBagConstraints();
-		gbc_lblPhone.anchor = GridBagConstraints.SOUTHWEST;
+		gbc_lblPhone.anchor = GridBagConstraints.SOUTH;
 		gbc_lblPhone.insets = new Insets(0, 0, 5, 5);
 		gbc_lblPhone.gridx = 0;
 		gbc_lblPhone.gridy = 4;
@@ -178,7 +178,6 @@ public class WindowTenant extends JDialog {
 		JLabel lblStudyProof = new JLabel("StufyProof");
 		GridBagConstraints gbc_lblStudyProof = new GridBagConstraints();
 		gbc_lblStudyProof.anchor = GridBagConstraints.SOUTH;
-		gbc_lblStudyProof.fill = GridBagConstraints.HORIZONTAL;
 		gbc_lblStudyProof.insets = new Insets(0, 0, 5, 0);
 		gbc_lblStudyProof.gridx = 1;
 		gbc_lblStudyProof.gridy = 4;

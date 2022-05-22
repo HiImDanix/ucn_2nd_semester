@@ -216,7 +216,7 @@ public class WindowContract extends JDialog {
 		btnChooseTenants = new JButton("Choose...");
 		GridBagConstraints gbc_btnChooseTenants = new GridBagConstraints();
 		gbc_btnChooseTenants.gridwidth = 2;
-		gbc_btnChooseTenants.anchor = GridBagConstraints.SOUTH;
+		gbc_btnChooseTenants.anchor = GridBagConstraints.NORTH;
 		gbc_btnChooseTenants.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnChooseTenants.insets = new Insets(0, 0, 5, 0);
 		gbc_btnChooseTenants.gridx = 0;

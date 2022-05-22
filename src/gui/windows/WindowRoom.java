@@ -76,7 +76,6 @@ public class WindowRoom extends JDialog {
 		JLabel lblID = new JLabel("ID");
 		GridBagConstraints gbc_lblID = new GridBagConstraints();
 		gbc_lblID.anchor = GridBagConstraints.SOUTH;
-		gbc_lblID.fill = GridBagConstraints.HORIZONTAL;
 		gbc_lblID.insets = new Insets(0, 0, 5, 5);
 		gbc_lblID.gridx = 0;
 		gbc_lblID.gridy = 0;
@@ -86,7 +85,6 @@ public class WindowRoom extends JDialog {
 		JLabel lblOutOfService = new JLabel("Out of service");
 		GridBagConstraints gbc_lblOutOfService = new GridBagConstraints();
 		gbc_lblOutOfService.anchor = GridBagConstraints.SOUTH;
-		gbc_lblOutOfService.fill = GridBagConstraints.HORIZONTAL;
 		gbc_lblOutOfService.insets = new Insets(0, 0, 5, 0);
 		gbc_lblOutOfService.gridx = 1;
 		gbc_lblOutOfService.gridy = 0;
@@ -136,8 +134,8 @@ public class WindowRoom extends JDialog {
 		
 		JLabel lblCategory = new JLabel("Category *");
 		GridBagConstraints gbc_lblCategory = new GridBagConstraints();
+		gbc_lblCategory.gridwidth = 2;
 		gbc_lblCategory.anchor = GridBagConstraints.SOUTH;
-		gbc_lblCategory.fill = GridBagConstraints.HORIZONTAL;
 		gbc_lblCategory.insets = new Insets(0, 0, 5, 5);
 		gbc_lblCategory.gridx = 0;
 		gbc_lblCategory.gridy = 2;
