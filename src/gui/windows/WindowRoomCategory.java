@@ -340,43 +340,87 @@ public class WindowRoomCategory extends JDialog {
 			}
 			if (Messages.confirm(this, message)) {
 
-				// Validation here
-				if (txtName.getText().isEmpty() || txtPrice.getText().isEmpty() || txtPriceInternet.getText().isEmpty() || txtPriceExtraTenant.getText().isEmpty() || txtLeaveNoticeDays.getText().isEmpty()) {
-					Messages.error(this, "Fill out all out the necessary fields!");
-					return;
-				}
-				else {
-				name = txtName.getText().trim();
-				description = txtDescription.getText();
-				try {
-					pricePerMonth = new BigDecimal(txtPrice.getText());
-					priceForInternet = new BigDecimal(txtPriceInternet.getText());
-					priceExtraTenant = new BigDecimal(txtPriceExtraTenant.getText());
-				} catch (NumberFormatException e1) {
-					Messages.error(this, "Prices must be in number format!");
-					return;
-				}
-				maxTenants = Integer.parseInt(String.valueOf(spinnerMaxNumberOfTenants.getValue()));
-				leaveNoticeDays = Integer.parseInt(txtLeaveNoticeDays.getText().trim());
-				
+				// Validate & parse: name
+				String name = txtName.getText().strip();
 				if (name.isEmpty()) {
-					Messages.error(this, "You must give a name to the category!");
+					Messages.error(this, "Name cannot be empty!");
 					return;
 				}
-				if (pricePerMonth.compareTo(BigDecimal.ZERO) < 0  || priceForInternet.compareTo(BigDecimal.ZERO) < 0 || priceExtraTenant.compareTo(BigDecimal.ZERO) < 0) {
-					Messages.error(this, "Prices are not allowed to be negative!");
+
+				// Validate & parse: description
+				String description = txtDescription.getText().strip();
+				if (description.isEmpty()) {
+					Messages.error(this, "Description cannot be empty!");
 					return;
 				}
-				if (maxTenants  <= 0) {
-					Messages.error(this, "Maximum number of tenants cannot be 0 or negative!");
+
+				// Validate & parse: price
+				BigDecimal pricePerMonth;
+				try {
+					pricePerMonth = new BigDecimal(txtPrice.getText().strip());
+				} catch (NumberFormatException e1) {
+					Messages.error(this, "Price must be a decimal number!");
 					return;
 				}
-				if (leaveNoticeDays < 0) {
-					Messages.error(this, "Leave notice days are not allowed to be negative!");
+				if (pricePerMonth.compareTo(BigDecimal.ZERO) <= 0) {
+					Messages.error(this, "Price must be greater than zero!");
 					return;
 				}
+
+				// Validate & parse: price for internet
+				BigDecimal priceForInternet;
+				try {
+					priceForInternet = new BigDecimal(txtPriceInternet.getText().strip());
+				} catch (NumberFormatException e1) {
+					Messages.error(this, "Price for internet must be a decimal number!");
+					return;
 				}
+				if (priceForInternet.compareTo(BigDecimal.ZERO) < 0) {
+					Messages.error(this, "Price for internet must be a positive number!");
+					return;
+				}
+
+				// Validate & parse: price for extra tenant
+				BigDecimal priceForExtraTenant;
+				try {
+					priceForExtraTenant = new BigDecimal(txtPriceExtraTenant.getText().strip());
+				} catch (NumberFormatException e1) {
+					Messages.error(this, "Price for extra tenant must be a decimal number!");
+					return;
+				}
+				if (priceForExtraTenant.compareTo(BigDecimal.ZERO) < 0) {
+					Messages.error(this, "Price for extra tenant must be a positive number!");
+					return;
+				}
+
+				// Validate & parse: max number of tenants
+				int maxTenants;
+				try {
+					maxTenants = Integer.parseInt(spinnerMaxNumberOfTenants.getValue().toString());
+				} catch (NumberFormatException e1) {
+					Messages.error(this, "Max number of tenants must be a number!");
+					return;
+				}
+				if (maxTenants < 1) {
+					Messages.error(this, "Max number of tenants must be at least 1!");
+					return;
+				}
+
+				// Validate & parse: leave notice days
+				int leaveNoticeDays;
+				try {
+					leaveNoticeDays = Integer.parseInt(txtLeaveNoticeDays.getText().strip());
+				} catch (NumberFormatException e1) {
+					Messages.error(this, "Leave notice days must be a number!");
+					return;
+				}
+				if (leaveNoticeDays < 1) {
+					Messages.error(this, "Leave notice days must be at least 1!");
+					return;
+				}
+				
 				if (mode == Mode.EDIT) {
+					Messages.error(this, "Not implemented yet!");
 					
 				} else if (mode == Mode.CREATE) {
 					// if mode == Create, create a new room

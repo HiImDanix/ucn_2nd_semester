@@ -269,7 +269,7 @@ public class Dashboard extends JFrame {
 			// Disable refresh button
 			btnRefresh.setEnabled(false);
 
-			// Execute code in invoke later
+			// Execute after refresh button is disabled
 			SwingUtilities.invokeLater(() -> {
 				try {
 					new DBController().clearLocalContainer();
