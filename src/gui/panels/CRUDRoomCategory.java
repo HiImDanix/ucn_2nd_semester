@@ -25,7 +25,7 @@ public class CRUDRoomCategory extends AbstractCRUDPanel {
 
 	@Override
 	protected MyAbstractTableModel<RoomCategory> createTableModel() throws DataAccessException {
-		return new RoomCategoryTableModel(new RoomCategoryController().getAllRoomCategories());
+		return new RoomCategoryTableModel(new RoomCategoryController()::getAllRoomCategories);
 	}
 
 	@Override

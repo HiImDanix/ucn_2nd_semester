@@ -67,11 +67,6 @@ public class ContractDB extends DAO<Contract> implements ContractDBIF {
             DBConnection.getInstance().rollbackTransaction();
             throw new DataAccessException("Error adding Contract to DB", e);
         }
-
-        // link tenant-contract in domain
-        for (Tenant tenant : contract.getTenants()) {
-            tenant.addContract(contract);
-        }
         return id;
     }
 
@@ -123,6 +118,8 @@ public class ContractDB extends DAO<Contract> implements ContractDBIF {
     protected void setAssociatedObjects(Contract contract, ResultSet rs) throws DataAccessException, SQLException {
         // Set room
         contract.setRoom(new RoomController().getRoomById(rs.getInt(ROOM_ID.fieldName())));
+        // set back-references
+        contract.getRoom().addContract(contract);
 
         // Tenants
         TenantContractController tenantContractController = new TenantContractController();
@@ -131,7 +128,5 @@ public class ContractDB extends DAO<Contract> implements ContractDBIF {
             contract.addTenant(tenant);
             tenant.addContract(contract);
         }
-
-        contract.getRoom().addContract(contract);
     }
 }

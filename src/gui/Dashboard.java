@@ -1,28 +1,19 @@
 package gui;
 
-import java.awt.*;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.border.EmptyBorder;
-
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatLightLaf;
 import controller.SessionController;
 import db.DataAccessException;
+import gui.panels.AbstractCRUDPanel;
 import gui.panels.CRUDContracts;
 import gui.panels.CRUDRooms;
 import gui.panels.CRUDTenants;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 
-import com.formdev.flatlaf.FlatDarkLaf;
-import com.formdev.flatlaf.FlatLightLaf;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
 
 /**
  * @author Daniels Kanepe
@@ -235,6 +226,36 @@ public class Dashboard extends JFrame {
 		    	Dashboard.this.dispose();
 	    	}
 		});
-		
+
+		// On tab change, reload the table's data
+		tabsPane.addChangeListener(e -> {
+			if (tabsPane.getSelectedIndex() == 1) {
+				try {
+					((AbstractCRUDPanel) tabsPane.getComponentAt(1)).getTableModel().refreshData();
+				} catch (DataAccessException e1) {
+					Messages.error(Dashboard.this, "Could not load rooms data", "Error");
+				}
+				// todo: Employee use case: uncomment code below
+//			} else if (tabsPane.getSelectedIndex() == 2) {
+//				try {
+//					((AbstractCRUDPanel) tabsPane.getComponentAt(2)).getTableModel().refreshData();
+//				} catch (DataAccessException e1) {
+//					Messages.error(Dashboard.this, "Could not load employees data", "Error");
+//				}
+			} else if (tabsPane.getSelectedIndex() == 3) {
+				try {
+					((AbstractCRUDPanel) tabsPane.getComponentAt(3)).getTableModel().refreshData();
+				} catch (DataAccessException e1) {
+					Messages.error(Dashboard.this, "Could not load contracts data", "Error");
+				}
+			} else if (tabsPane.getSelectedIndex() == 4) {
+				try {
+					((AbstractCRUDPanel) tabsPane.getComponentAt(4)).getTableModel().refreshData();
+				} catch (DataAccessException e1) {
+					Messages.error(Dashboard.this, "Could not load tenants data", "Error");
+				}
+			}
+		});
+
 	} // end of event handlers
 }

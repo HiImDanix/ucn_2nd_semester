@@ -3,6 +3,7 @@ package dal;
 import controller.ContractController;
 import controller.RoomCategoryController;
 import db.DataAccessException;
+import model.Contract;
 import model.Room;
 
 import java.sql.PreparedStatement;
@@ -13,6 +14,8 @@ import java.util.ArrayList;
 import static dal.RoomDB.Columns.*;
 
 public class RoomDB extends DAO<Room> implements RoomDBIF {
+    ContractController contractCtrl = new ContractController();
+
     public static final String tableName = "room";
     public enum Columns {
         ID,
@@ -56,8 +59,11 @@ public class RoomDB extends DAO<Room> implements RoomDBIF {
     @Override
     protected void setAssociatedObjects(Room room, ResultSet rs) throws DataAccessException, SQLException {
         // set contracts
-        for (int contractID : new ContractController().getAllContractIDsByRoomID(room.getID())) {
-            room.addContract(new ContractController().getContractById(contractID));
+        for (int contractID : contractCtrl.getAllContractIDsByRoomID(room.getID())) {
+            Contract contract = contractCtrl.getContractById(contractID);
+            room.addContract(contract);
+            contract.setRoom(room);
+
             
         }
         // set room category

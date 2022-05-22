@@ -2,6 +2,7 @@ package gui.panels.tablemodels;
 
 
 import controller.RoomController;
+import db.DataAccessException;
 import model.Room;
 import model.RoomCategory;
 
@@ -18,10 +19,11 @@ public class RoomCategoryTableModel extends MyAbstractTableModel<RoomCategory> {
     };
 
     private List<RoomCategory> roomCategories;
+    private DataSupplier<List<RoomCategory>> roomCategorySupplier;
 
-    public RoomCategoryTableModel(List<RoomCategory> roomCategories) {
-        // Prevent possible mutation
-        this.roomCategories = new ArrayList<>(roomCategories);
+    public RoomCategoryTableModel(DataSupplier<List<RoomCategory>> supplier) throws DataAccessException {
+        this.roomCategorySupplier = supplier;
+        this.roomCategories = supplier.get();
     }
 
     @Override
@@ -100,5 +102,11 @@ public class RoomCategoryTableModel extends MyAbstractTableModel<RoomCategory> {
     public void remove(int row) {
     	this.roomCategories.remove(row);
     	this.fireTableRowsDeleted(row, row);
+    }
+
+    @Override
+    public void refreshData() throws DataAccessException {
+        this.roomCategories = roomCategorySupplier.get();
+        fireTableDataChanged();
     }
 }

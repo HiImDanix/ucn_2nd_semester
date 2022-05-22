@@ -19,7 +19,7 @@ public class CRUDTenants extends AbstractCRUDPanel {
 
 	@Override
 	protected MyAbstractTableModel<Tenant> createTableModel() throws DataAccessException {
-		return new TenantTableModel(new TenantController().getAllTenants());
+		return new TenantTableModel(new TenantController()::getAllTenants);
 	}
 
 	@Override

@@ -78,6 +78,7 @@ public class TenantDB extends DAO<Tenant> implements TenantDBIF {
 		for (int contractID: new TenantContractController().getContractIDsByTenantID(tenant.getID())) {
 			Contract contract = new ContractController().getContractById(contractID);
 			tenant.addContract(contract);
+			contract.addTenant(tenant);
 		}
 	}
 }

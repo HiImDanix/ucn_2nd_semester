@@ -9,6 +9,8 @@ import gui.panels.tablemodels.RoomTableModel;
 import gui.windows.WindowRoom;
 import model.Room;
 
+import java.util.List;
+
 
 public class CRUDRooms extends AbstractCRUDPanel {
 
@@ -18,7 +20,7 @@ public class CRUDRooms extends AbstractCRUDPanel {
 
 	@Override
 	protected MyAbstractTableModel<Room> createTableModel() throws DataAccessException {
-		return new RoomTableModel(new RoomController().getAllRooms());
+		return new RoomTableModel(new RoomController()::getAllRooms);
 	}
 
 	@Override

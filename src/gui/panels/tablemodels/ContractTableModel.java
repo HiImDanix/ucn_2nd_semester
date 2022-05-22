@@ -1,8 +1,10 @@
 package gui.panels.tablemodels;
 
 import controller.ContractController;
+import db.DataAccessException;
 import gui.Common;
 import model.Contract;
+import model.Room;
 import model.Tenant;
 
 import java.time.LocalDate;
@@ -16,10 +18,11 @@ public class ContractTableModel extends MyAbstractTableModel<Contract> {
 	private static final String[] COLUMN_NAMES = {"Contract ID", "Tenants", "Room ID", "Room category", "start date", "end date", "Total price/m", "Internet included"};
 
 	private List<Contract> contracts;
+    private DataSupplier<List<Contract>> contractSupplier;
 
-	public ContractTableModel(List<Contract> contract) {
-        // Copying array to prevent mutation
-		this.contracts = new ArrayList<>(contract);
+	public ContractTableModel(DataSupplier<List<Contract>> supplier) throws DataAccessException {
+        this.contractSupplier = supplier;
+        this.contracts = supplier.get();
 	}
 	
 	@Override
@@ -111,5 +114,11 @@ public class ContractTableModel extends MyAbstractTableModel<Contract> {
     public void remove(int row) {
     	this.contracts.remove(row);
     	this.fireTableRowsDeleted(row, row);
+    }
+
+    @Override
+    public void refreshData() throws DataAccessException {
+        this.contracts = contractSupplier.get();
+        fireTableDataChanged();
     }
 }

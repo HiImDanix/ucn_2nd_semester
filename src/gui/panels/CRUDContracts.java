@@ -19,7 +19,7 @@ public class CRUDContracts extends AbstractCRUDPanel {
 
 	@Override
 	protected MyAbstractTableModel<Contract> createTableModel() throws DataAccessException {
-		return new ContractTableModel(new ContractController().getAllContracts());
+		return new ContractTableModel(new ContractController()::getAllContracts);
 	}
 
 	@Override

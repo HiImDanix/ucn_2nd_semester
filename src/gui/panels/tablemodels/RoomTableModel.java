@@ -5,14 +5,16 @@ package gui.panels.tablemodels;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 import controller.RoomController;
+import db.DataAccessException;
 import model.Contract;
 import model.Room;
 
 public class RoomTableModel extends MyAbstractTableModel<Room> {
 
-    RoomController roomController = new RoomController();
+    RoomController roomCtrl = new RoomController();
 
 	private static final long serialVersionUID = -2367962812947993282L;
 
@@ -21,13 +23,13 @@ public class RoomTableModel extends MyAbstractTableModel<Room> {
     };
 
     private List<Room> rooms;
+    private DataSupplier<List<Room>> roomsSupplier;
 
 
-    public RoomTableModel(List<Room> rooms) {
-        // Prevent possible mutation
-        this.rooms = new ArrayList<>(rooms);
+    public RoomTableModel(DataSupplier<List<Room>> supplier) throws DataAccessException {
+        this.roomsSupplier = supplier;
+        this.rooms = supplier.get();
     }
-    
 
     @Override
     public int getRowCount() {
@@ -57,7 +59,7 @@ public class RoomTableModel extends MyAbstractTableModel<Room> {
 
         // is room available?
         String roomIsAvailable = room.isOutOfService() ? "Out of service"
-                : new RoomController().isRoomOccupied(room) ? "Occupied" : "Yes";
+                : roomCtrl.isRoomOccupied(room) ? "Occupied" : "Yes";
 
         switch (columnIndex) {
             case 0: return "#" + room.getID();
@@ -102,6 +104,12 @@ public class RoomTableModel extends MyAbstractTableModel<Room> {
     public void remove(int row) {
     	this.rooms.remove(row);
     	this.fireTableRowsDeleted(row, row);
+    }
+
+    @Override
+    public void refreshData() throws DataAccessException {
+        this.rooms = roomsSupplier.get();
+        fireTableDataChanged();
     }
 
 }

@@ -383,12 +383,6 @@ public class WindowContract extends JDialog {
 					return;
 				}
 
-				// Validate: start date is not in the past
-				if (newStartDate.isBefore(LocalDate.now())) {
-					Messages.error(this, "The start date cannot be in the past.");
-					return;
-				}
-
 				// Validate: yes/no radio buttons are selected for internet
 				if (!rdbtnInternetYes.isSelected() && !rdbtnInternetNo.isSelected()) {
 					Messages.error(this, "Please select whether the contract includes internet.");

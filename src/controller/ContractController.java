@@ -33,6 +33,12 @@ public class ContractController {
             throw e;
         }
 
+        // set reverse associations
+        for (Tenant tenant : tenants) {
+            tenant.addContract(contract);
+        }
+        room.addContract(contract);
+
         return contract;
     }
 
@@ -85,6 +91,10 @@ public class ContractController {
             for (Tenant tenant : tenants) {
                 tenant.addContract(contract);
             }
+        }
+        if (oldRoom != room) {
+            oldRoom.removeContract(contract);
+            room.addContract(contract);
         }
     }
 

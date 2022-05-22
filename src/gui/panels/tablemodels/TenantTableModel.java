@@ -7,6 +7,7 @@ import controller.TenantContractController;
 import db.DataAccessException;
 import gui.Common;
 import model.Contract;
+import model.Room;
 import model.Tenant;
 
 public class TenantTableModel extends MyAbstractTableModel<Tenant> {
@@ -16,11 +17,14 @@ public class TenantTableModel extends MyAbstractTableModel<Tenant> {
 	private static final String[] COLUMN_NAMES = {"ID", "First name", "Last name", "Email", "Phone", "Study proof?", "Contract"};
 
 	private List<Tenant> tenants;
+    private DataSupplier<List<Tenant>> tenantsSupplier;
+
+
 	
-	public TenantTableModel(List<Tenant> tenants) {
-        // Copying array to prevent mutation
-		this.tenants = new ArrayList<>(tenants);
-	}
+	public TenantTableModel(DataSupplier<List<Tenant>> supplier) throws DataAccessException  {
+        this.tenantsSupplier = supplier;
+        this.tenants = supplier.get();
+    }
 	
 	@Override
 	public int getRowCount() {
@@ -99,5 +103,11 @@ public class TenantTableModel extends MyAbstractTableModel<Tenant> {
     public void remove(int row) {
     	this.tenants.remove(row);
     	this.fireTableRowsDeleted(row, row);
+    }
+
+    @Override
+    public void refreshData() throws DataAccessException {
+        this.tenants = tenantsSupplier.get();
+        fireTableDataChanged();
     }
 }
