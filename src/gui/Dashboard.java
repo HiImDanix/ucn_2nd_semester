@@ -2,6 +2,7 @@ package gui;
 
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
+import controller.DBController;
 import controller.SessionController;
 import db.DataAccessException;
 import gui.panels.AbstractCRUDPanel;
@@ -67,6 +68,7 @@ public class Dashboard extends JFrame {
 	private JTextField txtCustomerLoans;
 	private JButton btnChooseCustomerSell;
 	private JTextField txtCustomerSell;
+	private JButton btnRefresh;
 
 	/**
 	 * Create the frame.
@@ -89,9 +91,9 @@ public class Dashboard extends JFrame {
 			
 			// ***** TOP PANEL *****
 			GridBagLayout gbl_topPanel = new GridBagLayout();
-			gbl_topPanel.columnWidths = new int[]{0, 0, 0, 0, 0};
+			gbl_topPanel.columnWidths = new int[]{0, 0, 0, 0, 0, 0};
 			gbl_topPanel.rowHeights = new int[]{0, 0, 0};
-			gbl_topPanel.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
+			gbl_topPanel.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 			gbl_topPanel.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 			topPanel.setLayout(gbl_topPanel);
 		
@@ -103,6 +105,18 @@ public class Dashboard extends JFrame {
 				gbc_lblGreeting.gridy = 0;
 				topPanel.add(lblGreeting, gbc_lblGreeting);
 				
+				btnRefresh = new JButton( Images.RELOAD.getImageIcon(16, 16));
+				btnRefresh.setToolTipText("Sync");
+				btnRefresh.setFocusPainted(false);
+				btnRefresh.setContentAreaFilled(false);
+				btnRefresh.setBorderPainted(false);
+				btnRefresh.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				GridBagConstraints gbc_btnRefresh = new GridBagConstraints();
+				gbc_btnRefresh.insets = new Insets(0, 0, 5, 5);
+				gbc_btnRefresh.gridx = 2;
+				gbc_btnRefresh.gridy = 0;
+				topPanel.add(btnRefresh, gbc_btnRefresh);
+				
 				btnDarkLight = new JButton(App.darkMode ? Images.SUN.getImageIcon(16, 16) : Images.MOON.getImageIcon(16, 16));
 				btnDarkLight.setBorderPainted(false);
 				btnDarkLight.setFocusPainted(false);
@@ -110,7 +124,7 @@ public class Dashboard extends JFrame {
 				btnDarkLight.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 				GridBagConstraints gbc_btnDarkLight = new GridBagConstraints();
 				gbc_btnDarkLight.insets = new Insets(0, 0, 5, 5);
-				gbc_btnDarkLight.gridx = 2;
+				gbc_btnDarkLight.gridx = 3;
 				gbc_btnDarkLight.gridy = 0;
 				topPanel.add(btnDarkLight, gbc_btnDarkLight);
 		
@@ -118,7 +132,7 @@ public class Dashboard extends JFrame {
 				btnLogout = new JLink("Log out");
 				GridBagConstraints gbc_lblLogout = new GridBagConstraints();
 				gbc_lblLogout.insets = new Insets(0, 0, 5, 0);
-				gbc_lblLogout.gridx = 3;
+				gbc_lblLogout.gridx = 4;
 				gbc_lblLogout.gridy = 0;
 				topPanel.add(btnLogout, gbc_lblLogout);
 		
@@ -192,7 +206,19 @@ public class Dashboard extends JFrame {
 	 * *******************  METHODS **************************
 	 * *******************************************************
 	 */
-	
+
+
+	// Get current tab's AbstractCRUDPanel, if exists
+	private AbstractCRUDPanel getCurrentTabCRUDPanel() {
+
+		int tabIndex = tabsPane.getSelectedIndex();
+
+		try {
+			return (AbstractCRUDPanel) tabsPane.getComponentAt(tabIndex);
+		} catch (ClassCastException e) {
+			return null;
+		}
+	}
 
 	
 	
@@ -229,33 +255,38 @@ public class Dashboard extends JFrame {
 
 		// On tab change, reload the table's data
 		tabsPane.addChangeListener(e -> {
-			if (tabsPane.getSelectedIndex() == 1) {
-				try {
-					((AbstractCRUDPanel) tabsPane.getComponentAt(1)).getTableModel().refreshData();
-				} catch (DataAccessException e1) {
-					Messages.error(Dashboard.this, "Could not load rooms data", "Error");
+			try {
+				if (getCurrentTabCRUDPanel() != null) {
+					getCurrentTabCRUDPanel().getTableModel().refreshData();
 				}
-				// todo: Employee use case: uncomment code below
-//			} else if (tabsPane.getSelectedIndex() == 2) {
-//				try {
-//					((AbstractCRUDPanel) tabsPane.getComponentAt(2)).getTableModel().refreshData();
-//				} catch (DataAccessException e1) {
-//					Messages.error(Dashboard.this, "Could not load employees data", "Error");
-//				}
-			} else if (tabsPane.getSelectedIndex() == 3) {
-				try {
-					((AbstractCRUDPanel) tabsPane.getComponentAt(3)).getTableModel().refreshData();
-				} catch (DataAccessException e1) {
-					Messages.error(Dashboard.this, "Could not load contracts data", "Error");
-				}
-			} else if (tabsPane.getSelectedIndex() == 4) {
-				try {
-					((AbstractCRUDPanel) tabsPane.getComponentAt(4)).getTableModel().refreshData();
-				} catch (DataAccessException e1) {
-					Messages.error(Dashboard.this, "Could not load tenants data", "Error");
-				}
+			} catch (DataAccessException ex) {
+				Messages.error(Dashboard.this, "Could not load table data...", "Error");
 			}
 		});
+
+		// On refresh button click, reload the table's data
+		btnRefresh.addActionListener(e -> {
+			// Disable refresh button
+			btnRefresh.setEnabled(false);
+
+			// Execute code in invoke later
+			SwingUtilities.invokeLater(() -> {
+				try {
+					new DBController().clearLocalContainer();
+					if (getCurrentTabCRUDPanel() != null) {
+						getCurrentTabCRUDPanel().getTableModel().refreshData();
+					}
+				} catch (DataAccessException ex) {
+					Messages.error(Dashboard.this, "Could not load table data...", "Error");
+				}
+				// Enable refresh button
+				btnRefresh.setEnabled(true);
+			});
+
+
+		});
+
+
 
 	} // end of event handlers
 }

@@ -46,4 +46,11 @@ public class Container {
         return map.containsKey(id);
     }
 
+    /*
+     * Clear the container
+     */
+    public static void clear() {
+        cache.clear();
+    }
+
 }

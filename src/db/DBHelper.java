@@ -92,4 +92,25 @@ public class DBHelper {
 
 
     }
+
+    public boolean checkConnection() {
+        try {
+            DBConnection.getInstance().getConnection().createStatement().executeQuery("SELECT 1");
+        } catch (SQLException | DataAccessException e) {
+            return false;
+        }
+        return true;
+    }
+
+    public void cacheAllData() {
+        try {
+            new EmployeeController().getAllEmployees();
+            new RoomCategoryController().getAllRoomCategories();
+            new RoomController().getAllRooms();
+            new TenantController().getAllTenants();
+            new ContractController().getAllContracts();
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        }
+    }
 }

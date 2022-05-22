@@ -5,10 +5,12 @@ import javax.swing.*;
 import java.awt.*;
 
 public enum Images {
+    // TODO: convert to resource
     // Here are the images that will be used in the program.
     ADD_ITEM("images/add_item.png"),
     MOON("images/moon.png"),
-    SUN("images/sun.png");
+    SUN("images/sun.png"),
+    RELOAD("images/reload.png");
 
     private final String path;
     private final String defaultPath = "images/default.png";

@@ -1,5 +1,6 @@
 package controller;
 
+import dal.Container;
 import db.DBConnection;
 import db.DBHelper;
 import db.DataAccessException;
@@ -9,20 +10,26 @@ import java.sql.SQLException;
 
 public class DBController {
 
+    DBHelper dbHelperCtrl = new DBHelper();
+
     public void clear() throws DataAccessException, IOException {
-        new DBHelper().clear();
+        dbHelperCtrl.clear();
     }
 
     public void addDemoData() throws DataAccessException {
-        new DBHelper().addDemoData();
+        dbHelperCtrl.addDemoData();
     }
 
     public boolean checkConnection() {
-        try {
-            DBConnection.getInstance().getConnection().createStatement().executeQuery("SELECT 1");
-        } catch (SQLException | DataAccessException e) {
-            return false;
-        }
-        return true;
+        return dbHelperCtrl.checkConnection();
     }
+
+    public void clearLocalContainer() throws DataAccessException {
+        Container.clear();
+    }
+
+    public void cacheAllData() throws DataAccessException {
+    	dbHelperCtrl.cacheAllData();
+    }
+
 }
