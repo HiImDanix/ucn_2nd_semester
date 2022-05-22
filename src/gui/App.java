@@ -48,10 +48,12 @@ public class App {
 
 		// parse args
 		if (args.length > 0) {
-			if (Arrays.stream(args).anyMatch(arg -> arg.toLowerCase().equals("-debug"))) {
+			if (Arrays.stream(args).anyMatch(arg -> arg.equalsIgnoreCase("-debug"))) {
+				System.out.println("Debug mode enabled.");
 				DEBUG = true;
 			}
-			if (Arrays.stream(args).anyMatch(arg -> arg.toLowerCase().equals("-rebuildDB"))) {
+			if (Arrays.stream(args).anyMatch(arg -> arg.equalsIgnoreCase("-rebuildDB"))) {
+				System.out.println("Rebuilding database.");
 				resetDatabase();
 			}
 		}
@@ -80,7 +82,6 @@ public class App {
 	}
 
 	public static void resetDatabase() {
-		System.out.println("Resetting database...");
 		DBController dataCtrl = new DBController();
 
 		// Clear data
