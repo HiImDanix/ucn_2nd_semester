@@ -181,6 +181,7 @@ public class WindowRoomCategory extends JDialog {
 		contentPane.add(lblPriceInternet, gbc_lblPriceInternet);
 		
 		scrollPane = new JScrollPane();
+		scrollPane.setPreferredSize(new Dimension(1, 2));
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.gridheight = 3;
 		gbc_scrollPane.insets = new Insets(0, 0, 5, 5);
@@ -190,6 +191,7 @@ public class WindowRoomCategory extends JDialog {
 		contentPane.add(scrollPane, gbc_scrollPane);
 		
 		txtDescription = new JTextArea();
+		txtDescription.setTabSize(4);
 		txtDescription.setWrapStyleWord(true);
 		txtDescription.setLineWrap(true);
 		scrollPane.setViewportView(txtDescription);
@@ -418,7 +420,7 @@ public class WindowRoomCategory extends JDialog {
 					Messages.error(this, "Leave notice days must be at least 1!");
 					return;
 				}
-				
+
 				if (mode == Mode.EDIT) {
 					Messages.error(this, "Not implemented yet!");
 					
