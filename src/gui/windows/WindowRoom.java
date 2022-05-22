@@ -1,6 +1,7 @@
 package gui.windows;
 
 import java.awt.*;
+import java.util.function.Predicate;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -304,23 +305,19 @@ public class WindowRoom extends JDialog {
 		});
 
 		btnChooseCategory.addActionListener(e -> {
-//			ChooseCustomerType frame = new ChooseCustomerType(auth);
-//			frame.setVisible(true);
-//			if (frame.getSelectedCustomerType() != null) {
-//				this.customerType = frame.getSelectedCustomerType();
-//				txtType.setText(customerType.getName());
-//			}
+			// Choose room category
 			try {
+				// Check if the room is out of service or occupied
 				ChooseRoomCategory frame = new ChooseRoomCategory();
 				frame.setVisible(true);
-				try {
+
+				if (frame.getSelectedObject() != null) {
 					roomCategory = frame.getSelectedObject();
 					txtCategory.setText(roomCategory.getName());
-				} catch (NullPointerException npe) {
-					Messages.info(contentPane, "Category was not selected!");
 				}
+
 			} catch (DataAccessException ex) {
-				ex.printStackTrace();
+				Messages.error("Error opening 'choose room category' window", "error");
 			}
 		});
 	}
