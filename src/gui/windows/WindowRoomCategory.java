@@ -424,7 +424,7 @@ public class WindowRoomCategory extends JDialog {
 					// if mode == Create, create a new room
 					try {
 						this.roomCategory = roomCategoryCtrl.addRoomCategory(name, description, pricePerMonth, priceForInternet, 
-								priceExtraTenant, maxTenants, leaveNoticeDays);
+								priceForExtraTenant, maxTenants, leaveNoticeDays);
 					} catch (DataAccessException ex) {
 						Messages.error("Error creating room category", "error");
 					}
