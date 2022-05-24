@@ -14,13 +14,12 @@ import java.util.List;
 
 public abstract class DAO<T extends modelIF> {
 
-    // Store table name and fields
     private String tableName;
     private String[] fields;
     private String IDFieldName;
 
     /*
-    *The first field should be the primary key
+    *The first field should be the primary key (ID)
      */
     public DAO(String tableName, String[] fields) {
         this.tableName = tableName;
@@ -33,7 +32,7 @@ public abstract class DAO<T extends modelIF> {
         return tableName;
     }
 
-    // Get fields excluding the primary key
+    // Get fields excluding the primary key (ID)
     public String[] getFields() {
         return Arrays.copyOfRange(fields, 1, fields.length);
     }
@@ -79,14 +78,9 @@ public abstract class DAO<T extends modelIF> {
         return "SELECT * FROM " + getTableName() + " WHERE " + field + " = ?";
     }
 
-    // Methods for setting values in prepared statements
-    protected abstract void setValues(PreparedStatement stmt, T obj) throws SQLException;
-
-    // Methods for building objects from ResultSet
-    protected abstract Class<T> getDomainObjectClass();
-    protected abstract T buildDomainObjectWithoutAssociations(ResultSet rs) throws SQLException;
-    protected abstract void setAssociatedObjects(T obj, ResultSet rs) throws DataAccessException, SQLException;
-
+    /*
+     * Returns the object from container, if exists, or builds a new object and adds it to the container.
+     */
     protected T buildDomainObject(ResultSet resultSet) throws DataAccessException {
         try {
             // return from container if exists
@@ -211,4 +205,26 @@ public abstract class DAO<T extends modelIF> {
             throw new DataAccessException("Could not get all " + getTableName(), e);
         }
     }
+
+    /*
+     * This method should set the prepared statement parameters using the given object
+     * in the order that the columns were provided in constructor
+     */
+    protected abstract void setValues(PreparedStatement stmt, T obj) throws SQLException;
+
+    /*
+     * This method should return the model object's class type
+     */
+    protected abstract Class<T> getDomainObjectClass();
+
+    /*
+     * This method should create the model object with fields from the result set, but without any associated objects.
+     */
+    protected abstract T buildDomainObjectWithoutAssociations(ResultSet rs) throws SQLException;
+
+    /*
+     * This method should set the associated objects for the given model object,
+     * as well as reference the object back from the associated object to the model object.
+     */
+    protected abstract void setAssociatedObjects(T obj, ResultSet rs) throws DataAccessException, SQLException;
 }
