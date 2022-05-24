@@ -21,7 +21,7 @@ public class RoomCategoryControllerTest {
 	private DBConnection dbCon;
 	private RoomCategory testRoomCategory;
 
-	public boolean compareObjects(RoomCategory obj, RoomCategory obj2) {
+	private boolean compareObjects(RoomCategory obj, RoomCategory obj2) {
 		return obj.getID() == obj2.getID() &&
 				obj.getName().equals(obj2.getName()) &&
 				obj.getDescription().equals(obj2.getDescription()) &&

@@ -104,7 +104,23 @@ class SessionControllerTest {
 		assertNull(sessionCtrl.getLoggedInEmployee()); // logged in employee should be null
 	}
 
-	public boolean compareObjects(Employee obj, Employee obj2) {
+	@Test
+	void logOutShouldLogOut() throws DataAccessException {
+		//Arrange
+		String email = "example@goodexample.com";
+		String password = "password";
+		employeeCtrl.addEmployee("Test", "Test", email, password);
+		sessionCtrl.authenticate(email, password);
+
+		//act
+		sessionCtrl.logout();
+
+		//Assert
+		assertFalse(sessionCtrl.isLoggedIn());
+		assertNull(sessionCtrl.getLoggedInEmployee()); // logged in employee should be null
+	}
+
+	private boolean compareObjects(Employee obj, Employee obj2) {
 		return	obj.getID() == obj2.getID() &&
 				obj.getFirstName().equals(obj2.getFirstName()) &&
 				obj.getLastName().equals(obj2.getLastName()) &&
