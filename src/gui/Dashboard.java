@@ -5,10 +5,7 @@ import com.formdev.flatlaf.FlatLightLaf;
 import controller.DBController;
 import controller.SessionController;
 import db.DataAccessException;
-import gui.panels.AbstractCRUDPanel;
-import gui.panels.CRUDContracts;
-import gui.panels.CRUDRooms;
-import gui.panels.CRUDTenants;
+import gui.panels.*;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 
@@ -68,6 +65,11 @@ public class Dashboard extends JFrame {
 	private JTextField txtCustomerLoans;
 	private JButton btnChooseCustomerSell;
 	private JTextField txtCustomerSell;
+	private JPanel roomsCRUDPanel;
+	private JButton btnRooms;
+	private JButton btnContracts;
+	private JButton btnTenants;
+	private JButton btnRoomCategories;
 
 	/**
 	 * Create the frame.
@@ -129,25 +131,66 @@ public class Dashboard extends JFrame {
 			
 			
 			// Home tab
-			JPanel emptyPanel1 = new JPanel();
-			emptyPanel1.setBorder(new EmptyBorder(15, 0, 0, 0));
-			tabsPane.addTab("Home", null, emptyPanel1, "Dashboard");
+			JPanel homePanel = new JPanel();
+			homePanel.setBorder(new EmptyBorder(15, 0, 0, 0));
+			tabsPane.addTab("Home", null, homePanel, "Dashboard");
+			GridBagLayout gbl_homePanel = new GridBagLayout();
+			gbl_homePanel.columnWidths = new int[]{0, 0, 0};
+			gbl_homePanel.rowHeights = new int[]{0, 0, 0, 0, 0};
+			gbl_homePanel.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
+			gbl_homePanel.rowWeights = new double[]{1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
+			homePanel.setLayout(gbl_homePanel);
+			
+			btnRooms = new JButton("Rooms");
+			GridBagConstraints gbc_btnRooms = new GridBagConstraints();
+			gbc_btnRooms.anchor = GridBagConstraints.NORTH;
+			gbc_btnRooms.fill = GridBagConstraints.HORIZONTAL;
+			gbc_btnRooms.insets = new Insets(0, 0, 5, 5);
+			gbc_btnRooms.gridx = 0;
+			gbc_btnRooms.gridy = 1;
+			homePanel.add(btnRooms, gbc_btnRooms);
+			
+			btnContracts = new JButton("Contracts");
+			GridBagConstraints gbc_btnContracts = new GridBagConstraints();
+			gbc_btnContracts.anchor = GridBagConstraints.NORTH;
+			gbc_btnContracts.insets = new Insets(0, 0, 5, 0);
+			gbc_btnContracts.fill = GridBagConstraints.HORIZONTAL;
+			gbc_btnContracts.gridx = 1;
+			gbc_btnContracts.gridy = 1;
+			homePanel.add(btnContracts, gbc_btnContracts);
+			
+			btnTenants = new JButton("Tenants");
+			GridBagConstraints gbc_btnTenants = new GridBagConstraints();
+			gbc_btnTenants.anchor = GridBagConstraints.NORTH;
+			gbc_btnTenants.fill = GridBagConstraints.HORIZONTAL;
+			gbc_btnTenants.insets = new Insets(0, 0, 0, 5);
+			gbc_btnTenants.gridx = 0;
+			gbc_btnTenants.gridy = 3;
+			homePanel.add(btnTenants, gbc_btnTenants);
+			
+			btnRoomCategories = new JButton("Room Categories");
+			GridBagConstraints gbc_btnRoomCategories = new GridBagConstraints();
+			gbc_btnRoomCategories.anchor = GridBagConstraints.NORTH;
+			gbc_btnRoomCategories.fill = GridBagConstraints.HORIZONTAL;
+			gbc_btnRoomCategories.gridx = 1;
+			gbc_btnRoomCategories.gridy = 3;
+			homePanel.add(btnRoomCategories, gbc_btnRoomCategories);
 
 			// CRUD rooms tab
 			JPanel emptyPanel2 = null;
 			try {
-				emptyPanel2 = new CRUDRooms();
+				roomsCRUDPanel = new CRUDRooms();
 			} catch (DataAccessException e) {
 				e.printStackTrace();
 				System.exit(0);
 			}
-			emptyPanel2.setBorder(new EmptyBorder(15, 0, 0, 0));
-			tabsPane.addTab("Rooms", null, emptyPanel2, "Manage rooms");
+			roomsCRUDPanel.setBorder(new EmptyBorder(15, 0, 0, 0));
+			tabsPane.addTab("Rooms", null, roomsCRUDPanel, "Manage rooms");
 
-			// CRUD employees tab
-			JPanel emptyPanel3 = new JPanel();
-			emptyPanel3.setBorder(new EmptyBorder(15, 0, 0, 0));
-			tabsPane.addTab("Employees", null, emptyPanel3, "Manage employees");
+//			// CRUD employees tab
+//			JPanel emptyPanel3 = new JPanel();
+//			emptyPanel3.setBorder(new EmptyBorder(15, 0, 0, 0));
+//			tabsPane.addTab("Employees", null, emptyPanel3, "Manage employees");
 
 			// CRUD contracts tab
 			JPanel contractsCRUDPanel = null;
@@ -173,15 +216,26 @@ public class Dashboard extends JFrame {
 			tenantsCRUDPanel.setBorder(new EmptyBorder(15, 0, 0, 0));
 			tabsPane.addTab("Tenants", null, tenantsCRUDPanel, "Manage tenants");
 
-			// CRUD leaving notices tab
-			JPanel emptyPanel6 = new JPanel();
-			emptyPanel6.setBorder(new EmptyBorder(15, 0, 0, 0));
-			tabsPane.addTab("Leaving notices", null, emptyPanel6, "Manage leave notices");
-
-			// CRUD Reports tab
-			JPanel emptyPanel7 = new JPanel();
-			emptyPanel7.setBorder(new EmptyBorder(15, 0, 0, 0));
-			tabsPane.addTab("Reports", null, emptyPanel7, "View statistics");
+		// CRUD tenants tab
+		JPanel roomCategoriesCRUDPanel = null;
+		try {
+			roomCategoriesCRUDPanel = new CRUDRoomCategory();
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+			// exit
+			System.exit(0);
+		}
+		roomCategoriesCRUDPanel.setBorder(new EmptyBorder(15, 0, 0, 0));
+		tabsPane.addTab("Room Categories", null, roomCategoriesCRUDPanel, "Categories");
+//			// CRUD leaving notices tab
+//			JPanel emptyPanel6 = new JPanel();
+//			emptyPanel6.setBorder(new EmptyBorder(15, 0, 0, 0));
+//			tabsPane.addTab("Leaving notices", null, emptyPanel6, "Manage leave notices");
+//
+//			// CRUD Reports tab
+//			JPanel emptyPanel7 = new JPanel();
+//			emptyPanel7.setBorder(new EmptyBorder(15, 0, 0, 0));
+//			tabsPane.addTab("Reports", null, emptyPanel7, "View statistics");
 			
 		// Attach event handler
 		addEventHandlers();
@@ -249,6 +303,26 @@ public class Dashboard extends JFrame {
 			} catch (DataAccessException ex) {
 				Messages.error(Dashboard.this, "Could not load table data...", "Error");
 			}
+		});
+
+		// Rooms button
+		btnRooms.addActionListener(e -> {
+			tabsPane.setSelectedIndex(1);
+		});
+
+		// Contracts button
+		btnContracts.addActionListener(e -> {
+			tabsPane.setSelectedIndex(2);
+		});
+
+		// Tenants button
+		btnTenants.addActionListener(e -> {
+			tabsPane.setSelectedIndex(3);
+		});
+
+		// Room categories button
+		btnRoomCategories.addActionListener(e -> {
+			tabsPane.setSelectedIndex(4);
 		});
 	} // end of event handlers
 }
