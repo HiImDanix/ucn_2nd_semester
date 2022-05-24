@@ -1,6 +1,8 @@
-package dal;
+package test.dal;
 
 import controller.DBController;
+import dal.TenantDB;
+import dal.TenantDBIF;
 import db.DBConnection;
 import db.DataAccessException;
 import model.Tenant;

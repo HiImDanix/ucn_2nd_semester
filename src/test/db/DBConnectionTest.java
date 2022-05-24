@@ -1,4 +1,6 @@
-package db;
+package test.db;
+import db.DBConnection;
+import db.DataAccessException;
 import org.junit.jupiter.api.*;
 
 import java.sql.Connection;
