@@ -63,5 +63,7 @@ public class CRUDRoomCategory extends AbstractCRUDPanel {
 	}
 		
 	@Override
-	protected void btnDeleteAction() {}
+	protected void btnDeleteAction() {
+		Messages.info(this, "Not implemented yet");
+	}
 }
