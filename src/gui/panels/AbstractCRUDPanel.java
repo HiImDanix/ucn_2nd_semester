@@ -1,9 +1,8 @@
 package gui.panels;
 
+import controller.DBController;
 import db.DataAccessException;
-import gui.Images;
-import gui.JLink;
-import gui.Palette;
+import gui.*;
 import gui.panels.tablemodels.MyAbstractTableModel;
 
 import javax.swing.*;
@@ -31,6 +30,7 @@ public abstract class AbstractCRUDPanel extends JPanel {
     private JLink btnDelete;
     private JTextField txtSearch;
     private TableRowSorter<TableModel> rowSorter;
+    private JButton btnSync;
 
     /*
      * name: Name of the domain object (singular)
@@ -43,16 +43,16 @@ public abstract class AbstractCRUDPanel extends JPanel {
         JPanel topPanel = new JPanel();
         this.add(topPanel, BorderLayout.NORTH);
         GridBagLayout gbl_topPanel = new GridBagLayout();
-        gbl_topPanel.columnWidths = new int[]{0, 0, 0, 0};
+        gbl_topPanel.columnWidths = new int[]{0, 0, 0, 0, 0};
         gbl_topPanel.rowHeights = new int[]{0, 0, 0, 0};
-        gbl_topPanel.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
+        gbl_topPanel.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
         gbl_topPanel.rowWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
         topPanel.setLayout(gbl_topPanel);
 
         // ***** Title *****
         JLabel lblTitle = new JLabel(name);
         GridBagConstraints gbc_lblTitle = new GridBagConstraints();
-        gbc_lblTitle.gridwidth = 3;
+        gbc_lblTitle.gridwidth = 4;
         gbc_lblTitle.insets = new Insets(0, 0, 5, 0);
         gbc_lblTitle.gridx = 0;
         gbc_lblTitle.gridy = 0;
@@ -68,13 +68,25 @@ public abstract class AbstractCRUDPanel extends JPanel {
         topPanel.add(txtSearch, gbc_txtSearch);
         txtSearch.setColumns(10);
 
+        btnSync = new JButton( Images.RELOAD.getImageIcon(16, 16));
+        btnSync.setToolTipText("Sync");
+        btnSync.setFocusPainted(false);
+        btnSync.setContentAreaFilled(false);
+        btnSync.setBorderPainted(false);
+        btnSync.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        GridBagConstraints gbc_btnSync = new GridBagConstraints();
+        gbc_btnSync.insets = new Insets(0, 0, 5, 5);
+        gbc_btnSync.gridx = 2;
+        gbc_btnSync.gridy = 1;
+        topPanel.add(btnSync, gbc_btnSync);
+
         // ***** button: Add  *****
         btnAdd = new JButton("Add " + name);
-        GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
-        gbc_btnNewButton.insets = new Insets(0, 0, 5, 0);
-        gbc_btnNewButton.gridx = 2;
-        gbc_btnNewButton.gridy = 1;
-        topPanel.add(btnAdd, gbc_btnNewButton);
+        GridBagConstraints gbc_btnAdd = new GridBagConstraints();
+        gbc_btnAdd.insets = new Insets(0, 0, 5, 0);
+        gbc_btnAdd.gridx = 3;
+        gbc_btnAdd.gridy = 1;
+        topPanel.add(btnAdd, gbc_btnAdd);
         btnAdd.setIcon(Images.ADD_ITEM.getImageIcon(btnAdd));
 
         // ***** Middle panel: Scroll panel *****
@@ -146,6 +158,24 @@ public abstract class AbstractCRUDPanel extends JPanel {
 				btnDelete.setEnabled(true);
 			}
 		});
+
+        // On refresh button click, reload the table's data
+        btnSync.addActionListener(e -> {
+            // Disable refresh button
+            btnSync.setEnabled(false);
+
+            // Execute after refresh button is disabled
+            SwingUtilities.invokeLater(() -> {
+                try {
+                    new DBController().clearLocalContainer();
+                    getTableModel().refreshData();
+                } catch (DataAccessException ex) {
+                    Messages.error(this, "Could not load table data...", "Error");
+                }
+                // Enable refresh button
+                btnSync.setEnabled(true);
+            });
+        });
     }
 
 

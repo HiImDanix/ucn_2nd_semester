@@ -68,7 +68,6 @@ public class Dashboard extends JFrame {
 	private JTextField txtCustomerLoans;
 	private JButton btnChooseCustomerSell;
 	private JTextField txtCustomerSell;
-	private JButton btnRefresh;
 
 	/**
 	 * Create the frame.
@@ -91,9 +90,9 @@ public class Dashboard extends JFrame {
 			
 			// ***** TOP PANEL *****
 			GridBagLayout gbl_topPanel = new GridBagLayout();
-			gbl_topPanel.columnWidths = new int[]{0, 0, 0, 0, 0, 0};
+			gbl_topPanel.columnWidths = new int[]{0, 0, 0, 0, 0};
 			gbl_topPanel.rowHeights = new int[]{0, 0, 0};
-			gbl_topPanel.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+			gbl_topPanel.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
 			gbl_topPanel.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 			topPanel.setLayout(gbl_topPanel);
 		
@@ -105,18 +104,6 @@ public class Dashboard extends JFrame {
 				gbc_lblGreeting.gridy = 0;
 				topPanel.add(lblGreeting, gbc_lblGreeting);
 				
-				btnRefresh = new JButton( Images.RELOAD.getImageIcon(16, 16));
-				btnRefresh.setToolTipText("Sync");
-				btnRefresh.setFocusPainted(false);
-				btnRefresh.setContentAreaFilled(false);
-				btnRefresh.setBorderPainted(false);
-				btnRefresh.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-				GridBagConstraints gbc_btnRefresh = new GridBagConstraints();
-				gbc_btnRefresh.insets = new Insets(0, 0, 5, 5);
-				gbc_btnRefresh.gridx = 2;
-				gbc_btnRefresh.gridy = 0;
-				topPanel.add(btnRefresh, gbc_btnRefresh);
-				
 				btnDarkLight = new JButton(App.darkMode ? Images.SUN.getImageIcon(16, 16) : Images.MOON.getImageIcon(16, 16));
 				btnDarkLight.setBorderPainted(false);
 				btnDarkLight.setFocusPainted(false);
@@ -124,7 +111,7 @@ public class Dashboard extends JFrame {
 				btnDarkLight.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 				GridBagConstraints gbc_btnDarkLight = new GridBagConstraints();
 				gbc_btnDarkLight.insets = new Insets(0, 0, 5, 5);
-				gbc_btnDarkLight.gridx = 3;
+				gbc_btnDarkLight.gridx = 2;
 				gbc_btnDarkLight.gridy = 0;
 				topPanel.add(btnDarkLight, gbc_btnDarkLight);
 		
@@ -132,7 +119,7 @@ public class Dashboard extends JFrame {
 				btnLogout = new JLink("Log out");
 				GridBagConstraints gbc_lblLogout = new GridBagConstraints();
 				gbc_lblLogout.insets = new Insets(0, 0, 5, 0);
-				gbc_lblLogout.gridx = 4;
+				gbc_lblLogout.gridx = 3;
 				gbc_lblLogout.gridy = 0;
 				topPanel.add(btnLogout, gbc_lblLogout);
 		
@@ -263,30 +250,5 @@ public class Dashboard extends JFrame {
 				Messages.error(Dashboard.this, "Could not load table data...", "Error");
 			}
 		});
-
-		// On refresh button click, reload the table's data
-		btnRefresh.addActionListener(e -> {
-			// Disable refresh button
-			btnRefresh.setEnabled(false);
-
-			// Execute after refresh button is disabled
-			SwingUtilities.invokeLater(() -> {
-				try {
-					new DBController().clearLocalContainer();
-					if (getCurrentTabCRUDPanel() != null) {
-						getCurrentTabCRUDPanel().getTableModel().refreshData();
-					}
-				} catch (DataAccessException ex) {
-					Messages.error(Dashboard.this, "Could not load table data...", "Error");
-				}
-				// Enable refresh button
-				btnRefresh.setEnabled(true);
-			});
-
-
-		});
-
-
-
 	} // end of event handlers
 }
