@@ -155,6 +155,7 @@ public class Dashboard extends JFrame {
 			
 			imgContracts = new JLabel(Images.CONTRACT.getImageIcon(100, 100));
 			GridBagConstraints gbc_imgContracts = new GridBagConstraints();
+			gbc_imgContracts.anchor = GridBagConstraints.SOUTH;
 			gbc_imgContracts.insets = new Insets(0, 0, 5, 0);
 			gbc_imgContracts.gridx = 1;
 			gbc_imgContracts.gridy = 0;
@@ -190,6 +191,7 @@ public class Dashboard extends JFrame {
 			
 			imgRoomCategories = new JLabel(Images.ROOM_CATEGORY.getImageIcon(100, 100));
 			GridBagConstraints gbc_imgRoomCategories = new GridBagConstraints();
+			gbc_imgRoomCategories.anchor = GridBagConstraints.SOUTH;
 			gbc_imgRoomCategories.insets = new Insets(0, 0, 5, 0);
 			gbc_imgRoomCategories.gridx = 1;
 			gbc_imgRoomCategories.gridy = 2;
