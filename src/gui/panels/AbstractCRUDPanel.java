@@ -140,9 +140,17 @@ public abstract class AbstractCRUDPanel extends JPanel {
 
         addSearchFunctionality();
 
-        btnAdd.addActionListener(e -> btnAddAction());
+        btnAdd.addActionListener(e ->
+        {
+            btnAddAction();
+            getTableModel().fireTableDataChanged();
+        }
+    );
         btnView.addActionListener(e -> btnViewAction());
-        btnEdit.addActionListener(e -> btnEditAction());
+        btnEdit.addActionListener(e -> {
+            btnEditAction();
+            getTableModel().fireTableDataChanged();
+        });
         btnDelete.addActionListener(e -> btnDeleteAction());
 
         tableMain.getSelectionModel().addListSelectionListener(e -> {
