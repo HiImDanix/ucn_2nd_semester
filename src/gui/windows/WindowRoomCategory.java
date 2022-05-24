@@ -73,7 +73,7 @@ public class WindowRoomCategory extends JDialog {
 		this.mode = mode;
 		
 		roomCategoryCtrl = new RoomCategoryController();
-		//this.room = room;
+		this.roomCategory = roomCategory;
 		
 		setModal(true);
 		setBounds(100, 100, 600, 400);
@@ -260,6 +260,7 @@ public class WindowRoomCategory extends JDialog {
 			case EDIT: 
 				// Set title
 				setTitle("Edit Room");
+				btnSubmit.setText("Update");
 				// Enable fields for editing
 				this.enableFields();
 				// Fill fields with content
@@ -418,10 +419,16 @@ public class WindowRoomCategory extends JDialog {
 				}
 
 				if (mode == Mode.EDIT) {
-					Messages.error(this, "Not implemented yet!");
+					// if mode == Edit, edit a new room category
+					try {
+						roomCategoryCtrl.updateRoomCategory(roomCategory, name, description, pricePerMonth, pricePerMonth, 
+								priceForExtraTenant, maxTenants, null, leaveNoticeDays);
+					} catch (DataAccessException ex) {
+						Messages.error("Error updating room category", "error");
+					}
 					
 				} else if (mode == Mode.CREATE) {
-					// if mode == Create, create a new room
+					// if mode == Create, create a new room category
 					try {
 						this.roomCategory = roomCategoryCtrl.addRoomCategory(name, description, pricePerMonth, priceForInternet, 
 								priceForExtraTenant, maxTenants, leaveNoticeDays);

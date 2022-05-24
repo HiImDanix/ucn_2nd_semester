@@ -111,14 +111,6 @@ public class ChooseRoomCategory extends JDialog {
                 } else {
                     Messages.error(excludeMessage);
                 }
-//
-//                if (object.isOutOfService() == false) {
-//                	selectedObject = object;
-//                    this.dispose();
-//                }
-//                else {
-//                	Messages.error(table, "The selected room is out of service!","Error");
-//                }
             }
         });
     }
