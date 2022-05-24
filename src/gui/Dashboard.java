@@ -70,6 +70,10 @@ public class Dashboard extends JFrame {
 	private JButton btnContracts;
 	private JButton btnTenants;
 	private JButton btnRoomCategories;
+	private JLabel imgRoom;
+	private JLabel imgTenant;
+	private JLabel imgContracts;
+	private JLabel imgRoomCategories;
 
 	/**
 	 * Create the frame.
@@ -141,7 +145,23 @@ public class Dashboard extends JFrame {
 			gbl_homePanel.rowWeights = new double[]{1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
 			homePanel.setLayout(gbl_homePanel);
 			
+			imgRoom = new JLabel(Images.DOOR.getImageIcon(100, 100));
+			GridBagConstraints gbc_imgRoom = new GridBagConstraints();
+			gbc_imgRoom.anchor = GridBagConstraints.SOUTH;
+			gbc_imgRoom.insets = new Insets(0, 0, 5, 5);
+			gbc_imgRoom.gridx = 0;
+			gbc_imgRoom.gridy = 0;
+			homePanel.add(imgRoom, gbc_imgRoom);
+			
+			imgContracts = new JLabel(Images.CONTRACT.getImageIcon(100, 100));
+			GridBagConstraints gbc_imgContracts = new GridBagConstraints();
+			gbc_imgContracts.insets = new Insets(0, 0, 5, 0);
+			gbc_imgContracts.gridx = 1;
+			gbc_imgContracts.gridy = 0;
+			homePanel.add(imgContracts, gbc_imgContracts);
+			
 			btnRooms = new JButton("Rooms");
+			btnRooms.setPreferredSize(new Dimension(65, 30));
 			GridBagConstraints gbc_btnRooms = new GridBagConstraints();
 			gbc_btnRooms.anchor = GridBagConstraints.NORTH;
 			gbc_btnRooms.fill = GridBagConstraints.HORIZONTAL;
@@ -151,6 +171,7 @@ public class Dashboard extends JFrame {
 			homePanel.add(btnRooms, gbc_btnRooms);
 			
 			btnContracts = new JButton("Contracts");
+			btnContracts.setPreferredSize(new Dimension(79, 30));
 			GridBagConstraints gbc_btnContracts = new GridBagConstraints();
 			gbc_btnContracts.anchor = GridBagConstraints.NORTH;
 			gbc_btnContracts.insets = new Insets(0, 0, 5, 0);
@@ -159,7 +180,23 @@ public class Dashboard extends JFrame {
 			gbc_btnContracts.gridy = 1;
 			homePanel.add(btnContracts, gbc_btnContracts);
 			
+			imgTenant = new JLabel(Images.TENANT.getImageIcon(100, 100));
+			GridBagConstraints gbc_imgTenant = new GridBagConstraints();
+			gbc_imgTenant.anchor = GridBagConstraints.SOUTH;
+			gbc_imgTenant.insets = new Insets(0, 0, 5, 5);
+			gbc_imgTenant.gridx = 0;
+			gbc_imgTenant.gridy = 2;
+			homePanel.add(imgTenant, gbc_imgTenant);
+			
+			imgRoomCategories = new JLabel(Images.ROOM_CATEGORY.getImageIcon(100, 100));
+			GridBagConstraints gbc_imgRoomCategories = new GridBagConstraints();
+			gbc_imgRoomCategories.insets = new Insets(0, 0, 5, 0);
+			gbc_imgRoomCategories.gridx = 1;
+			gbc_imgRoomCategories.gridy = 2;
+			homePanel.add(imgRoomCategories, gbc_imgRoomCategories);
+			
 			btnTenants = new JButton("Tenants");
+			btnTenants.setPreferredSize(new Dimension(71, 30));
 			GridBagConstraints gbc_btnTenants = new GridBagConstraints();
 			gbc_btnTenants.anchor = GridBagConstraints.NORTH;
 			gbc_btnTenants.fill = GridBagConstraints.HORIZONTAL;
@@ -169,6 +206,7 @@ public class Dashboard extends JFrame {
 			homePanel.add(btnTenants, gbc_btnTenants);
 			
 			btnRoomCategories = new JButton("Room Categories");
+			btnRoomCategories.setPreferredSize(new Dimension(115, 30));
 			GridBagConstraints gbc_btnRoomCategories = new GridBagConstraints();
 			gbc_btnRoomCategories.anchor = GridBagConstraints.NORTH;
 			gbc_btnRoomCategories.fill = GridBagConstraints.HORIZONTAL;

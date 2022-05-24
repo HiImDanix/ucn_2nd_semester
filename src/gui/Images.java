@@ -10,7 +10,12 @@ public enum Images {
     ADD_ITEM("images/add_item.png"),
     MOON("images/moon.png"),
     SUN("images/sun.png"),
-    RELOAD("images/reload.png");
+    RELOAD("images/reload.png"),
+    DOOR("images/door.png"),
+    TENANT("images/tenant.png"),
+    ROOM_CATEGORY("images/room_category.png"),
+    CONTRACT("images/contract.png");
+
 
     private final String path;
     private final String defaultPath = "images/default.png";
